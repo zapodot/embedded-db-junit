@@ -106,7 +106,7 @@ public class EmbeddedDatabaseRule implements TestRule {
     /**
      * Will generate a JDBC url for an in-memory H2 named database
      * @param name the name of the currently running test
-     * @return
+     * @return a JDBC URL string
      */
     public String generateJdbcUrl(final String name) {
         StringBuilder jdbcUrlBuilder = new StringBuilder("jdbc:h2:mem:");
