@@ -87,7 +87,7 @@
     </distributionManagement>
     <profiles>
        <profile>
-           <id>gpg</id>
+           <id>release</id>
            <build>
                <plugins>
                    <plugin>
@@ -103,6 +103,17 @@
                                </goals>
                            </execution>
                        </executions>
+                   </plugin>
+                   <plugin>
+                       <groupId>org.sonatype.plugins</groupId>
+                       <artifactId>nexus-staging-maven-plugin</artifactId>
+                       <version>${nexus-staging-maven-plugin.version}</version>
+                       <extensions>true</extensions>
+                       <configuration>
+                           <serverId>sonatype-nexus-staging</serverId>
+                           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                           <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                       </configuration>
                    </plugin>
                </plugins>
            </build>
@@ -145,17 +156,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-maven-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>sonatype-nexus-staging</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 
