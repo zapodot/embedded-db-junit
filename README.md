@@ -7,7 +7,7 @@ embedded-db-junit
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/)
 
 ## Status
-This library is currently through the [Sonatype OSS repo](https://oss.sonatype.org/).
+This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 Java 7 or higher is required to use this plugin.
 
 ## Usage
