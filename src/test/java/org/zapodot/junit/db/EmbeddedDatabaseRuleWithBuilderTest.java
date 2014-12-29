@@ -12,11 +12,12 @@ import static org.junit.Assert.assertNotNull;
 public class EmbeddedDatabaseRuleWithBuilderTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
-                                                                                                                        + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
+    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql(
+            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
+            + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
 
     @Test
-    public void testRxJava() throws Exception {
+    public void testUsingRxJava() throws Exception {
         assertNotNull(embeddedDatabaseRule.getConnection());
         final Database database = Database.from(embeddedDatabaseRule.getConnection());
         assertNotNull(database.select("SELECT sysdate from DUAL").getAs(Date.class).toBlocking().single());
