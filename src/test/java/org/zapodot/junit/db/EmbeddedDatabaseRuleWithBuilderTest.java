@@ -1,40 +1,27 @@
-embedded-db-junit
-=================
+package org.zapodot.junit.db;
 
-JUnit Rule that provides a H2 Embedded in-memory database
+import com.github.davidmoten.rx.jdbc.Database;
+import org.junit.Rule;
+import org.junit.Test;
 
-## Status
-The library will be made available through Sonatype OSS repo, but until then you can clone this repo and install locally
+import java.util.Date;
 
-## Usage
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-### Add dependency
-#### Maven
-```xml
-        <dependency>
-            <groupId>org.zapodot</groupId>
-            <artifactId>embedded-db-junit</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-```
+public class EmbeddedDatabaseRuleWithBuilderTest {
 
-#### SBT
-```scala
-    libraryDependencies += "org.zapodot" % "jackson-databind-java-optional" % "0.1-SNAPSHOT" changing()
-```
-
-### Add to Junit test
-```java
     @Rule
     public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
                                                                                                                         + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
 
     @Test
-    public void testUsingRxJdbc() throws Exception {
+    public void testRxJava() throws Exception {
         assertNotNull(embeddedDatabaseRule.getConnection());
         final Database database = Database.from(embeddedDatabaseRule.getConnection());
         assertNotNull(database.select("SELECT sysdate from DUAL").getAs(Date.class).toBlocking().single());
 
         assertEquals("John Doe", database.select("select name from customer where id=1").getAs(String.class).toBlocking().single());
     }
-```
+
+}
