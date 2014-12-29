@@ -70,7 +70,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     private final Map<String, String> _jdbcUrlProperties;
 
-    public Connection connection;
+    private Connection connection;
 
 
     /**
