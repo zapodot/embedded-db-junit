@@ -6,7 +6,7 @@ embedded-db-junit
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/)
 
 ## Status
-This library is currently available through [Sonatype OSS SNAPSHOT repo](https://oss.sonatype.org/)
+This library is currently through the [Sonatype OSS repo](https://oss.sonatype.org/)
 
 ## Usage
 
@@ -16,13 +16,13 @@ This library is currently available through [Sonatype OSS SNAPSHOT repo](https:/
         <dependency>
             <groupId>org.zapodot</groupId>
             <artifactId>embedded-db-junit</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
 ```
 
 #### SBT
 ```scala
-    libraryDependencies += "org.zapodot" % "jackson-databind-java-optional" % "0.1-SNAPSHOT" changing()
+    libraryDependencies += "org.zapodot" % "jackson-databind-java-optional" % "0.1" changing()
 ```
 
 ### Add to Junit test
