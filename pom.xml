@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-db-junit</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <properties>
+        <junit.version>4.11</junit.version>
+        <h2.version>1.4.184</h2.version>
+    </properties>
+    <name>Library that provides a JUnit rule tfor setting up unit test using an embedded in-memory database (H2)</name>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.davidmoten</groupId>
+            <artifactId>rxjava-jdbc</artifactId>
+            <version>0.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.7</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <developers>
+        <developer>
+            <id>zapodot</id>
+            <email>zapodot@gmail.com</email>
+            <name>Sondre Eikanger Kvalø</name>
+            <roles>
+                <role>creator</role>
+            </roles>
+            <url>http://zapodot.org</url>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/zapodot/embedded-db-junit/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:zapodot/embedded-db-junit.git</connection>
+        <developerConnection>scm:git:git@github.com:zapodot/embedded-db-junit.git</developerConnection>
+        <url>https://github.com/zapodot/embedded-db-junit</url>
+    </scm>
+
+</project>
