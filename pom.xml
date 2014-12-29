@@ -6,7 +6,7 @@
 
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <properties>
         <junit.version>4.11</junit.version>
         <h2.version>1.4.184</h2.version>
@@ -20,6 +20,7 @@
         <maven>3.2.0</maven>
     </prerequisites>
     <name>Library that provides a JUnit rule tfor setting up unit test using an embedded in-memory database (H2)</name>
+    <url>https://github.com/zapodot/embedded-db-junit</url>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -119,12 +120,26 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>${nexus-staging-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>sonatype-nexus-stagin</serverId>
+                    <serverId>sonatype-nexus-staging</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
