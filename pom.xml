@@ -19,7 +19,8 @@
     <prerequisites>
         <maven>3.2.0</maven>
     </prerequisites>
-    <name>Library that provides a JUnit rule tfor setting up unit test using an embedded in-memory database (H2)</name>
+    <name>${project.artifactId}</name>
+    <description>Library that provides a JUnit rule tfor setting up unit test using an embedded in-memory database (H2)</description>
     <url>https://github.com/zapodot/embedded-db-junit</url>
     <dependencies>
         <dependency>
