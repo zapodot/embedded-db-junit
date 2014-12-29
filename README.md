@@ -5,7 +5,7 @@ embedded-db-junit
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/)
 
 ## Status
-The library will be made available through [Sonatype OSS repo](https://oss.sonatype.org/), but until then you can clone this repo and install locally
+This library is currently available through [Sonatype OSS SNAPSHOT repo](https://oss.sonatype.org/)
 
 ## Usage
 
