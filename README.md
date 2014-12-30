@@ -9,7 +9,7 @@ embedded-db-junit
 
 ## Status
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
-Java 7 or higher is required to use this plugin.
+Java 7 or higher is required.
 
 ## Usage
 
