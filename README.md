@@ -53,3 +53,16 @@ Java 7 or higher is required.
                                          .single());
     }
 ```
+
+#### Multiple data sources in the same test class
+If you need more than one database instance in your test class, you should name them using the "withName" construct.
+If not set the rule builder will generate the name using the name of the test class
+```java
+        @Rule
+        public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
+                EmbeddedDatabaseRule.builder().withName("db1").withMode("MySQL").build();
+
+        @Rule
+        public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
+                EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
+```
