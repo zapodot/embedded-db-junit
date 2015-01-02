@@ -25,7 +25,7 @@ Java 7 or higher is required.
 
 #### SBT
 ```scala
-    libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.1" changing()
+    libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.1" 
 ```
 
 ### Add to Junit test
