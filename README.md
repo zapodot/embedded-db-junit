@@ -15,13 +15,13 @@ Java 7 or higher is required.
 
 ### Add dependency
 #### Maven
-    ```xml
+```xml
     <dependency>
         <groupId>org.zapodot</groupId>
         <artifactId>embedded-db-junit</artifactId>
         <version>0.1</version>
     </dependency>
-    ```
+```
 
 #### SBT
 ```scala
@@ -29,7 +29,7 @@ Java 7 or higher is required.
 ```
 
 ### Add to Junit test
-    ```java
+```java
     @Rule
     public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
                                                                         .builder()
@@ -66,12 +66,12 @@ Java 7 or higher is required.
         assertEquals(customerName, jdbcOperations.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
 
     }
-    ```
+```
 
 #### Multiple data sources in the same test class
 If you need more than one database instance in your test class, you should name them using the "withName" construct.
 If not set the rule builder will generate the name using the name of the test class
-    ```java
+```java
     @Rule
     public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
             EmbeddedDatabaseRule.builder().withName("db1").withMode("MySQL").build();
@@ -79,4 +79,4 @@ If not set the rule builder will generate the name using the name of the test cl
     @Rule
     public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
             EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
-    ```
+```
