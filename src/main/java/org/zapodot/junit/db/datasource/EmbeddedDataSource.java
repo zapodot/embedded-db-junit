@@ -52,7 +52,7 @@ public class EmbeddedDataSource implements DataSource {
 
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-        return null;
+        return Logger.getGlobal();
     }
 
     @Override
