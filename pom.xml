@@ -14,7 +14,8 @@
         <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.5</nexus-staging-maven-plugin.version>
         <rxjava-jdbc.version>0.4</rxjava-jdbc.version>
-        <slf4j-simple.version>1.7.7</slf4j-simple.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <spring-jdbc.version>4.1.4.RELEASE</spring-jdbc.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <prerequisites>
@@ -41,9 +42,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring-jdbc.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j-simple.version}</version>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

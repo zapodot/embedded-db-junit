@@ -52,6 +52,22 @@ Java 7 or higher is required.
                                          .toBlocking()
                                          .single());
     }
+
+    @Test
+    public void testUsingSpringJdbc() throws Exception {
+
+        final JdbcOperations jdbcOperation = new JdbcTemplate(embeddedDatabaseRule.getDataSource());
+        final int id = 2;
+        final String customerName = "Jane Doe";
+
+        final int updatedRows = jdbcOperations.update("INSERT INTO CUSTOMER(id, name) VALUES(?,?)", id, customerName);
+
+        assertEquals(1, updatedRows);
+        assertEquals(customerName, jdbcOperations.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
+
+    }
+
+
 ```
 
 #### Multiple data sources in the same test class

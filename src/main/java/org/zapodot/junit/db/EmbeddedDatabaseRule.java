@@ -3,7 +3,10 @@ package org.zapodot.junit.db;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.zapodot.junit.db.datasource.EmbeddedDataSource;
+import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionWrapper;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -96,7 +99,11 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return the current JDBC connection to be used internally in your test, or null if has not been set yet
      */
     public Connection getConnection() {
-        return connection;
+        return CloseSuppressedConnectionWrapper.forConnection(connection);
+    }
+
+    public DataSource getDataSource() {
+        return new EmbeddedDataSource(getConnection());
     }
 
     public boolean isAutoCommit() {
