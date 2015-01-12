@@ -6,7 +6,7 @@
 
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <properties>
         <junit.version>4.12</junit.version>
         <h2.version>1.4.184</h2.version>
