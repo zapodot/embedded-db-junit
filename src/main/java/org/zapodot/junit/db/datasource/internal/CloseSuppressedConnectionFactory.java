@@ -45,11 +45,7 @@ public class CloseSuppressedConnectionFactory {
         final Constructor<?> constructor = createConstructorForProxyClass();
         try {
             return (ConnectionProxy) constructor.newInstance();
-        } catch (InstantiationException e) {
-            throw new IllegalStateException(e);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
     }
