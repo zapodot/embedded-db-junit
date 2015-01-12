@@ -42,17 +42,17 @@ public class CloseSuppressedConnectionFactory {
     }
 
     private static ConnectionProxy createProxyInstance() {
-        final Constructor<?> constructor = createConstructorForProxyClass();
+        final Constructor<ConnectionProxy> constructor = createConstructorForProxyClass();
         try {
-            return (ConnectionProxy) constructor.newInstance();
+            return constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private static Constructor<?> createConstructorForProxyClass() {
+    private static Constructor<ConnectionProxy> createConstructorForProxyClass() {
         try {
-            return ReflectionFactory.getReflectionFactory()
+            return (Constructor<ConnectionProxy>) ReflectionFactory.getReflectionFactory()
                                     .newConstructorForSerialization(proxyType,
                                                                     Object.class.getDeclaredConstructor());
         } catch (NoSuchMethodException e) {
