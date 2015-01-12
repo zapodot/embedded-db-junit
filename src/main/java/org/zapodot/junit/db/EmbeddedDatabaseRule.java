@@ -4,7 +4,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.zapodot.junit.db.datasource.EmbeddedDataSource;
-import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionWrapper;
+import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -94,14 +94,19 @@ public class EmbeddedDatabaseRule implements TestRule {
     }
 
     /**
-     * Gives access to the current H2 JDBC connection.
+     * Gives access to the current H2 JDBC connection. The connection returned by this method will suppress all "close" calls
      *
      * @return the current JDBC connection to be used internally in your test, or null if has not been set yet
      */
     public Connection getConnection() {
-        return CloseSuppressedConnectionWrapper.forConnection(connection);
+        return CloseSuppressedConnectionFactory.createProxy(connection);
     }
 
+    /**
+     * To be used when you actually need is a DataSource
+     *
+     * @return a DataSource instance wrapping a single connection
+     */
     public DataSource getDataSource() {
         return new EmbeddedDataSource(getConnection());
     }

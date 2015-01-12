@@ -1,6 +1,6 @@
 package org.zapodot.junit.db.datasource;
 
-import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionWrapper;
+import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -22,12 +22,12 @@ public class EmbeddedDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return CloseSuppressedConnectionWrapper.forConnection(connection);
+        return CloseSuppressedConnectionFactory.createProxy(connection);
     }
 
     @Override
     public Connection getConnection(final String username, final String password) throws SQLException {
-        return CloseSuppressedConnectionWrapper.forConnection(connection);
+        return getConnection();
     }
 
     @Override

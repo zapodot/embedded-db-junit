@@ -11,6 +11,10 @@ embedded-db-junit
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 Java 7 or higher is required.
 
+## Changelog
+* version 0.2: added datasource() for getting an embedded DataSource and suppressing close() call to the connection
+* version 0.1: first release
+
 ## Usage
 
 ### Add dependency
