@@ -13,6 +13,10 @@ public class ConnectionInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionInterceptor.class);
 
+    private ConnectionInterceptor() {
+
+    }
+
     public static void close() {
         logger.debug("close() is suppressed");
     }
