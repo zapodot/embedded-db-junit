@@ -5,7 +5,6 @@ import net.bytebuddy.dynamic.ClassLoadingStrategy;
 import net.bytebuddy.instrumentation.FieldAccessor;
 import net.bytebuddy.instrumentation.MethodDelegation;
 import net.bytebuddy.modifier.Visibility;
-import sun.reflect.ReflectionFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,19 +16,19 @@ import static net.bytebuddy.matcher.ElementMatchers.any;
 public class CloseSuppressedConnectionFactory {
 
     private static Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
-                                                                          .method(any())
-                                                                          .intercept(MethodDelegation.to(
-                                                                                  ConnectionInterceptor.class))
-                                                                          .defineField("delegatedConnection",
-                                                                                       Connection.class,
-                                                                                       Visibility.PRIVATE)
-                                                                          .implement(ConnectionProxy.class)
-                                                                          .intercept(FieldAccessor.ofBeanProperty())
-                                                                          .make()
-                                                                          .load(CloseSuppressedConnectionFactory.class
-                                                                                        .getClassLoader(),
-                                                                                ClassLoadingStrategy.Default.WRAPPER)
-                                                                          .getLoaded();
+            .method(any())
+            .intercept(MethodDelegation.to(
+                    ConnectionInterceptor.class))
+            .defineField("delegatedConnection",
+                    Connection.class,
+                    Visibility.PRIVATE)
+            .implement(ConnectionProxy.class)
+            .intercept(FieldAccessor.ofBeanProperty())
+            .make()
+            .load(CloseSuppressedConnectionFactory.class
+                            .getClassLoader(),
+                    ClassLoadingStrategy.Default.WRAPPER)
+            .getLoaded();
 
     /**
      * Create a proxy that delegates to the provided Connection except for calls to "close()" which will be suppressed.
@@ -49,21 +48,20 @@ public class CloseSuppressedConnectionFactory {
     }
 
     private static ConnectionProxy createProxyInstance() {
-        final Constructor<ConnectionProxy> constructor = createConstructorForProxyClass();
+        final Constructor<? extends Connection> constructor = createConstructorForProxyClass();
         try {
-            return constructor.newInstance();
+            final Connection connectionProxy = constructor.newInstance();
+            return (ConnectionProxy) connectionProxy;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private static Constructor<ConnectionProxy> createConstructorForProxyClass() {
+    private static Constructor<? extends Connection> createConstructorForProxyClass() {
         try {
-            return (Constructor<ConnectionProxy>) ReflectionFactory.getReflectionFactory()
-                                    .newConstructorForSerialization(proxyType,
-                                                                    Object.class.getDeclaredConstructor());
+            return proxyType.getDeclaredConstructor();
         } catch (NoSuchMethodException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("Found no default constructor for proxy class", e);
         }
     }
 }
