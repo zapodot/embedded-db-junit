@@ -26,7 +26,7 @@ public class EmbeddedDatabaseRule implements TestRule {
      */
     public static class Builder {
 
-        private Map<String, String> properties = new LinkedHashMap<>();
+        private final Map<String, String> properties = new LinkedHashMap<>();
 
         private String name;
 
@@ -67,6 +67,11 @@ public class EmbeddedDatabaseRule implements TestRule {
             return this;
         }
 
+        public Builder withoutAutoCommit() {
+            autoCommit = false;
+            return this;
+        }
+
         private Map<String, String> propertiesMap() {
             return new LinkedHashMap<>(properties);
         }
@@ -92,7 +97,7 @@ public class EmbeddedDatabaseRule implements TestRule {
         this(true, null, null);
     }
 
-    EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties) {
+    private EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties) {
         this.autoCommit = autoCommit;
         this._predefinedName = name;
         this._jdbcUrlProperties = jdbcUrlProperties == null ? Collections.<String, String>emptyMap() : jdbcUrlProperties;

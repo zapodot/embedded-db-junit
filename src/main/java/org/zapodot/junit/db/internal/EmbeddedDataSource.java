@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 /**
  * A simple DataSource implementation that simply wraps a single Connection
+ * Needs to be public to be used by ByteBuddy. Part of internal api, so it may be changed or removed without prior warning
  */
 public class EmbeddedDataSource implements DataSource {
 

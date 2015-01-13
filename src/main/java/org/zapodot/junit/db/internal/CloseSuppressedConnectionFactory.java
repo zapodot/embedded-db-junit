@@ -13,9 +13,12 @@ import java.util.Objects;
 
 import static net.bytebuddy.matcher.ElementMatchers.any;
 
+/**
+ * Needs to be public to be used by ByteBuddy. Part of internal api, so it may be changed or removed without prior warning
+ */
 public class CloseSuppressedConnectionFactory {
 
-    private static Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
+    private final static Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
             .method(any())
             .intercept(MethodDelegation.to(
                     ConnectionInterceptor.class))
