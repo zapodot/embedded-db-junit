@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.datasource.internal;
+package org.zapodot.junit.db.internal;
 
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.AllArguments;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;

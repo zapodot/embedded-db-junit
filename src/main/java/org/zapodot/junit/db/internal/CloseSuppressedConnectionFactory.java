@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.datasource.internal;
+package org.zapodot.junit.db.internal;
 
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.ClassLoadingStrategy;
@@ -10,6 +10,7 @@ import sun.reflect.ReflectionFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.util.Objects;
 
 import static net.bytebuddy.matcher.ElementMatchers.any;
 
@@ -30,7 +31,13 @@ public class CloseSuppressedConnectionFactory {
                                                                                 ClassLoadingStrategy.Default.WRAPPER)
                                                                           .getLoaded();
 
+    /**
+     * Create a proxy that delegates to the provided Connection except for calls to "close()" which will be suppressed.
+     * @param connection the connection that is to be used as an underlying connection
+     * @return a Connection proxy
+     */
     public static Connection createProxy(final Connection connection) {
+        Objects.requireNonNull(connection, "The \"connection\" argument can not be null");
         return (Connection) createConnectionProxy(connection);
 
     }

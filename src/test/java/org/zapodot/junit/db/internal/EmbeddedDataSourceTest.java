@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.datasource;
+package org.zapodot.junit.db.internal;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Before;

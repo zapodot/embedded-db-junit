@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.datasource.internal;
+package org.zapodot.junit.db.internal;
 
 import java.sql.Connection;
 

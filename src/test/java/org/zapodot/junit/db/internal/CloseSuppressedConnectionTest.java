@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.datasource.internal;
+package org.zapodot.junit.db.internal;
 
 import org.junit.Before;
 import org.junit.Rule;

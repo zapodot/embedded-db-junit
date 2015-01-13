@@ -1,6 +1,6 @@
-package org.zapodot.junit.db.datasource;
+package org.zapodot.junit.db.internal;
 
-import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionFactory;
+import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;

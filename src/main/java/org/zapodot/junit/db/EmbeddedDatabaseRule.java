@@ -3,8 +3,8 @@ package org.zapodot.junit.db;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.zapodot.junit.db.datasource.EmbeddedDataSource;
-import org.zapodot.junit.db.datasource.internal.CloseSuppressedConnectionFactory;
+import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
+import org.zapodot.junit.db.internal.EmbeddedDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,6 +14,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * A JUnit Rule implementation that makes it easy to stub JDBC integrations from your tests
+ *
+ * @author zapodot
+ */
 public class EmbeddedDatabaseRule implements TestRule {
 
     public static class Builder {
@@ -32,8 +37,9 @@ public class EmbeddedDatabaseRule implements TestRule {
             this.name = name;
             return this;
         }
+
         private String normalizeString(final String input) {
-            if(input == null) {
+            if (input == null) {
                 return null;
             } else {
                 return input.replaceAll("\n", "").replaceAll(";", "\\\\;").trim();
@@ -52,7 +58,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
         public Builder withProperty(final String property, final String value) {
 
-            if(property != null && value != null) {
+            if (property != null && value != null) {
                 properties.put(property, normalizeString(value));
             }
             return this;
@@ -89,6 +95,11 @@ public class EmbeddedDatabaseRule implements TestRule {
         this._jdbcUrlProperties = jdbcUrlProperties == null ? Collections.<String, String>emptyMap() : jdbcUrlProperties;
     }
 
+    /**
+     * Creates a builder that enables you to use the fluent API when construction an EmbeddedDatabaseRule instance
+     *
+     * @return a Builder
+     */
     public static Builder builder() {
         return Builder.instance();
     }
@@ -117,22 +128,22 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     /**
      * Will generate a JDBC url for an in-memory H2 named database
+     *
      * @param name the name of the currently running test
      * @return a JDBC URL string
      */
     public String generateJdbcUrl(final String name) {
         StringBuilder jdbcUrlBuilder = new StringBuilder("jdbc:h2:mem:");
-        if(_predefinedName != null) {
+        if (_predefinedName != null) {
             jdbcUrlBuilder.append(_predefinedName);
         } else {
             jdbcUrlBuilder.append(name);
         }
-        for (String property: _jdbcUrlProperties.keySet()) {
+        for (String property : _jdbcUrlProperties.keySet()) {
             jdbcUrlBuilder.append(';').append(property).append('=').append(_jdbcUrlProperties.get(property));
         }
         return jdbcUrlBuilder.toString();
     }
-
 
 
     @Override
