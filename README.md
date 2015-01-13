@@ -7,6 +7,11 @@ embedded-db-junit
 
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/). It is compatible with all known JDBC access libraries such as [Spring JDBC](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jdbc.html#jdbc-introduction), [RX-JDBC](https://github.com/davidmoten/rxjava-jdbc), [sql2o](http://www.sql2o.org/), [JDBI](http://jdbi.org/) or plain old JDBC.
 
+## Why?
+* makes it easy to stub out JDBC calls while still letting you JUnit test your SQL
+* removes the need of having a database server running and available
+* when you are refactoring legacy code where JDBC calls is tightly coupled with your business logic and you start off by testing it from the "outside" (as suggested by [Michael Feathers](http://www.informit.com/store/working-effectively-with-legacy-code-9780131177055?aid=15d186bd-1678-45e9-8ad3-fe53713e811b))
+
 ## Status
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 Java 7 or higher is required.
