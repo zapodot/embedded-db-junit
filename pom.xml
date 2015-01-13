@@ -171,6 +171,15 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <windowtitle>Embedded Database JUnit Rule API</windowtitle>
+                    <encoding>UTF-8</encoding>
+                    <links>
+                        <link>http://junit.org/javadoc/latest/</link>
+                    </links>
+                    <locale>en</locale>
+                    <keywords>true</keywords>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
