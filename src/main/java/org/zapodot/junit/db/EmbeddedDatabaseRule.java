@@ -127,7 +127,7 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return a DataSource instance wrapping a single connection
      */
     public DataSource getDataSource() {
-        return EmbeddedDataSource.create(getConnection());
+        return EmbeddedDataSource.create(connection);
     }
 
     public boolean isAutoCommit() {
