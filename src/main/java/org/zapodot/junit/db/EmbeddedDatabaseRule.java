@@ -21,6 +21,9 @@ import java.util.Map;
  */
 public class EmbeddedDatabaseRule implements TestRule {
 
+    /**
+     * A builder class that provides a fluent api for building DB rules
+     */
     public static class Builder {
 
         private Map<String, String> properties = new LinkedHashMap<>();
@@ -119,7 +122,7 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return a DataSource instance wrapping a single connection
      */
     public DataSource getDataSource() {
-        return new EmbeddedDataSource(getConnection());
+        return EmbeddedDataSource.create(getConnection());
     }
 
     public boolean isAutoCommit() {

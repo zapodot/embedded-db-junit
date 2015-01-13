@@ -1,7 +1,5 @@
 package org.zapodot.junit.db.internal;
 
-import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
-
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -16,8 +14,12 @@ public class EmbeddedDataSource implements DataSource {
 
     private final Connection connection;
 
-    public EmbeddedDataSource(final Connection connection) {
+    private EmbeddedDataSource(final Connection connection) {
         this.connection = connection;
+    }
+
+    public static EmbeddedDataSource create(final Connection connection) {
+        return new EmbeddedDataSource(connection);
     }
 
     @Override
