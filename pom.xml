@@ -15,10 +15,12 @@
         <nexus-staging-maven-plugin.version>1.6.5</nexus-staging-maven-plugin.version>
         <rxjava-jdbc.version>0.4</rxjava-jdbc.version>
         <slf4j.version>1.7.7</slf4j.version>
-        <spring-jdbc.version>4.1.4.RELEASE</spring-jdbc.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mockito.version>1.10.19</mockito.version>
         <byte-buddy.version>0.5.1</byte-buddy.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-jdbc.version>4.1.4.RELEASE</spring-jdbc.version>
+        <mockito.version>1.10.19</mockito.version>
+        <jdbi.version>2.56</jdbi.version>
+        <sql2o.version>1.5.3</sql2o.version>
     </properties>
     <prerequisites>
         <maven>3.2.0</maven>
@@ -68,9 +70,16 @@
         <dependency>
             <groupId>org.jdbi</groupId>
             <artifactId>jdbi</artifactId>
-            <version>2.56</version>
+            <version>${jdbi.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.sql2o</groupId>
+            <artifactId>sql2o</artifactId>
+            <version>${sql2o.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
