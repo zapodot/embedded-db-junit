@@ -3,7 +3,10 @@ package org.zapodot.junit.db;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
+import java.sql.Connection;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class EmbeddedDatabaseRuleSimpleTest {
 
@@ -12,7 +15,12 @@ public class EmbeddedDatabaseRuleSimpleTest {
 
     @Test
     public void testCanConnect() throws Exception {
-        assertNotNull(embeddedDatabaseRule.getConnection());
+
+        try(final Connection connection = embeddedDatabaseRule.getConnection()) {
+            assertFalse(connection.isClosed());
+            assertEquals("H2", connection.getMetaData().getDatabaseProductName());
+
+        }
 
     }
 }
