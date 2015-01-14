@@ -4,6 +4,8 @@ embedded-db-junit
 [![Build Status](https://travis-ci.org/zapodot/embedded-db-junit.svg)](https://travis-ci.org/zapodot/embedded-db-junit)
 [![Coverage Status](https://img.shields.io/coveralls/zapodot/embedded-db-junit.svg)](https://coveralls.io/r/zapodot/embedded-db-junit)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit)
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
+
 
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/). It is compatible with all known JDBC access libraries such as [Spring JDBC](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jdbc.html#jdbc-introduction), [RX-JDBC](https://github.com/davidmoten/rxjava-jdbc), [sql2o](http://www.sql2o.org/), [JDBI](http://jdbi.org/) or plain old JDBC.
 
@@ -89,4 +91,3 @@ public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
 public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
         EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
 ```
-[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](/igrigorik/ga-beacon)
