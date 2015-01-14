@@ -89,3 +89,4 @@ public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
 public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
         EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
 ```
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](/igrigorik/ga-beacon)
