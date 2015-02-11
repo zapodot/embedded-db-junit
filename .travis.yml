@@ -9,5 +9,5 @@ jdk:
 - oraclejdk8
 after_success:
 - mvn clean cobertura:cobertura coveralls:cobertura
-- echo "<settings><servers><server><id>ossrh</id><username>\${env.REPO_USER}</username><password>\${env.REPO_KEY}</password></server></servers></settings>" > ~/settings.xml
+- echo "<settings><servers><server><id>sonatype-nexus-snapshots</id><username>\${env.REPO_USER}</username><password>\${env.REPO_KEY}</password></server></servers></settings>" > ~/settings.xml
 - mvn deploy --settings ~/settings.xml
