@@ -147,8 +147,13 @@ public class EmbeddedDatabaseRule implements TestRule {
         } else {
             jdbcUrlBuilder.append(name);
         }
-        for (String property : _jdbcUrlProperties.keySet()) {
-            jdbcUrlBuilder.append(';').append(property).append('=').append(_jdbcUrlProperties.get(property));
+        for (Map.Entry<String, String> property : _jdbcUrlProperties.entrySet()) {
+            jdbcUrlBuilder
+                    .append(';')
+                    .append(property.getKey())
+                    .append('=')
+                    .append(_jdbcUrlProperties.get(property.getValue()));
+
         }
         return jdbcUrlBuilder.toString();
     }
