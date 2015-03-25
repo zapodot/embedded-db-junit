@@ -19,6 +19,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
+* version 0.3: updated all dependencies as well as some changes to the internal implementation
 * version 0.2: added datasource() for getting an embedded DataSource and suppressing close() call to the connection
 * version 0.1: first release
 
