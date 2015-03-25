@@ -15,6 +15,20 @@ public class EmbeddedDatabaseRuleTest {
     }
 
     @Test
+    public void testInitialSqlNull() throws Exception {
+        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(null).build();
+
+        assertEquals("jdbc:h2:mem:test", embeddedDatabaseRule.generateJdbcUrl("test"));
+    }
+
+    @Test
+    public void testPropertyNull() throws Exception {
+        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withProperty("property", null).build();
+        assertEquals("jdbc:h2:mem:test", embeddedDatabaseRule.generateJdbcUrl("test"));
+
+    }
+
+    @Test
     public void testModeSet() throws Exception {
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").build();
 
