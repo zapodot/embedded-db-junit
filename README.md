@@ -72,10 +72,10 @@ public void testUsingSpringJdbc() throws Exception {
     final int id = 2;
     final String customerName = "Jane Doe";
 
-    final int updatedRows = jdbcOperations.update("INSERT INTO CUSTOMER(id, name) VALUES(?,?)", id, customerName);
+    final int updatedRows = jdbcOperation.update("INSERT INTO CUSTOMER(id, name) VALUES(?,?)", id, customerName);
 
     assertEquals(1, updatedRows);
-    assertEquals(customerName, jdbcOperations.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
+    assertEquals(customerName, jdbcOperation.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
 
 }
 ```
