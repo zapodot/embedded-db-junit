@@ -163,8 +163,13 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     @Override
     public Statement apply(final Statement base, final Description description) {
-        return statement(base, description.getTestClass().getSimpleName());
+        return statement(base, _predefinedName != null ? _predefinedName : extractNameFromDescription(description));
     }
+
+    private String extractNameFromDescription(Description description) {
+        return description.getTestClass() == null ? description.getClassName() : description.getTestClass().getSimpleName();
+    }
+
 
     private Statement statement(final Statement base, final String name) {
         return new Statement() {
