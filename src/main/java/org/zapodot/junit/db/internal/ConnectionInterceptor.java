@@ -1,9 +1,9 @@
 package org.zapodot.junit.db.internal;
 
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.AllArguments;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.This;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class ConnectionInterceptor {
     }
 
     @RuntimeType
-    public static Object intercept(@Origin(cacheMethod = true) Method method,
+    public static Object intercept(@Origin(cache = true) Method method,
                                    @This ConnectionProxy delegator,
                                    @AllArguments Object[] arguments) throws Exception {
         return method.invoke(delegator.getDelegatedConnection(), arguments);

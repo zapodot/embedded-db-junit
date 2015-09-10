@@ -1,10 +1,10 @@
 package org.zapodot.junit.db.internal;
 
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.dynamic.ClassLoadingStrategy;
-import net.bytebuddy.instrumentation.FieldAccessor;
-import net.bytebuddy.instrumentation.MethodDelegation;
-import net.bytebuddy.modifier.Visibility;
+import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.FieldAccessor;
+import net.bytebuddy.implementation.MethodDelegation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
