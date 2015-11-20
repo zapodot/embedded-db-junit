@@ -9,11 +9,11 @@
     <version>0.4-SNAPSHOT</version>
     <properties>
         <junit.version>4.12</junit.version>
-        <h2.version>1.4.188</h2.version>
-        <rxjava-jdbc.version>0.5.1</rxjava-jdbc.version>
-        <slf4j.version>1.7.12</slf4j.version>
-        <byte-buddy.version>0.6.15</byte-buddy.version>
-        <spring-jdbc.version>4.1.5.RELEASE</spring-jdbc.version>
+        <h2.version>1.4.190</h2.version>
+        <rxjava-jdbc.version>0.6.8</rxjava-jdbc.version>
+        <slf4j.version>1.7.13</slf4j.version>
+        <byte-buddy.version>0.7.1</byte-buddy.version>
+        <spring-jdbc.version>4.2.3.RELEASE</spring-jdbc.version>
         <mockito.version>1.10.19</mockito.version>
         <jdbi.version>2.63.1</jdbi.version>
         <sql2o.version>1.5.4</sql2o.version>
