@@ -21,74 +21,14 @@ import java.util.Map;
  */
 public class EmbeddedDatabaseRule implements TestRule {
 
-    /**
-     * A builder class that provides a fluent api for building DB rules
-     */
-    public static class Builder {
-
-        private final Map<String, String> properties = new LinkedHashMap<>();
-
-        private String name;
-
-        private boolean autoCommit = true;
-
-        public static Builder instance() {
-            return new Builder();
-        }
-
-        public Builder withName(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        private String normalizeString(final String input) {
-            if (input == null) {
-                return null;
-            } else {
-                return input.replaceAll("\n", "").replaceAll(";", "\\\\;").trim();
-            }
-        }
-
-        public Builder withInitialSql(final String sql) {
-
-            return withProperty("INIT", sql);
-        }
-
-        public Builder withMode(final String mode) {
-
-            return withProperty("MODE", mode);
-        }
-
-        public Builder withProperty(final String property, final String value) {
-
-            if (property != null && value != null) {
-                properties.put(property, normalizeString(value));
-            }
-            return this;
-        }
-
-        public Builder withoutAutoCommit() {
-            autoCommit = false;
-            return this;
-        }
-
-        private Map<String, String> propertiesMap() {
-            return new LinkedHashMap<>(properties);
-        }
-
-        public EmbeddedDatabaseRule build() {
-            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap());
-        }
-    }
-
+    public static final String PROP_INIT_SQL = "INIT";
+    public static final String PROP_MODE = "MODE";
     private final boolean autoCommit;
-
     private final String _predefinedName;
+    private String _testName;
 
     private final Map<String, String> _jdbcUrlProperties;
-
     private Connection connection;
-
 
     /**
      * Standard constructor that is suitable if you don't need to do anything special
@@ -96,6 +36,7 @@ public class EmbeddedDatabaseRule implements TestRule {
     public EmbeddedDatabaseRule() {
         this(true, null, null);
     }
+
 
     private EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties) {
         this.autoCommit = autoCommit;
@@ -110,6 +51,46 @@ public class EmbeddedDatabaseRule implements TestRule {
      */
     public static Builder builder() {
         return Builder.instance();
+    }
+
+    private static Map<String, String> filterInitProperties(final Map<String, String> jdbcUrlProperties) {
+        if (jdbcUrlProperties == null) {
+            return null;
+        } else {
+            final Map<String, String> propertiesCopy = new LinkedHashMap<>();
+            for (final Map.Entry<String, String> property : jdbcUrlProperties.entrySet()) {
+                if (!PROP_INIT_SQL.equalsIgnoreCase(property.getKey())) {
+                    propertiesCopy.put(property.getKey(), property.getValue());
+                }
+            }
+            return propertiesCopy;
+        }
+    }
+
+    private static String createJdbcUrlParameterString(final Map<String, String> properties) {
+        if (properties == null) {
+            return "";
+        }
+        final StringBuilder paramStringBuilder = new StringBuilder("");
+        for (final Map.Entry<String, String> property : properties.entrySet()) {
+            if (property.getValue() != null) {
+                paramStringBuilder.append(';')
+                        .append(property.getKey())
+                        .append('=')
+                        .append(property.getValue());
+            }
+        }
+        return paramStringBuilder.toString();
+    }
+
+    private static String createH2InMemoryCreateUrl(final String name, final Map<String, String> properties) {
+        if (name == null) {
+            throw new NullPointerException("The value of the \"name\" parameter can not be null");
+        }
+        return new StringBuilder("jdbc:h2:mem:")
+                .append(name)
+                .append(createJdbcUrlParameterString(properties))
+                .toString();
     }
 
     /**
@@ -135,31 +116,25 @@ public class EmbeddedDatabaseRule implements TestRule {
     }
 
     /**
-     * Will generate a JDBC url for an in-memory H2 named database
-     *
-     * @param name the name of the currently running test
-     * @return a JDBC URL string
+     * Returns a JDBC url for connecting to the in-memory database created by this rule with all INIT params stripped
+     * @return a JDBC url string
      */
-    public String generateJdbcUrl(final String name) {
-        StringBuilder jdbcUrlBuilder = new StringBuilder("jdbc:h2:mem:");
-        if (_predefinedName != null) {
-            jdbcUrlBuilder.append(_predefinedName);
-        } else {
-            jdbcUrlBuilder.append(name);
-        }
-        for (Map.Entry<String, String> property : _jdbcUrlProperties.entrySet()) {
-            if(property.getValue() != null) {
-                jdbcUrlBuilder
-                        .append(';')
-                        .append(property.getKey())
-                        .append('=')
-                        .append(property.getValue());
-            }
-
-        }
-        return jdbcUrlBuilder.toString();
+    public String getConnectionJdbcUrl() {
+        return createH2InMemoryCreateUrl(getInMemoryDatabaseName(), filterInitProperties(_jdbcUrlProperties));
     }
 
+    /**
+     * Will generate a JDBC url for an in-memory H2 named database
+     *
+     * @return a JDBC URL string
+     */
+    private String generateJdbcUrl() {
+        return createH2InMemoryCreateUrl(getInMemoryDatabaseName(), _jdbcUrlProperties);
+    }
+
+    private String getInMemoryDatabaseName() {
+        return _predefinedName == null ? _testName : _predefinedName;
+    }
 
     @Override
     public Statement apply(final Statement base, final Description description) {
@@ -190,8 +165,70 @@ public class EmbeddedDatabaseRule implements TestRule {
     }
 
     private void setupConnection(final String name) throws SQLException {
-        connection = DriverManager.getConnection(generateJdbcUrl(name));
+
+        _testName = name;
+        connection = DriverManager.getConnection(generateJdbcUrl());
         connection.setAutoCommit(isAutoCommit());
+    }
+
+    /**
+     * A builder class that provides a fluent api for building DB rules
+     */
+    public static class Builder {
+
+        private final Map<String, String> properties = new LinkedHashMap<>();
+
+        private String name;
+
+        private boolean autoCommit = true;
+
+        public static Builder instance() {
+            return new Builder();
+        }
+
+        public Builder withName(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String normalizeString(final String input) {
+            if (input == null) {
+                return null;
+            } else {
+                return input.replaceAll("\n", "").replaceAll(";", "\\\\;").trim();
+            }
+        }
+
+        public Builder withInitialSql(final String sql) {
+
+            return withProperty(PROP_INIT_SQL, sql);
+        }
+
+        public Builder withMode(final String mode) {
+
+            return withProperty(PROP_MODE, mode);
+        }
+
+        public Builder withProperty(final String property, final String value) {
+
+            if (property != null && value != null) {
+                properties.put(property, normalizeString(value));
+            }
+            return this;
+        }
+
+        public Builder withoutAutoCommit() {
+            autoCommit = false;
+            return this;
+        }
+
+        private Map<String, String> propertiesMap() {
+            return new LinkedHashMap<>(properties);
+        }
+
+        public EmbeddedDatabaseRule build() {
+            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap());
+        }
     }
 
 
