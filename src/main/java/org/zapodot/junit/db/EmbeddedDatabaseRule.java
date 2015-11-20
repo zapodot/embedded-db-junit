@@ -5,6 +5,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
 import org.zapodot.junit.db.internal.EmbeddedDataSource;
+import org.zapodot.junit.db.internal.H2JdbcUrlFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -53,46 +54,6 @@ public class EmbeddedDatabaseRule implements TestRule {
         return Builder.instance();
     }
 
-    private static Map<String, String> filterInitProperties(final Map<String, String> jdbcUrlProperties) {
-        if (jdbcUrlProperties == null) {
-            return null;
-        } else {
-            final Map<String, String> propertiesCopy = new LinkedHashMap<>();
-            for (final Map.Entry<String, String> property : jdbcUrlProperties.entrySet()) {
-                if (!PROP_INIT_SQL.equalsIgnoreCase(property.getKey())) {
-                    propertiesCopy.put(property.getKey(), property.getValue());
-                }
-            }
-            return propertiesCopy;
-        }
-    }
-
-    private static String createJdbcUrlParameterString(final Map<String, String> properties) {
-        if (properties == null) {
-            return "";
-        }
-        final StringBuilder paramStringBuilder = new StringBuilder("");
-        for (final Map.Entry<String, String> property : properties.entrySet()) {
-            if (property.getValue() != null) {
-                paramStringBuilder.append(';')
-                        .append(property.getKey())
-                        .append('=')
-                        .append(property.getValue());
-            }
-        }
-        return paramStringBuilder.toString();
-    }
-
-    private static String createH2InMemoryCreateUrl(final String name, final Map<String, String> properties) {
-        if (name == null) {
-            throw new NullPointerException("The value of the \"name\" parameter can not be null");
-        }
-        return new StringBuilder("jdbc:h2:mem:")
-                .append(name)
-                .append(createJdbcUrlParameterString(properties))
-                .toString();
-    }
-
     /**
      * Gives access to the current H2 JDBC connection. The connection returned by this method will suppress all "close" calls
      *
@@ -120,7 +81,7 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return a JDBC url string
      */
     public String getConnectionJdbcUrl() {
-        return createH2InMemoryCreateUrl(getInMemoryDatabaseName(), filterInitProperties(_jdbcUrlProperties));
+        return H2JdbcUrlFactory.buildFilteringInitProperties(getInMemoryDatabaseName(), _jdbcUrlProperties);
     }
 
     /**
@@ -129,7 +90,7 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return a JDBC URL string
      */
     private String generateJdbcUrl() {
-        return createH2InMemoryCreateUrl(getInMemoryDatabaseName(), _jdbcUrlProperties);
+        return H2JdbcUrlFactory.buildWithNameAndProperties(getInMemoryDatabaseName(), _jdbcUrlProperties);
     }
 
     private String getInMemoryDatabaseName() {
