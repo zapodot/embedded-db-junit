@@ -19,6 +19,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
+* version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
 * version 0.3: updated all dependencies as well as some changes to the internal implementation
 * version 0.2: added datasource() for getting an embedded DataSource and suppressing close() call to the connection
 * version 0.1: first release
@@ -31,13 +32,13 @@ Java 7 or higher is required.
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.3"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.4"
 ```
 
 ### Add to Junit test
@@ -78,6 +79,20 @@ public void testUsingSpringJdbc() throws Exception {
     assertEquals(customerName, jdbcOperation.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
 
 }
+
+@Test
+public void testUsingConnectionUrl() throws Exception {
+
+    try(final Connection connection = DriverManager.getConnection(embeddedDatabaseRule.getConnectionJdbcUrl())) {
+        try(final Statement statement = connection.createStatement()) {
+            try (final ResultSet resultSet = statement.executeQuery("SELECT * from CUSTOMER")) {
+                assertTrue(resultSet.next());
+            }
+        }
+    }
+
+}
+
 ```
 
 #### Multiple data sources in the same test class
