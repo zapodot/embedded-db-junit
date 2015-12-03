@@ -95,7 +95,8 @@ public void testUsingConnectionUrl() throws Exception {
 }
 
 ```
-### Read initial SQL from a file resource (v >= 0.5)
+
+#### Read initial SQL from a file resource (v >= 0.5)
 ```java
 @Rule
 public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
