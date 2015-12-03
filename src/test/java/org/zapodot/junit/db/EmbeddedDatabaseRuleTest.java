@@ -17,11 +17,9 @@ public class EmbeddedDatabaseRuleTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testInitialSqlNull() throws Exception {
-        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withInitialSql(null).build();
-
-        assertEquals("jdbc:h2:mem:" + TEST_NAME, embeddedDatabaseRule.getConnectionJdbcUrl());
+        EmbeddedDatabaseRule.builder().withName(TEST_NAME).withInitialSql(null);
     }
 
     @Test
@@ -52,5 +50,10 @@ public class EmbeddedDatabaseRuleTest {
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withProperty("MODE", "ORACLE").build();
         assertEquals("jdbc:h2:mem:test;MODE=ORACLE", embeddedDatabaseRule.getConnectionJdbcUrl());
 
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInitResourcesNull() throws Exception {
+        EmbeddedDatabaseRule.builder().withInitialSqlFromResource(null);
     }
 }

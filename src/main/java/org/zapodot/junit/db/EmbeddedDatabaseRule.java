@@ -1,5 +1,6 @@
 package org.zapodot.junit.db;
 
+import org.h2.util.StringUtils;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -161,8 +162,22 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         public Builder withInitialSql(final String sql) {
-
+            if(sql == null) {
+                throw new IllegalArgumentException("The value of the \"sql\" argument can not be null");
+            }
             return withProperty(PROP_INIT_SQL, sql);
+        }
+
+        public Builder withInitialSqlFromResource(final String resource) {
+
+            if(resource == null) {
+                throw new IllegalArgumentException("The value of the \"resource\" argument can not be null");
+            }
+            return withProperty(PROP_INIT_SQL, String.format("RUNSCRIPT FROM '%s';", escapeSpecialChars(resource)));
+        }
+
+        private String escapeSpecialChars(final String absolutePath) {
+            return StringUtils.replaceAll(absolutePath, "\\", "/");
         }
 
         public Builder withMode(final String mode) {

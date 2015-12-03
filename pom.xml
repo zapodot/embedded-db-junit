@@ -12,10 +12,10 @@
         <h2.version>1.4.190</h2.version>
         <rxjava-jdbc.version>0.6.8</rxjava-jdbc.version>
         <slf4j.version>1.7.13</slf4j.version>
-        <byte-buddy.version>0.7.1</byte-buddy.version>
+        <byte-buddy.version>0.7.4</byte-buddy.version>
         <spring-jdbc.version>4.2.3.RELEASE</spring-jdbc.version>
         <mockito.version>1.10.19</mockito.version>
-        <jdbi.version>2.63.1</jdbi.version>
+        <jdbi.version>2.70</jdbi.version>
         <sql2o.version>1.5.4</sql2o.version>
         <maven-javadoc-plugin.version>2.10.2</maven-javadoc-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.5</nexus-staging-maven-plugin.version>
@@ -30,7 +30,7 @@
         <maven>3.2.0</maven>
     </prerequisites>
     <name>${project.artifactId}</name>
-    <description>Library that provides a JUnit rule tfor setting up unit test using an embedded in-memory database (H2)</description>
+    <description>Library that provides a JUnit rule for setting up unit test using an embedded in-memory database (H2)</description>
     <url>https://github.com/zapodot/embedded-db-junit</url>
     <dependencies>
         <dependency>
