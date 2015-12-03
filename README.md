@@ -19,6 +19,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
+* version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be read from file
 * version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
 * version 0.3: updated all dependencies as well as some changes to the internal implementation
 * version 0.2: added datasource() for getting an embedded DataSource and suppressing close() call to the connection
@@ -93,6 +94,28 @@ public void testUsingConnectionUrl() throws Exception {
 
 }
 
+```
+### Read initial SQL from a file resource (v >= 0.5)
+```java
+@Rule
+public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                       .withInitialSqlFromResource(
+                                                                               "classpath:initial.sql")
+                                                                       .build();
+
+@Test
+public void testWithInitialSQL() throws Exception {
+    try (final Connection connection = embeddedDatabaseRule.getConnection()) {
+
+        try (final Statement statement = connection.createStatement()) {
+            try (final ResultSet resultSet = statement.executeQuery("SELECT * from PEOPLE")) {
+                assertTrue(resultSet.next());
+            }
+        }
+
+    }
+
+}
 ```
 
 #### Multiple data sources in the same test class
