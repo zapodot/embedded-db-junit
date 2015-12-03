@@ -7,6 +7,7 @@ import org.junit.runners.model.Statement;
 import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
 import org.zapodot.junit.db.internal.EmbeddedDataSource;
 import org.zapodot.junit.db.internal.H2JdbcUrlFactory;
+import org.zapodot.junit.db.plugin.InitializationPlugin;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -30,20 +31,22 @@ public class EmbeddedDatabaseRule implements TestRule {
     private String _testName;
 
     private final Map<String, String> _jdbcUrlProperties;
+    private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins;
     private Connection connection;
 
     /**
      * Standard constructor that is suitable if you don't need to do anything special
      */
     public EmbeddedDatabaseRule() {
-        this(true, null, null);
+        this(true, null, null, null);
     }
 
 
-    private EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties) {
+    private EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties, final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins) {
         this.autoCommit = autoCommit;
         this._predefinedName = name;
         this._jdbcUrlProperties = jdbcUrlProperties == null ? Collections.<String, String>emptyMap() : jdbcUrlProperties;
+        this.initializationPlugins = initializationPlugins == null ? Collections.<Class<? extends InitializationPlugin>, InitializationPlugin>emptyMap() : initializationPlugins;
     }
 
     /**
@@ -131,6 +134,9 @@ public class EmbeddedDatabaseRule implements TestRule {
         _testName = name;
         connection = DriverManager.getConnection(generateJdbcUrl());
         connection.setAutoCommit(isAutoCommit());
+        for(final Map.Entry<Class<? extends InitializationPlugin>, InitializationPlugin> entry : initializationPlugins.entrySet()) {
+            entry.getValue().connectionMade(name, connection);
+        }
     }
 
     /**
@@ -139,6 +145,8 @@ public class EmbeddedDatabaseRule implements TestRule {
     public static class Builder {
 
         private final Map<String, String> properties = new LinkedHashMap<>();
+
+        private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> plugins = new LinkedHashMap<>();
 
         private String name;
 
@@ -185,6 +193,13 @@ public class EmbeddedDatabaseRule implements TestRule {
             return withProperty(PROP_MODE, mode);
         }
 
+        public <P extends InitializationPlugin> Builder withPlugin(final P plugin) {
+            if(plugin != null) {
+                plugins.put(plugin.getClass(), plugin);
+            }
+            return this;
+        }
+
         public Builder withProperty(final String property, final String value) {
 
             if (property != null && value != null) {
@@ -203,7 +218,7 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         public EmbeddedDatabaseRule build() {
-            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap());
+            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap(), plugins);
         }
     }
 
