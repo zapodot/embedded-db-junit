@@ -33,13 +33,13 @@ Java 7 or higher is required.
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.4"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.5"
 ```
 
 ### Add to Junit test
