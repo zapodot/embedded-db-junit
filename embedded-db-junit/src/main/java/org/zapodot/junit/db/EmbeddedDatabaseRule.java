@@ -185,12 +185,23 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         private String escapeSpecialChars(final String absolutePath) {
+
             return StringUtils.replaceAll(absolutePath, "\\", "/");
         }
 
         public Builder withMode(final String mode) {
-
+            if(mode == null) {
+                throw new IllegalArgumentException("The \"mode\" argument can not be null");
+            }
             return withProperty(PROP_MODE, mode);
+        }
+
+        public Builder withMode(final CompatibilityMode compatibilityMode) {
+
+            if(compatibilityMode == null) {
+                throw new IllegalArgumentException("The \"compatibilityMode\" argument can not be null");
+            }
+            return withMode(compatibilityMode.name());
         }
 
         public <P extends InitializationPlugin> Builder withPlugin(final P plugin) {
@@ -220,6 +231,10 @@ public class EmbeddedDatabaseRule implements TestRule {
         public EmbeddedDatabaseRule build() {
             return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap(), plugins);
         }
+    }
+
+    public enum CompatibilityMode {
+         REGULAR, DB2, Derby, HSQLDB, MSSQLServer, MySQL, Oracle, PostgreSQL;
     }
 
 

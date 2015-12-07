@@ -9,9 +9,9 @@ public class EmbeddedDatabaseRuleTest {
 
     public static final String TEST_NAME = "test";
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testFilterNullProperties() throws Exception {
-        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withMode(null).build();
+        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withMode((String) null).build();
 
         assertEquals("jdbc:h2:mem:test", embeddedDatabaseRule.getConnectionJdbcUrl());
 
