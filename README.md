@@ -118,6 +118,7 @@ public void testWithInitialSQL() throws Exception {
 
 }
 ```
+In the example above a "classpath:" URI has been used to specify the location of the SQL file. All URIs that are supported by [H2's Pluggable File System](http://www.h2database.com/html/advanced.html#file_system) is supported. 
 
 #### Multiple data sources in the same test class
 If you need more than one database instance in your test class, you should name them using the "withName" construct.
