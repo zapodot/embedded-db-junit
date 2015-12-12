@@ -16,7 +16,7 @@ public class EmbeddedDatabaseRuleWithPluginTest {
     private static AssertPlugin assertPlugin = new AssertPlugin();
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withPlugin(assertPlugin).build();
+    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().initializedByPlugin(assertPlugin).build();
 
     private static class AssertPlugin implements InitializationPlugin {
 

@@ -146,7 +146,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
         private final Map<String, String> properties = new LinkedHashMap<>();
 
-        private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> plugins = new LinkedHashMap<>();
+        private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins = new LinkedHashMap<>();
 
         private String name;
 
@@ -204,9 +204,9 @@ public class EmbeddedDatabaseRule implements TestRule {
             return withMode(compatibilityMode.name());
         }
 
-        public <P extends InitializationPlugin> Builder withPlugin(final P plugin) {
+        public <P extends InitializationPlugin> Builder initializedByPlugin(final P plugin) {
             if(plugin != null) {
-                plugins.put(plugin.getClass(), plugin);
+                initializationPlugins.put(plugin.getClass(), plugin);
             }
             return this;
         }
@@ -229,7 +229,7 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         public EmbeddedDatabaseRule build() {
-            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap(), plugins);
+            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap(), initializationPlugins);
         }
     }
 
