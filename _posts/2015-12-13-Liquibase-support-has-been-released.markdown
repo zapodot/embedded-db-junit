@@ -12,17 +12,17 @@ The brand new 0.6 release of the [Embedded DB JUnit Rule](https://github.com/zap
 ## A new initialization plugin API
 You can now implement custom initialization code by implementing the new InitializationPlugin interface:
 
-```java
+{% highlight java %}
 public interface InitializationPlugin {
 
     void connectionMade(final String name, final Connection connection);
 }
-```
+{% endhighlight %}
 
 ## Liquibase support
 To initiate the embedded in-memory H2 database created by the @Rule, add the plugin to the @Rule initialization using the fluent Builder API:
 
-```java
+{% highlight java %}
 @Rule
 public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
         .builder()
@@ -32,7 +32,7 @@ public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
                 .addDatabaseNameToContext()
                 .build())
         .build();
-```
+{% endhighlight %}
 
 ## Links
 * [How-to add the Liquibase plugin to your project](https://github.com/zapodot/embedded-db-junit/tree/master/embedded-db-junit-liquibase)
