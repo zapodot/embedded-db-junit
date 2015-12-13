@@ -32,4 +32,7 @@ public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
 ```
 
 The fluent builder API contains numerous methods that let you control various parameters
-that are provided to L
+that are provided to Liquibase.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/embedded-db-junit-liquibase/README.md)](https://github.com/igrigorik/ga-beacon)
+
