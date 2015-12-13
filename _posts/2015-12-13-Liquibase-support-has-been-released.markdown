@@ -29,7 +29,6 @@ public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
         .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
         .initializedByPlugin(LiquibaseInitializer.builder()
                 .withChangelogResource("example-changelog.sql")
-                .addDatabaseNameToContext()
                 .build())
         .build();
 {% endhighlight %}
