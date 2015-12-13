@@ -109,6 +109,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>embedded-db-junit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -233,5 +238,6 @@
     </build>
     <modules>
         <module>embedded-db-junit</module>
+        <module>embedded-db-junit-liquibase</module>
     </modules>
 </project>

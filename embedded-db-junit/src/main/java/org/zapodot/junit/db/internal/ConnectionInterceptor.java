@@ -28,6 +28,14 @@ public class ConnectionInterceptor {
     public static Object intercept(@Origin(cache = true) Method method,
                                    @This ConnectionProxy delegator,
                                    @AllArguments Object[] arguments) throws Exception {
-        return method.invoke(delegator.getDelegatedConnection(), arguments);
+        try {
+            return method.invoke(delegator.getDelegatedConnection(), arguments);
+        } catch (Exception e) {
+            if(e.getCause() instanceof Exception) {
+                throw (Exception) e.getCause();
+            } else {
+                throw e;
+            }
+        }
     }
 }
