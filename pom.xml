@@ -205,6 +205,7 @@
                         <encoding>UTF-8</encoding>
                         <links>
                             <link>http://junit.org/javadoc/latest/</link>
+                            <link>http://docs.oracle.com/javase/7/docs/api/</link>
                         </links>
                         <locale>en</locale>
                         <keywords>true</keywords>
