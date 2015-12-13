@@ -32,6 +32,19 @@ public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
                 .build())
         .build();
 {% endhighlight %}
+You can then get a DataSource or Connection from the JUnit rule to be used in your test
+{% highlight java %}
+@Test
+public void testCanConnect() throws Exception {
+
+    try(final Connection connection = embeddedDatabaseRule.getConnection()) {
+        // test code
+
+    }
+
+}
+{% endhighlight %}
+
 
 ## Links
 * [How-to add the Liquibase plugin to your project](https://github.com/zapodot/embedded-db-junit/tree/master/embedded-db-junit-liquibase)
