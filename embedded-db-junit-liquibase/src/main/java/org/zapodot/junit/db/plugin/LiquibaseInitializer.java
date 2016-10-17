@@ -3,6 +3,7 @@ package org.zapodot.junit.db.plugin;
 import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
+import liquibase.database.core.H2Database;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -10,6 +11,7 @@ import liquibase.resource.ResourceAccessor;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
     private final ResourceAccessor resourceAccessor;
     private final Integer changesLimit;
     private final boolean addDbNameToContext;
+    private final String defaultSchemaName;
 
     public static class Builder {
         private String databaseChangeLog;
@@ -35,6 +38,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
         private List<String> labels = new LinkedList<>();
         private Integer changesToApply;
         private boolean addNameToContext = false;
+        private String defaultSchemaName;
 
         public Builder() {
         }
@@ -100,6 +104,14 @@ public class LiquibaseInitializer implements InitializationPlugin {
             return this;
         }
 
+        /**
+         * Overrides default H2 schema name (which is PUBLIC) with given one. Will handle schema
+         * creation (if not exists) on startup.
+         */
+        public Builder withDefaultSchemaName(String schemaName) {
+            this.defaultSchemaName = schemaName;
+            return this;
+        }
 
         /**
          * Builds the LiquibaseInitializer based on the settings provided earlier by calls to the various builder methods
@@ -117,7 +129,9 @@ public class LiquibaseInitializer implements InitializationPlugin {
             } catch (IOException e) {
                 throw new IllegalArgumentException(String.format("An IO exception occurred while loading changelog from resource \"%s\"", databaseChangeLog), e);
             }
-            return new LiquibaseInitializer(createContexts(), createLabels(), databaseChangeLog, resourceAccessor, changesToApply, addNameToContext);
+            return new LiquibaseInitializer(createContexts(), createLabels(), databaseChangeLog,
+                                            resourceAccessor, changesToApply, addNameToContext,
+                                            defaultSchemaName);
         }
 
         private LabelExpression createLabels() {
@@ -135,17 +149,29 @@ public class LiquibaseInitializer implements InitializationPlugin {
                                  final String changeLog,
                                  final ResourceAccessor resourceAccessor,
                                  final Integer changesLimit,
-                                 final boolean addDbNameToContext) {
+                                 final boolean addDbNameToContext,
+                                 final String defaultSchemaName) {
         this.contexts = contexts;
         this.labelExpression = labelExpression;
         this.changeLog = changeLog;
         this.resourceAccessor = resourceAccessor;
         this.changesLimit = changesLimit;
         this.addDbNameToContext = addDbNameToContext;
+        this.defaultSchemaName = defaultSchemaName;
     }
 
     @Override
     public void connectionMade(final String name, final Connection connection) {
+        if (defaultSchemaName != null) {
+            try {
+                connection.prepareStatement(
+                    String.format("CREATE SCHEMA IF NOT EXISTS %s", defaultSchemaName))
+                    .execute();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         final Liquibase liquibase = createLiquibase(connection);
         if (addDbNameToContext) {
             contexts.add(name);
@@ -163,7 +189,13 @@ public class LiquibaseInitializer implements InitializationPlugin {
 
     private Liquibase createLiquibase(final Connection connection) {
         try {
-            return new Liquibase(changeLog, resourceAccessor, new JdbcConnection(connection));
+            JdbcConnection conn = new JdbcConnection(connection);
+            H2Database h2Database = new H2Database();
+            h2Database.setConnection(conn);
+            if (defaultSchemaName != null) {
+                h2Database.setDefaultSchemaName(defaultSchemaName);
+            }
+            return new Liquibase(changeLog, resourceAccessor, h2Database);
         } catch (LiquibaseException e) {
             throw new RuntimeException("Could not initialize Liquibase", e);
         }
