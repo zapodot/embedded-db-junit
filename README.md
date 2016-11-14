@@ -20,6 +20,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
+* version 0.7: merged pull request #3 which created by @tmszdmsk. Thx! 
 * version 0.6: created InitializationPlugin API with the first implementation being the [LiquibaseInitializer](./embedded-db-junit-liquibase/)
 * version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be [read from file](#read-initial-sql-from-a-file-resource-v--05)
 * version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
@@ -35,13 +36,13 @@ Java 7 or higher is required.
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.6</version>
+    <version>0.7</version>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.6"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.7"
 ```
 
 ### Add to Junit test
