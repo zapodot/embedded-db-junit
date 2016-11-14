@@ -20,7 +20,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
-* version 0.7: merged pull request #3 which created by @tmszdmsk. Thx! 
+* version 0.7: merged pull request #3 which created by @tmszdmsk allowing the developer to specify a schema for Liquibase. Thx! 
 * version 0.6: created InitializationPlugin API with the first implementation being the [LiquibaseInitializer](./embedded-db-junit-liquibase/)
 * version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be [read from file](#read-initial-sql-from-a-file-resource-v--05)
 * version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
