@@ -3,6 +3,7 @@ package org.zapodot.junit.db.internal;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -63,7 +64,7 @@ public class CloseSuppressedConnectionTest {
     @Test
     public void testSetTypeMap() throws Exception {
         connection.setTypeMap(new HashMap<String, Class<?>>());
-        verify(underlyingConnection).setTypeMap(anyMap());
+        verify(underlyingConnection).setTypeMap(ArgumentMatchers.<String, Class<?>>anyMap());
     }
 
     @Test
