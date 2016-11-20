@@ -28,7 +28,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <liquibase.version>3.4.2</liquibase.version>
+        <liquibase.version>3.5.3</liquibase.version>
     </properties>
     <build>
         <plugins>
