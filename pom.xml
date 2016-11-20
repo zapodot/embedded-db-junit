@@ -7,7 +7,7 @@
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <properties>
         <junit.version>4.12</junit.version>
         <h2.version>1.4.193</h2.version>
