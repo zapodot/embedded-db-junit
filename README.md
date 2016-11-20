@@ -20,8 +20,8 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
-* version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when using the rule as 
-a method-based @Rule will issue a warning. Thx to @victornoel for valuable input
+* version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked 
+as a method-based @Rule will issue a warning. Thx to @victornoel for valuable input
 * version 0.7: merged pull request #3 which created by @tmszdmsk allowing the developer to specify a schema for Liquibase. Thx! 
 * version 0.6: created InitializationPlugin API with the first implementation being the [LiquibaseInitializer](./embedded-db-junit-liquibase/)
 * version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be [read from file](#read-initial-sql-from-a-file-resource-v--05)
