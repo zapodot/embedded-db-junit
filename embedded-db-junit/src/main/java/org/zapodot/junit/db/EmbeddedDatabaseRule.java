@@ -4,6 +4,8 @@ import org.h2.util.StringUtils;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
 import org.zapodot.junit.db.internal.EmbeddedDataSource;
 import org.zapodot.junit.db.internal.H2JdbcUrlFactory;
@@ -29,6 +31,7 @@ public class EmbeddedDatabaseRule implements TestRule {
     private final boolean autoCommit;
     private final String _predefinedName;
     private String _testName;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedDatabaseRule.class);
 
     private final Map<String, String> _jdbcUrlProperties;
     private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins;
@@ -103,7 +106,16 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     @Override
     public Statement apply(final Statement base, final Description description) {
+        warnIfNameIsPredifinedAndTheRuleIsMethodBased(description);
         return statement(base, _predefinedName != null ? _predefinedName : extractNameFromDescription(description));
+    }
+
+    private void warnIfNameIsPredifinedAndTheRuleIsMethodBased(final Description description) {
+        if(description.getMethodName() != null && _predefinedName != null) {
+            LOGGER.warn("You have set a name for your datasource and are running the EmbeddedDatabaseRule as a method @Rule. " +
+                    "This may lead to the datasource not being reset between tests especially of your tests uses runs with " +
+                    "multiple threads");
+        }
     }
 
     private String extractNameFromDescription(Description description) {
