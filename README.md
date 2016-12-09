@@ -90,10 +90,10 @@ public void testUsingSpringJdbc() throws Exception {
 public void testUsingConnectionUrl() throws Exception {
 
     try(final Connection connection = DriverManager.getConnection(embeddedDatabaseRule.getConnectionJdbcUrl())) {
-        try(final Statement statement = connection.createStatement()) {
-            try (final ResultSet resultSet = statement.executeQuery("SELECT * from CUSTOMER")) {
-                assertTrue(resultSet.next());
-            }
+        try(final Statement statement = connection.createStatement();
+            final ResultSet resultSet = statement.executeQuery("SELECT * from CUSTOMER")
+        ) {
+            assertTrue(resultSet.next());
         }
     }
 
@@ -113,10 +113,10 @@ public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder(
 public void testWithInitialSQL() throws Exception {
     try (final Connection connection = embeddedDatabaseRule.getConnection()) {
 
-        try (final Statement statement = connection.createStatement()) {
-            try (final ResultSet resultSet = statement.executeQuery("SELECT * from PEOPLE")) {
-                assertTrue(resultSet.next());
-            }
+        try (final Statement statement = connection.createStatement();
+             final ResultSet resultSet = statement.executeQuery("SELECT * from PEOPLE")) {
+             
+             assertTrue(resultSet.next());
         }
 
     }
