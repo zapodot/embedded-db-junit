@@ -1,0 +1,2 @@
+# Illegal SQL
+FOO BAR;

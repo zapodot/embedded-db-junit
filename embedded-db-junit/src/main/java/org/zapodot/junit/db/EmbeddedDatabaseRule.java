@@ -1,5 +1,6 @@
 package org.zapodot.junit.db;
 
+import org.h2.jdbc.JdbcSQLException;
 import org.h2.util.StringUtils;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -144,7 +145,15 @@ public class EmbeddedDatabaseRule implements TestRule {
     private void setupConnection(final String name) throws SQLException {
 
         _testName = name;
-        connection = DriverManager.getConnection(generateJdbcUrl());
+        final String url = generateJdbcUrl();
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (JdbcSQLException e) {
+            if(url.contains("RUNSCRIPT")) {
+                LOGGER.error("Failed to initialize the H2 database. Please check your init script for errors", e);
+            }
+            throw e;
+        }
         connection.setAutoCommit(isAutoCommit());
         for(final Map.Entry<Class<? extends InitializationPlugin>, InitializationPlugin> entry : initializationPlugins.entrySet()) {
             entry.getValue().connectionMade(name, connection);
