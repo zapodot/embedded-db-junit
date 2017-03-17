@@ -21,9 +21,10 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
-* version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked 
+* version 0.9: improved logging as per request by @Gaibhne. Also updated H2 and SLF4J dependencies
+* version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked
 as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/victornoel) for valuable input
-* version 0.7: merged pull request #3 which created by [@tmszdmsk](//github.com/tmszdmsk) allowing the developer to specify a schema for Liquibase. Thx! 
+* version 0.7: merged pull request #3 which created by [@tmszdmsk](//github.com/tmszdmsk) allowing the developer to specify a schema for Liquibase. Thx!
 * version 0.6: created InitializationPlugin API with the first implementation being the [LiquibaseInitializer](./embedded-db-junit-liquibase/)
 * version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be [read from file](#read-initial-sql-from-a-file-resource-v--05)
 * version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
@@ -39,13 +40,13 @@ as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.8"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "0.9"
 ```
 
 ### Add to Junit test
@@ -116,7 +117,7 @@ public void testWithInitialSQL() throws Exception {
 
         try (final Statement statement = connection.createStatement();
              final ResultSet resultSet = statement.executeQuery("SELECT * from PEOPLE")) {
-             
+
              assertTrue(resultSet.next());
         }
 
@@ -124,7 +125,7 @@ public void testWithInitialSQL() throws Exception {
 
 }
 ```
-In the example above a "classpath:" URI has been used to specify the location of the SQL file. All URIs that are supported by [H2's Pluggable File System](http://www.h2database.com/html/advanced.html#file_system) is supported. 
+In the example above a "classpath:" URI has been used to specify the location of the SQL file. All URIs that are supported by [H2's Pluggable File System](http://www.h2database.com/html/advanced.html#file_system) is supported.
 
 #### Multiple data sources in the same test class
 If you need more than one database instance in your test class, you should name them using the "withName" construct.
