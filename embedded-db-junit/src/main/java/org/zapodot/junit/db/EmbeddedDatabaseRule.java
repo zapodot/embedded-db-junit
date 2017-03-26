@@ -156,7 +156,7 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
         connection.setAutoCommit(isAutoCommit());
         for(final Map.Entry<Class<? extends InitializationPlugin>, InitializationPlugin> entry : initializationPlugins.entrySet()) {
-            entry.getValue().connectionMade(name, connection);
+            entry.getValue().connectionMade(name, getConnection());
         }
     }
 
