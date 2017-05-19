@@ -21,7 +21,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
-* versopm 1.0-RC1: Fixed issue #8. InitializationPlugins will now be provided with a connection that will not be closed before the end of the test execution. Thanks to [@victornoel](//github.com/victornoel)
+* version 1.0-RC1: Fixed issue #8. InitializationPlugins will now be provided with a connection that will not be closed before the end of the test execution. Thanks to [@victornoel](//github.com/victornoel)
 * version 0.9: improved logging as per request by @Gaibhne. Also updated H2 and SLF4J dependencies
 * version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked
 as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/victornoel) for valuable input
