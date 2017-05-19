@@ -7,6 +7,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ConnectionInterceptorTest {
@@ -323,6 +325,20 @@ public class ConnectionInterceptorTest {
         verifyNoMoreInteractions(connection);
     }
 
+    @Test(expected = SQLException.class)
+    public void testInterceptWithException() throws Throwable {
+        when(connection.createStatement()).thenThrow(new SQLException("Some reason"));
+        doInterception(connection);
+
+    }
+
+    @Test(expected = InvocationTargetException.class)
+    public void testInterceptWithError() throws Throwable {
+        when(connection.createStatement()).thenThrow(new Error("Some Error"));
+        doInterception(connection);
+
+    }
+
     @Test
     public void testInstantiation() throws Exception {
         final Constructor<ConnectionInterceptor> constructor = ConnectionInterceptor.class.getDeclaredConstructor();
@@ -336,5 +352,22 @@ public class ConnectionInterceptorTest {
         final Constructor<ConnectionInterceptor> constructor = ConnectionInterceptor.class.getDeclaredConstructor();
         constructor.newInstance();
 
+    }
+
+    @Test
+    public void testClose() throws Exception {
+        ConnectionInterceptor.close();
+        assertTrue(true);
+    }
+
+    private void doInterception(final Connection connection) throws Throwable {
+        try {
+            final FrenchConnection frenchConnection = spy(new FrenchConnection(connection));
+            final Method createStatement = Connection.class.getMethod("createStatement");
+            ConnectionInterceptor.intercept(createStatement, frenchConnection, new Object[]{});
+        } finally {
+            verify(connection).createStatement();
+            verifyNoMoreInteractions(connection);
+        }
     }
 }
