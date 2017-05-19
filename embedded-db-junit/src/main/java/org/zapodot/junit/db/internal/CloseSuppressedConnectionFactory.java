@@ -18,20 +18,24 @@ import static net.bytebuddy.matcher.ElementMatchers.any;
  */
 public class CloseSuppressedConnectionFactory {
 
+    // Added to prevent instantiation
+    private CloseSuppressedConnectionFactory() {
+    }
+
     private final static Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
-            .method(any())
-            .intercept(MethodDelegation.to(
+                                                                                .method(any())
+                                                                                .intercept(MethodDelegation.to(
                     ConnectionInterceptor.class))
-            .defineField("delegatedConnection",
+                                                                                .defineField("delegatedConnection",
                     Connection.class,
                     Visibility.PRIVATE)
-            .implement(ConnectionProxy.class)
-            .intercept(FieldAccessor.ofBeanProperty())
-            .make()
-            .load(CloseSuppressedConnectionFactory.class
+                                                                                .implement(ConnectionProxy.class)
+                                                                                .intercept(FieldAccessor.ofBeanProperty())
+                                                                                .make()
+                                                                                .load(CloseSuppressedConnectionFactory.class
                             .getClassLoader(),
                     ClassLoadingStrategy.Default.WRAPPER)
-            .getLoaded();
+                                                                                .getLoaded();
 
     /**
      * Create a proxy that delegates to the provided Connection except for calls to "close()" which will be suppressed.
