@@ -43,12 +43,13 @@ as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
     <version>1.0-RC1</version>
+    <scope>test</scope>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.0-RC1"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.0-RC1" % "test"
 ```
 
 ### Add to Junit test
