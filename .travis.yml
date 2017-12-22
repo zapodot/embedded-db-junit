@@ -5,7 +5,6 @@ env:
   - secure: Biy/10UkYORxRqSxWYq3FCoOgi7SYjRmqyUDQzvNwihPRP+fazmHqYJIxFd9KCfaovBYAP4WdXJcVvTO2VLaLypuv4kCsPwlsgYL3i5gBpexUelAT+zpqclb4eSCw9qrFnhpVagzXi7/K5si7V+SHCdijGmbYf88uTuYLSPvOi8=
 language: java
 jdk:
-- oraclejdk7
 - openjdk7
 - oraclejdk8
 after_success:
