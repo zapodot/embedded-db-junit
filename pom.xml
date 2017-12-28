@@ -26,6 +26,8 @@
         <coveralls-maven-plugin.version>3.1.0</coveralls-maven-plugin.version>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <guava.version>23.6-jre</guava.version>
+        <flyway.version>5.0.3</flyway.version>
     </properties>
     <prerequisites>
         <maven>3.2.0</maven>
@@ -134,6 +136,12 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
@@ -240,5 +248,6 @@
     <modules>
         <module>embedded-db-junit</module>
         <module>embedded-db-junit-liquibase</module>
+        <module>embedded-db-flyway</module>
     </modules>
 </project>
