@@ -10,7 +10,6 @@
     <version>1.0.1-SNAPSHOT</version>
     <properties>
         <byte-buddy.version>1.6.14</byte-buddy.version>
-        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <flyway.version>5.0.3</flyway.version>
         <guava.version>23.6-jre</guava.version>
@@ -246,16 +245,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>${cobertura-maven-plugin.version}</version>
-                    <configuration>
-                        <format>xml</format>
-                        <maxmem>256m</maxmem>
-                        <aggregate>true</aggregate>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
