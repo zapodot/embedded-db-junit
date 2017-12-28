@@ -1,0 +1,72 @@
+---
+layout: post
+title:  "Version 1.0 released"
+date:   2017-12-28 17:00:00 CET
+categories: changelog release
+
+---
+The first final release of the [Embedded DB JUnit Rule](https://github.com/zapodot/embedded-db-junit) has been released. 
+It has proven to be a lightweigth tool for testing database logic by using an embedded H2 in-memory database. 
+
+## Usage
+
+### Add dependency
+Include the following in your pom:
+
+{% highlight xml %}
+<dependency>
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-db-junit</artifactId>
+    <version>1.0.0</version>
+    <scope>test</scope>
+</dependency>
+{% endhighlight %}
+
+If you are using SBT, add the following:
+
+{% highlight scala %}
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.0.0" % "test"
+{% endhighlight %}
+
+### Add the EmbeddedDatabaseRule to the test class:
+
+{% highlight java %}
+@Rule
+public EmbeddedDatabaseRule dbRule = EmbeddedDatabaseRule
+                                        .builder()
+                                        .withMode("ORACLE")
+                                        .withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
+                                                        + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')")
+                                        .build();
+                                        
+@Test
+public void testUsingConnectionUrl() throws Exception {
+
+    try(final Connection connection = DriverManager.getConnection(embeddedDatabaseRule.getConnectionJdbcUrl())) {
+        try(final Statement statement = connection.createStatement();
+            final ResultSet resultSet = statement.executeQuery("SELECT * from CUSTOMER")
+        ) {
+            assertTrue(resultSet.next());
+        }
+    }
+
+}                                        
+{% endhighlight %}
+
+## Support for testing Liquibase migrations
+Version 1.0 includes support for creating database structures using existing Liquibase changelogs. To set up in your test, use the LiquibaseInitializer.
+
+{% highlight java %}
+@Rule
+public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
+        .builder()
+        .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+        .initializedByPlugin(LiquibaseInitializer.builder()
+                .withChangelogResource("example-changelog.sql")
+                .build())
+        .build();
+{% endhighlight %}
+
+## Feedback
+Do you have any questions or suggestions, please [report an issue](https://github.com/zapodot/embedded-db-junit/issues) :-). 
+
