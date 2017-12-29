@@ -60,7 +60,7 @@ public class EmbeddedDatabaseRuleJdbiTest {
             }).first();
             assertEquals(1L, id.longValue());
 
-            final List<Employee> employeeList = handle.createQuery("SELECT * from EMPLOYEE").map(new ReflectionBeanMapper<Employee>(Employee.class)).list();
+            final List<Employee> employeeList = handle.createQuery("SELECT * from EMPLOYEE").map(new ReflectionBeanMapper<>(Employee.class)).list();
             assertEquals(1, employeeList.size());
 
             final Employee persistedEmployee = employeeList.iterator().next();
