@@ -4,7 +4,6 @@ import com.github.davidmoten.rx.jdbc.Database;
 import org.junit.Rule;
 import org.junit.Test;
 import rx.Observable;
-import rx.functions.Func2;
 
 import java.util.Date;
 

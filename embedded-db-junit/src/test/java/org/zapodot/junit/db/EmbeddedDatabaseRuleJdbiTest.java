@@ -2,11 +2,11 @@ package org.zapodot.junit.db;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.skife.jdbi.v2.*;
-import org.skife.jdbi.v2.tweak.ResultSetMapper;
+import org.skife.jdbi.v2.DBI;
+import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.ReflectionBeanMapper;
+import org.skife.jdbi.v2.Update;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
