@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class LiquibaseInitializerWithDbNameAddedToContextsTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
             .builder()
             .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
             .initializedByPlugin(LiquibaseInitializer.builder()

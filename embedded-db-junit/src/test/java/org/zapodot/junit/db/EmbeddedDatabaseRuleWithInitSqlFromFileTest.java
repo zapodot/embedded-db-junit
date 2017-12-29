@@ -15,10 +15,10 @@ import static org.junit.Assert.assertTrue;
 public class EmbeddedDatabaseRuleWithInitSqlFromFileTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-                                                                           .withInitialSqlFromResource(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                                 .withInitialSqlFromResource(
                                                                                    "classpath:initial.sql")
-                                                                           .build();
+                                                                                 .build();
 
     @Test
     public void testWithInitialSQL() throws Exception {

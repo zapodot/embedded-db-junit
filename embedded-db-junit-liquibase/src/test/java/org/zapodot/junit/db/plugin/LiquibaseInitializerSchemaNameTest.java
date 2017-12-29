@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class LiquibaseInitializerSchemaNameTest {
 
   @Rule
-  public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
+  public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
       .builder()
       .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
       .initializedByPlugin(LiquibaseInitializer.builder()

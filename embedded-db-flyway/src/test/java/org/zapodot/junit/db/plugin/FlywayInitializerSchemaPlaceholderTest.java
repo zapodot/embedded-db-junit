@@ -18,10 +18,10 @@ public class FlywayInitializerSchemaPlaceholderTest {
     public static final String INSTALLED_BY = "someone";
     public static final String HISTORY_TABLE = "schemahistory";
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-                                                                           .withMode(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                                 .withMode(
                                                                                    EmbeddedDatabaseRule.CompatibilityMode.Oracle)
-                                                                           .initializedByPlugin(
+                                                                                 .initializedByPlugin(
                                                                                    new FlywayInitializer.Builder()
                                                                                            .withSchemas(SCHEMA_NAME)
                                                                                            .withPlaceholders(

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class LiquibaseInitializerLabelTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
             .builder()
             .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
             .initializedByPlugin(LiquibaseInitializer.builder()

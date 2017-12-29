@@ -13,11 +13,11 @@ public class EmbeddedDatabaseRuleMultipleTest {
 
     // If you have more than one instance in your test class, you should name them explicitly
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
+    public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
             EmbeddedDatabaseRule.builder().withName("db1").withMode("MySQL").build();
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
+    public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
             EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
 
     @Test

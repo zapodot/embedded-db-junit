@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 public class EmbeddedDataSourceTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(
             "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); ").build();
     private DataSource dataSource;
 

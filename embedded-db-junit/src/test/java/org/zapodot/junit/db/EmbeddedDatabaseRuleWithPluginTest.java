@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class EmbeddedDatabaseRuleWithPluginTest {
 
-    private static AssertPlugin assertPlugin = new AssertPlugin();
+    private static final AssertPlugin assertPlugin = new AssertPlugin();
 
     @Rule
     public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().initializedByPlugin(assertPlugin).build();

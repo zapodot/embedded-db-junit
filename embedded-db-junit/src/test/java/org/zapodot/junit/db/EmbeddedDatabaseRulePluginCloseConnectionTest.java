@@ -26,7 +26,7 @@ public class EmbeddedDatabaseRulePluginCloseConnectionTest {
     }
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().initializedByPlugin(new InitDbPlugin()).build();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().initializedByPlugin(new InitDbPlugin()).build();
 
     @Test
     public void connectionShouldNotBeClosed() throws Exception {

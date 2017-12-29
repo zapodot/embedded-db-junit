@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 public class EmbeddedDatabaseRuleSimpleTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = new EmbeddedDatabaseRule();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = new EmbeddedDatabaseRule();
 
     @Test
     public void testCanConnect() throws Exception {

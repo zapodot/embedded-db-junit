@@ -25,10 +25,10 @@ import static org.junit.Assert.assertThat;
 public class EmbeddedDatabaseRulePredefinedNameTest {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-            .withName("predefined")
-            .withInitialSql("CREATE TABLE A (id INT PRIMARY KEY, NAME VARCHAR(255) NOT NULL)")
-            .build();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                                 .withName("predefined")
+                                                                                 .withInitialSql("CREATE TABLE A (id INT PRIMARY KEY, NAME VARCHAR(255) NOT NULL)")
+                                                                                 .build();
 
     @Test
     public void testA() throws Exception {

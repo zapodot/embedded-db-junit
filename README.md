@@ -56,7 +56,7 @@ libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.0.0" % "test"
 ### Add to Junit test
 ```java
 @Rule
-public EmbeddedDatabaseRule dbRule = EmbeddedDatabaseRule
+public final EmbeddedDatabaseRule dbRule = EmbeddedDatabaseRule
                                         .builder()
                                         .withMode("ORACLE")
                                         .withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
@@ -110,7 +110,7 @@ public void testUsingConnectionUrl() throws Exception {
 #### Read initial SQL from a file resource (v >= 0.5)
 ```java
 @Rule
-public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
                                                                        .withInitialSqlFromResource(
                                                                                "classpath:initial.sql")
                                                                        .build();
@@ -136,10 +136,10 @@ If you need more than one database instance in your test class, you should name 
 If not set the rule builder will generate the name using the name of the test class
 ```java
 @Rule
-public EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
-        EmbeddedDatabaseRule.builder().withName("db1").withMode("MySQL").build();
+public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
+        EmbeddedDatabaseRule.builder().withName("db1").withMode(CompatibilityMode.MySQL).build();
 
 @Rule
-public EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
-        EmbeddedDatabaseRule.builder().withName("db2").withMode("MSSQLServer").build();
+public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
+        EmbeddedDatabaseRule.builder().withName("db2").withMode(CompatibilityMode.MSSQLServer).build();
 ```

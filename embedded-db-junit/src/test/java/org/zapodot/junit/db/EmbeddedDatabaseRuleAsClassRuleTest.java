@@ -13,7 +13,7 @@ public class EmbeddedDatabaseRuleAsClassRuleTest {
 
 
     @ClassRule
-    public static EmbeddedDatabaseRule embeddedDatabaseClassRule = EmbeddedDatabaseRule.builder().withInitialSql(
+    public static final EmbeddedDatabaseRule embeddedDatabaseClassRule = EmbeddedDatabaseRule.builder().withInitialSql(
             "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
             + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
 

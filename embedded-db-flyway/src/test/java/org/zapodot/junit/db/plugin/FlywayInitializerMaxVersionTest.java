@@ -14,8 +14,8 @@ public class FlywayInitializerMaxVersionTest {
 
     public static final String INSTALLED_BY = "zapodot";
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-                                                                           .initializedByPlugin(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                                 .initializedByPlugin(
                                                                                    new FlywayInitializer.Builder()
                                                                                            .withLocations(
                                                                                                    "classpath:migrations/")

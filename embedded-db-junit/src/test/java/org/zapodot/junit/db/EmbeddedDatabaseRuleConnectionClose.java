@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class EmbeddedDatabaseRuleConnectionClose {
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql(
             "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
             + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
 

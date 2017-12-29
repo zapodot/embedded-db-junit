@@ -40,9 +40,9 @@ public class EmbeddedDatabaseRuleJdbiTest {
 
 
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-            .withInitialSql("CREATE TABLE EMPLOYEE(id IDENTITY PRIMARY KEY, firstName varchar(512) NOT NULL, lastName varchar(512) NOT NULL)")
-            .build();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
+                                                                                 .withInitialSql("CREATE TABLE EMPLOYEE(id IDENTITY PRIMARY KEY, firstName varchar(512) NOT NULL, lastName varchar(512) NOT NULL)")
+                                                                                 .build();
 
     @Test
     public void testJdbi() throws Exception {

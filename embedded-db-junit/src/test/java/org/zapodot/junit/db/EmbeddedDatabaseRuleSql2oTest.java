@@ -21,7 +21,7 @@ public class EmbeddedDatabaseRuleSql2oTest {
     }
 
     @Rule
-    public EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule
+    public final EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule
             .builder()
             .withInitialSql("CREATE TABLE ELEMENT(id IDENTITY PRIMARY KEY, name VARCHAR(512) NOT NULL)")
             .withoutAutoCommit()

@@ -13,7 +13,7 @@ public class EmbeddedDatabaseRuleUsingSpringTest {
 
     public static final String CUSTOMER_NAME = "John Doe";
     @Rule
-    public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(
             "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
             + "INSERT INTO CUSTOMER(id, name) VALUES (1, '" + CUSTOMER_NAME + "')").build();
 
