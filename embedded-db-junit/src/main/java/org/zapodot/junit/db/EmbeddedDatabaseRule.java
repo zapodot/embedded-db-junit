@@ -49,8 +49,8 @@ public class EmbeddedDatabaseRule implements TestRule {
     private EmbeddedDatabaseRule(final boolean autoCommit, final String name, final Map<String, String> jdbcUrlProperties, final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins) {
         this.autoCommit = autoCommit;
         this._predefinedName = name;
-        this._jdbcUrlProperties = jdbcUrlProperties == null ? Collections.<String, String>emptyMap() : jdbcUrlProperties;
-        this.initializationPlugins = initializationPlugins == null ? Collections.<Class<? extends InitializationPlugin>, InitializationPlugin>emptyMap() : initializationPlugins;
+        this._jdbcUrlProperties = jdbcUrlProperties == null ? Collections.emptyMap() : jdbcUrlProperties;
+        this.initializationPlugins = initializationPlugins == null ? Collections.emptyMap() : initializationPlugins;
     }
 
     /**

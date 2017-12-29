@@ -64,7 +64,7 @@ public class CloseSuppressedConnectionTest {
     @Test
     public void testSetTypeMap() throws Exception {
         connection.setTypeMap(new HashMap<>());
-        verify(underlyingConnection).setTypeMap(ArgumentMatchers.<String, Class<?>>anyMap());
+        verify(underlyingConnection).setTypeMap(ArgumentMatchers.anyMap());
     }
 
     @Test
