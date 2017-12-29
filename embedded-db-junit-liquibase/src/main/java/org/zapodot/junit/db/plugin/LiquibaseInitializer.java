@@ -180,7 +180,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
             if (changesLimit == null) {
                 liquibase.update(contexts, labelExpression);
             } else {
-                liquibase.update(changesLimit.intValue(), contexts, labelExpression);
+                liquibase.update(changesLimit, contexts, labelExpression);
             }
         } catch (LiquibaseException e) {
             throw new RuntimeException("An exception occurred while applying Liquibase changesets", e);
