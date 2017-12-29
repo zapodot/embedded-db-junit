@@ -77,7 +77,7 @@ public class H2JdbcUrlFactoryTest {
 
     /**
      * This test is added only to reach 100% test coverage
-     * @throws Exception
+     * @throws Exception if test fails
      */
     @Test
     public void testFakeInstantiation() throws Exception {
