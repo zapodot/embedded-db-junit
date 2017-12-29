@@ -52,12 +52,8 @@ public class EmbeddedDatabaseRuleJdbiTest {
             final Update statement = handle.createStatement("insert into EMPLOYEE (firstName, lastName) values (:firstName, :lastName)");
             statement.bind("firstName", initialEmployee.firstName);
             statement.bind("lastName", initialEmployee.lastName);
-            final Long id = statement.executeAndReturnGeneratedKeys(new ResultSetMapper<Long>(){
-                @Override
-                public Long map(final int i, final ResultSet resultSet, final StatementContext statementContext) throws SQLException {
-                    return resultSet.getLong(1);
-                }
-            }).first();
+            final Long id = statement.executeAndReturnGeneratedKeys(
+                    (i, resultSet, statementContext) -> resultSet.getLong(1)).first();
             assertEquals(1L, id.longValue());
 
             final List<Employee> employeeList = handle.createQuery("SELECT * from EMPLOYEE").map(new ReflectionBeanMapper<>(Employee.class)).list();

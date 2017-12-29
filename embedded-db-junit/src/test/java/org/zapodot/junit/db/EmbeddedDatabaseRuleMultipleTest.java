@@ -29,12 +29,7 @@ public class EmbeddedDatabaseRuleMultipleTest {
         final Observable<Date> dateMysql = mysql.select("select sysdate from dual").getAs(Date.class);
         final Observable<Date> dateMssql = mssqlServer.select("select sysdate from dual").getAs(Date.class);
 
-        assertTrue(Observable.zip(dateMysql, dateMssql, new Func2<Date, Date, Boolean>() {
-            @Override
-            public Boolean call(final Date date, final Date date2) {
-                return date != null && date2 != null;
-            }
-        }).toBlocking().single());
+        assertTrue(Observable.zip(dateMysql, dateMssql, (date, date2) -> date != null && date2 != null).toBlocking().single());
 
 
     }
