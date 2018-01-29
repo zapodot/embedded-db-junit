@@ -22,7 +22,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Java 7 or higher is required.
 
 ## Changelog
-* version 1.0.0: Updated some build plugins. Otherwise equal to v. 1.0-RC1
+* version 1.0.0: Updated some build plugins and added initial support for [Flyway](//github.com/flyway/flyway). Otherwise equal to v. 1.0-RC1
 * version 1.0-RC1: Fixed issue #8. InitializationPlugins will now be provided with a connection that will not be closed before the end of the test execution. Thanks to [@victornoel](//github.com/victornoel)
 * version 0.9: improved logging as per request by @Gaibhne. Also updated H2 and SLF4J dependencies
 * version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked
@@ -43,6 +43,27 @@ as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
+    <version>1.0.0</version>
+    <scope>test</scope>
+</dependency>
+```
+
+##### Liquibase plugin
+If you want to use the Liquibase plugin:
+```xml
+<dependency>
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-db-junit-liquibase</artifactId>
+    <version>1.0.0</version>
+    <scope>test</scope>
+</dependency>
+```
+##### Flyway plugin
+If you want to use the Flyway plugin:
+```xml
+<dependency>
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-db-flyway</artifactId>
     <version>1.0.0</version>
     <scope>test</scope>
 </dependency>
@@ -110,10 +131,11 @@ public void testUsingConnectionUrl() throws Exception {
 #### Read initial SQL from a file resource (v >= 0.5)
 ```java
 @Rule
-public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
-                                                                       .withInitialSqlFromResource(
-                                                                               "classpath:initial.sql")
-                                                                       .build();
+public final EmbeddedDatabaseRule embeddedDatabaseRule = 
+                                EmbeddedDatabaseRule.builder()
+                                                       .withInitialSqlFromResource(
+                                                               "classpath:initial.sql")
+                                                       .build();
 
 @Test
 public void testWithInitialSQL() throws Exception {
@@ -130,6 +152,55 @@ public void testWithInitialSQL() throws Exception {
 }
 ```
 In the example above a "classpath:" URI has been used to specify the location of the SQL file. All URIs that are supported by [H2's Pluggable File System](http://www.h2database.com/html/advanced.html#file_system) is supported.
+
+#### Use Liquibase changelog to populate the test database (v >= 0.6)
+```java
+@Rule
+public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
+        .builder()
+        .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+        .initializedByPlugin(LiquibaseInitializer.builder()
+                .withChangelogResource("example-changelog.sql")
+                .build())
+        .build();
+
+@Test
+public void testFindRolesInsertedByLiquibase() throws Exception {
+    try(final Connection connection = embeddedDatabaseRule.getConnection()) {
+        try(final PreparedStatement statement = connection.prepareStatement("Select * FROM ROLE r INNER JOIN USERROLE ur on r.ID = ur.ROLE_ID INNER JOIN USER u on ur.USER_ID = u.ID where u.NAME = ?")) {
+            statement.setString(1, "Ada");
+            try(final ResultSet resultSet = statement.executeQuery()) {
+                final List<String> roles = new LinkedList<>();
+                while(resultSet.next()) {
+                    roles.add(resultSet.getString("name"));
+                }
+                assertEquals(2, roles.size());
+            }
+        }
+    }
+
+}
+```
+#### Use Flyway to populate the test database (v >= 1.0)
+```java
+@Rule
+public final EmbeddedDatabaseRule embeddedDatabaseRule = 
+                EmbeddedDatabaseRule.builder()
+                                 .initializedByPlugin(
+                                   new FlywayInitializer.Builder()
+                                           .withLocations(
+                                                   "classpath:migrations/")
+                                           .build()).build();
+
+@Test
+public void checkMigrationsHasRun() throws Exception {
+    try (final Connection connection = embeddedDatabaseRule.getConnection();
+         final Statement statement = connection.createStatement();
+         final ResultSet resultSet = statement.executeQuery("SELECT * FROM USER")) {
+        assertTrue(resultSet.next());
+    }
+}
+```
 
 #### Multiple data sources in the same test class
 If you need more than one database instance in your test class, you should name them using the "withName" construct.
