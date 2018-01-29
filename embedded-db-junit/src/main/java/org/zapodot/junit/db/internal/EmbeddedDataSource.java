@@ -24,47 +24,47 @@ public class EmbeddedDataSource implements DataSource {
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         return CloseSuppressedConnectionFactory.createProxy(connection);
     }
 
     @Override
-    public Connection getConnection(final String username, final String password) throws SQLException {
+    public Connection getConnection(final String username, final String password) {
         return getConnection();
     }
 
     @Override
-    public PrintWriter getLogWriter() throws SQLException {
+    public PrintWriter getLogWriter() {
         return new PrintWriter(System.err);
     }
 
     @Override
-    public void setLogWriter(final PrintWriter out) throws SQLException {
+    public void setLogWriter(final PrintWriter out) {
 
     }
 
     @Override
-    public void setLoginTimeout(final int seconds) throws SQLException {
+    public void setLoginTimeout(final int seconds) {
 
     }
 
     @Override
-    public int getLoginTimeout() throws SQLException {
+    public int getLoginTimeout() {
         return 0;
     }
 
     @Override
-    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+    public Logger getParentLogger() {
         return Logger.getGlobal();
     }
 
     @Override
-    public <T> T unwrap(final Class<T> iface) throws SQLException {
+    public <T> T unwrap(final Class<T> iface) {
         throw new UnsupportedOperationException("unWrap(Class) is not supported for embedded datasource");
     }
 
     @Override
-    public boolean isWrapperFor(final Class<?> iface) throws SQLException {
+    public boolean isWrapperFor(final Class<?> iface) {
         return false;
     }
 }
