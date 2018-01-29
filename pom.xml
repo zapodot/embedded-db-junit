@@ -22,12 +22,12 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>2.10.2</maven-javadoc-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
-        <mockito.version>2.8.47</mockito.version>
+        <mockito.version>2.13.0</mockito.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <rxjava-jdbc.version>0.7.8</rxjava-jdbc.version>
+        <rxjava-jdbc.version>0.7.13</rxjava-jdbc.version>
         <slf4j.version>1.7.24</slf4j.version>
-        <spring-jdbc.version>4.2.3.RELEASE</spring-jdbc.version>
+        <spring-jdbc.version>5.0.2.RELEASE</spring-jdbc.version>
         <sql2o.version>1.6.0-RC3</sql2o.version>
     </properties>
     <prerequisites>
