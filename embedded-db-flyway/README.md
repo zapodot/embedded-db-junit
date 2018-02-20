@@ -1,6 +1,6 @@
 embedded-db-flyway
 =================
-Plugin for the [embedded-db-junit](../README.md) that allows for Flyway migrations to be run for the embedded database before the tests are executed.
+Plugin for the [embedded-db-junit](../README.md) that allows for [Flyway](//github.com/flyway/flyway) migrations to be run for the embedded database before the tests are executed.
 
 ## Usage instructions
 ### Add dependency
