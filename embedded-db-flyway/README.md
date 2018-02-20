@@ -35,3 +35,5 @@ public void checkMigrationsHasRun() throws Exception {
 }
 
 ```
+
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/embedded-db-flyway/README.md)](https://github.com/igrigorik/ga-beacon)
