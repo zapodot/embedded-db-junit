@@ -16,8 +16,8 @@ public class EmbeddedDatabaseRuleWithBuilderTest {
 
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql(
-            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
-            + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
+            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, illegalSqlFromResource VARCHAR(512)); "
+            + "INSERT INTO CUSTOMER(id, illegalSqlFromResource) VALUES (1, 'John Doe')").build();
 
     @Test
     public void testUsingRxJava() throws Exception {
@@ -25,7 +25,7 @@ public class EmbeddedDatabaseRuleWithBuilderTest {
         final Database database = Database.from(embeddedDatabaseRule.getConnection());
         assertNotNull(database.select("SELECT sysdate from DUAL").getAs(Date.class).toBlocking().single());
 
-        assertEquals("John Doe", database.select("select name from customer where id=1").getAs(String.class).toBlocking().single());
+        assertEquals("John Doe", database.select("select illegalSqlFromResource from customer where id=1").getAs(String.class).toBlocking().single());
     }
 
     @Test

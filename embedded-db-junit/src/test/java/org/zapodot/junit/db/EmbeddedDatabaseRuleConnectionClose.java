@@ -11,8 +11,8 @@ public class EmbeddedDatabaseRuleConnectionClose {
 
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withMode("ORACLE").withInitialSql(
-            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
-            + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')").build();
+            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, illegalSqlFromResource VARCHAR(512)); "
+            + "INSERT INTO CUSTOMER(id, illegalSqlFromResource) VALUES (1, 'John Doe')").build();
 
     @Test
     public void testBlah() throws Exception {

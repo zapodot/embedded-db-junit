@@ -1,6 +1,5 @@
 package org.zapodot.junit.db;
 
-import org.h2.jdbc.JdbcSQLException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -20,9 +19,11 @@ public class EmbeddedDatabaseRuleInitSqlFailedTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Test(expected = JdbcSQLException.class)
-    public void name() throws Throwable {
-        final EmbeddedDatabaseRule rule = EmbeddedDatabaseRule.builder().withInitialSqlFromResource("classpath:illegal.sql").build();
+    @Test(expected = IllegalStateException.class)
+    public void illegalSqlFromResource() throws Throwable {
+        final EmbeddedDatabaseRule rule = EmbeddedDatabaseRule.builder()
+                                                              .withInitialSqlFromResource("classpath:illegal.sql")
+                                                              .build();
         final Description testDescription = Description.createTestDescription(getClass(), "Test");
         final Statement testStatement = rule.apply(statement, testDescription);
         testStatement.evaluate();

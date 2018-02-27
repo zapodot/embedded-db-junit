@@ -35,7 +35,7 @@ public class LiquibaseInitializerWithContextExcludeTest {
                 try(final ResultSet resultSet = statement.executeQuery()) {
                     final List<String> roles = new LinkedList<>();
                     while(resultSet.next()) {
-                        roles.add(resultSet.getString("name"));
+                        roles.add(resultSet.getString("illegalSqlFromResource"));
                     }
                     assertEquals(0, roles.size());
                 }

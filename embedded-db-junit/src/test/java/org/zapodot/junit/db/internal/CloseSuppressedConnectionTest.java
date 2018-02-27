@@ -48,7 +48,7 @@ public class CloseSuppressedConnectionTest {
 
     @Test
     public void testSetClientInfo() throws Exception {
-        final String name = "name";
+        final String name = "illegalSqlFromResource";
         final String value = "value";
         connection.setClientInfo(name, value);
         verify(underlyingConnection).setClientInfo(eq(name), eq(value));

@@ -4,6 +4,7 @@ import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import javax.sql.DataSource;
@@ -14,16 +15,19 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class EmbeddedDataSourceTest {
 
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withInitialSql(
-            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); ").build();
+            "CREATE TABLE Customer(id INTEGER PRIMARY KEY, illegalSqlFromResource VARCHAR(512)); ").build();
     private DataSource dataSource;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         dataSource = embeddedDatabaseRule.getDataSource();
 
     }
@@ -44,6 +48,31 @@ public class EmbeddedDataSourceTest {
         assertNotNull(dataSource.getLogWriter());
     }
 
+    @Test
+    public void testGetLog() throws Exception {
+
+        try(final PrintWriter printWriter = dataSource.getLogWriter()) {
+            printWriter.write("Test", 0, 4);
+            assertNotNull(printWriter);
+            printWriter.flush();
+        }
+    }
+
+    @Test
+    public void slf4jInfoWriter() {
+        org.slf4j.Logger logger = Mockito.spy(org.slf4j.Logger.class);
+        final EmbeddedDataSource.Slf4jInfoWriter slf4jInfoWriter = new EmbeddedDataSource.Slf4jInfoWriter(logger);
+        final char[] charArray = "test".toCharArray();
+        slf4jInfoWriter.write((char[]) null, 0, 0);
+        slf4jInfoWriter.write(charArray, 0, charArray.length);
+        verify(logger).info(anyString());
+        verifyNoMoreInteractions(logger);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void nullSlf4jInfoWritter() {
+        new EmbeddedDataSource.Slf4jInfoWriter(null);
+    }
 
     @Test
     public void testSetLoginTimeout() throws Exception {

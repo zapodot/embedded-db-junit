@@ -30,7 +30,7 @@ public class EmbeddedDatabaseRuleSql2oTest {
     @Test
     public void testUsingSql2oWithTransaction() throws Exception {
         final Sql2o sql2o = new Sql2o(databaseRule.getDataSource());
-        final String elementName = "element name";
+        final String elementName = "element illegalSqlFromResource";
         try (final Connection transaction = sql2o.beginTransaction()) {
             final Long id = transaction
                     .createQuery("INSERT INTO ELEMENT(name) values (:name)")
