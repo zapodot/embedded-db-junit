@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
     <properties>
-        <byte-buddy.version>1.7.9</byte-buddy.version>
+        <byte-buddy.version>1.7.10</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <flyway.version>5.0.7</flyway.version>
         <guava.version>24.0-jre</guava.version>
@@ -22,7 +22,7 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>2.10.2</maven-javadoc-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
-        <mockito.version>2.13.0</mockito.version>
+        <mockito.version>2.15.0</mockito.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rxjava-jdbc.version>0.7.14</rxjava-jdbc.version>
