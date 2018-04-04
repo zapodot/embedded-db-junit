@@ -2,7 +2,7 @@ embedded-db-junit
 =================
 
 [![Build Status](https://travis-ci.org/zapodot/embedded-db-junit.svg)](https://travis-ci.org/zapodot/embedded-db-junit)
-[![Coverage Status](https://img.shields.io/coveralls/zapodot/embedded-db-junit.svg)](https://coveralls.io/r/zapodot/embedded-db-junit)
+[![Coverage Status](https://coveralls.io/repos/github/zapodot/embedded-db-junit/badge.svg?branch=master)](https://coveralls.io/github/zapodot/embedded-db-junit?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit)
 [![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/zapodot/embedded-db-junit/blob/master/LICENSE)
