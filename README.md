@@ -49,7 +49,7 @@ as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/
 ```
 
 ##### Liquibase plugin
-If you want to use the Liquibase plugin:
+If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/master/embedded-db-junit-liquibase) plugin:
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
@@ -59,7 +59,7 @@ If you want to use the Liquibase plugin:
 </dependency>
 ```
 ##### Flyway plugin
-If you want to use the Flyway plugin:
+If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/master/embedded-db-flyway) plugin:
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
