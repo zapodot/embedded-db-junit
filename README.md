@@ -4,7 +4,6 @@ embedded-db-junit
 [![Build Status](https://travis-ci.org/zapodot/embedded-db-junit.svg)](https://travis-ci.org/zapodot/embedded-db-junit)
 [![Coverage Status](https://coveralls.io/repos/github/zapodot/embedded-db-junit/badge.svg?branch=master)](https://coveralls.io/github/zapodot/embedded-db-junit?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zapodot/embedded-db-junit.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.zapodot%22%20AND%20a%3A%22embedded-db-junit%22)
-[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/zapodot/embedded-db-junit/blob/master/LICENSE)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/zapodot/embedded-db-junit.svg)](https://libraries.io/github/zapodot/embedded-db-junit)
 [![Open Source Helpers](https://www.codetriage.com/zapodot/embedded-db-junit/badges/users.svg)](https://www.codetriage.com/zapodot/embedded-db-junit)
@@ -215,3 +214,4 @@ public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
 public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
         EmbeddedDatabaseRule.builder().withName("db2").withMode(CompatibilityMode.MSSQLServer).build();
 ```
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
