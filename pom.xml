@@ -9,25 +9,25 @@
     <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
     <properties>
-        <byte-buddy.version>1.7.9</byte-buddy.version>
+        <byte-buddy.version>1.8.3</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
-        <flyway.version>5.0.3</flyway.version>
-        <guava.version>23.6-jre</guava.version>
-        <h2.version>1.4.196</h2.version>
-        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
+        <flyway.version>5.0.7</flyway.version>
+        <guava.version>24.1-jre</guava.version>
+        <h2.version>1.4.197</h2.version>
+        <jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
         <java.version>1.8</java.version>
         <jdbi.version>2.78</jdbi.version>
         <junit.version>4.12</junit.version>
-        <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>2.10.2</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>2.4</maven-source-plugin.version>
-        <mockito.version>2.13.0</mockito.version>
+        <maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <mockito.version>2.17.0</mockito.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <rxjava-jdbc.version>0.7.13</rxjava-jdbc.version>
-        <slf4j.version>1.7.24</slf4j.version>
-        <spring-jdbc.version>5.0.2.RELEASE</spring-jdbc.version>
+        <rxjava-jdbc.version>0.7.16</rxjava-jdbc.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <spring-jdbc.version>5.0.5.RELEASE</spring-jdbc.version>
         <sql2o.version>1.6.0-RC3</sql2o.version>
         <hsqldb.version>2.4.0</hsqldb.version>
     </properties>

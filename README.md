@@ -2,11 +2,11 @@ embedded-db-junit
 =================
 
 [![Build Status](https://travis-ci.org/zapodot/embedded-db-junit.svg)](https://travis-ci.org/zapodot/embedded-db-junit)
-[![Coverage Status](https://img.shields.io/coveralls/zapodot/embedded-db-junit.svg)](https://coveralls.io/r/zapodot/embedded-db-junit)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-db-junit)
-[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
+[![Coverage Status](https://coveralls.io/repos/github/zapodot/embedded-db-junit/badge.svg?branch=master)](https://coveralls.io/github/zapodot/embedded-db-junit?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/org.zapodot/embedded-db-junit.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.zapodot%22%20AND%20a%3A%22embedded-db-junit%22)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/zapodot/embedded-db-junit/blob/master/LICENSE)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/zapodot/embedded-db-junit.svg)](https://libraries.io/github/zapodot/embedded-db-junit)
+[![Open Source Helpers](https://www.codetriage.com/zapodot/embedded-db-junit/badges/users.svg)](https://www.codetriage.com/zapodot/embedded-db-junit)
 [![Follow me @ Twitter](https://img.shields.io/twitter/follow/zapodot.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=zapodot)
 
 [JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/). It is compatible with all known JDBC access libraries such as [Spring JDBC](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jdbc.html#jdbc-introduction), [RX-JDBC](//github.com/davidmoten/rxjava-jdbc), [sql2o](http://www.sql2o.org/), [JDBI](http://jdbi.org/) or plain old JDBC.
@@ -49,7 +49,7 @@ as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/
 ```
 
 ##### Liquibase plugin
-If you want to use the Liquibase plugin:
+If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/master/embedded-db-junit-liquibase) plugin:
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
@@ -59,7 +59,7 @@ If you want to use the Liquibase plugin:
 </dependency>
 ```
 ##### Flyway plugin
-If you want to use the Flyway plugin:
+If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/master/embedded-db-flyway) plugin:
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
@@ -214,3 +214,4 @@ public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
 public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
         EmbeddedDatabaseRule.builder().withName("db2").withMode(CompatibilityMode.MSSQLServer).build();
 ```
+[![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
