@@ -10,6 +10,8 @@ import org.zapodot.junit.db.internal.CloseSuppressedConnectionFactory;
 import org.zapodot.junit.db.internal.EmbeddedDataSource;
 import org.zapodot.junit.db.internal.FilePathInitializationPlugin;
 import org.zapodot.junit.db.internal.H2JdbcUrlFactory;
+import org.zapodot.junit.db.internal.HyperSqlJdbcUrlFactory;
+import org.zapodot.junit.db.internal.JdbcUrlFactory;
 import org.zapodot.junit.db.internal.SQLInitializationPlugin;
 import org.zapodot.junit.db.plugin.InitializationPlugin;
 
@@ -19,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,10 +32,6 @@ import java.util.Map;
  * @author zapodot
  */
 public class EmbeddedDatabaseRule implements TestRule {
-
-    public static final String PROP_INIT_SQL = "INIT";
-
-    public static final String PROP_MODE = "MODE";
 
     private final boolean autoCommit;
 
@@ -46,24 +45,32 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins;
 
+    private final JdbcUrlFactory jdbcUrlFactory;
+
+    private final CompatibilityMode compatibilityMode;
+
     private Connection connection;
 
     /**
      * Standard constructor that is suitable if you don't need to do anything special
      */
     public EmbeddedDatabaseRule() {
-        this(true, null, null, null);
+        this(true, null, null, null, null, CompatibilityMode.REGULAR);
     }
 
 
     private EmbeddedDatabaseRule(final boolean autoCommit,
                                  final String name,
                                  final Map<String, String> jdbcUrlProperties,
-                                 final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins) {
+                                 final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                 final JdbcUrlFactory jdbcUrlFactory,
+                                 final CompatibilityMode compatibilityMode) {
         this.autoCommit = autoCommit;
         this.predefinedName = name;
         this.jdbcUrlProperties = jdbcUrlProperties == null ? Collections.emptyMap() : jdbcUrlProperties;
         this.initializationPlugins = initializationPlugins == null ? Collections.emptyMap() : initializationPlugins;
+        this.jdbcUrlFactory = jdbcUrlFactory == null ? new H2JdbcUrlFactory() : jdbcUrlFactory;
+        this.compatibilityMode = compatibilityMode;
     }
 
     /**
@@ -115,13 +122,14 @@ public class EmbeddedDatabaseRule implements TestRule {
         return autoCommit;
     }
 
+
     /**
      * Returns a JDBC url for connecting to the in-memory database created by this rule with all INIT params stripped
      *
      * @return a JDBC url string
      */
     public String getConnectionJdbcUrl() {
-        return H2JdbcUrlFactory.buildFilteringInitProperties(getInMemoryDatabaseName(), jdbcUrlProperties);
+        return jdbcUrlFactory.connectionUrl(getInMemoryDatabaseName(), getJdbcUrlProperties());
     }
 
     /**
@@ -130,7 +138,14 @@ public class EmbeddedDatabaseRule implements TestRule {
      * @return a JDBC URL string
      */
     private String generateJdbcUrl() {
-        return H2JdbcUrlFactory.buildWithNameAndProperties(getInMemoryDatabaseName(), jdbcUrlProperties);
+        return jdbcUrlFactory.connectionUrlForInitialization(getInMemoryDatabaseName(), getJdbcUrlProperties());
+    }
+
+    private Map<String, String> getJdbcUrlProperties() {
+        final LinkedHashMap<String, String> properties = new LinkedHashMap<>();
+        properties.putAll(jdbcUrlFactory.compatibilityModeParam(compatibilityMode));
+        properties.putAll(jdbcUrlProperties);
+        return properties;
     }
 
     private String getInMemoryDatabaseName() {
@@ -209,6 +224,8 @@ public class EmbeddedDatabaseRule implements TestRule {
         private boolean autoCommit = true;
 
         private final Engine engine;
+
+        private CompatibilityMode compatibilityMode = CompatibilityMode.REGULAR;
 
         private Builder(final Engine engine) {
             if (engine == null) {
@@ -290,7 +307,21 @@ public class EmbeddedDatabaseRule implements TestRule {
             if (mode == null) {
                 throw new IllegalArgumentException("The \"mode\" argument can not be null");
             }
-            return withProperty(PROP_MODE, mode);
+            if (mode != "") {
+                return withMode(mapToCompatibilityMode(mode));
+            } else {
+                return this;
+            }
+        }
+
+        private CompatibilityMode mapToCompatibilityMode(final String mode) {
+            if (mode == null) {
+                throw new IllegalArgumentException("The \"mode\" argument can not be null");
+            }
+            return Arrays.stream(CompatibilityMode.values())
+                         .filter(c -> c.name().equalsIgnoreCase(mode))
+                         .findAny()
+                         .orElseThrow(() -> new IllegalArgumentException("Could not map mode \"" + mode + "\" to a valid Compatibility mode"));
         }
 
         public Builder withMode(final CompatibilityMode compatibilityMode) {
@@ -298,7 +329,8 @@ public class EmbeddedDatabaseRule implements TestRule {
             if (compatibilityMode == null) {
                 throw new IllegalArgumentException("The \"compatibilityMode\" argument can not be null");
             }
-            return withMode(compatibilityMode.name());
+            this.compatibilityMode = compatibilityMode;
+            return this;
         }
 
         public <P extends InitializationPlugin> Builder initializedByPlugin(final P plugin) {
@@ -326,7 +358,20 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         public EmbeddedDatabaseRule build() {
-            return new EmbeddedDatabaseRule(autoCommit, name, propertiesMap(), initializationPlugins);
+            return new EmbeddedDatabaseRule(autoCommit,
+                                            name,
+                                            propertiesMap(),
+                                            initializationPlugins,
+                                            createJdbcUrlFactory(),
+                                            compatibilityMode);
+        }
+
+        private JdbcUrlFactory createJdbcUrlFactory() {
+            if (engine == Engine.HSQLDB) {
+                return new HyperSqlJdbcUrlFactory();
+            } else {
+                return new H2JdbcUrlFactory();
+            }
         }
     }
 

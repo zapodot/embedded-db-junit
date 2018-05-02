@@ -10,10 +10,10 @@ import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
-public class FlywayInitializerDefaultSettingsTest {
+public class FlywayInitializerDefaultSettingsHypersqlTest {
 
     @Rule
-    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.h2()
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.hsqldb()
                                                                                  .initializedByPlugin(
                                                                                    new FlywayInitializer.Builder()
                                                                                            .withLocations(
