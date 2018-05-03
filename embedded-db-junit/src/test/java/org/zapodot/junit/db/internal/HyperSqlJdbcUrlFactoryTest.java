@@ -1,7 +1,7 @@
 package org.zapodot.junit.db.internal;
 
 import org.junit.Test;
-import org.zapodot.junit.db.EmbeddedDatabaseRule;
+import org.zapodot.junit.db.CompatibilityMode;
 
 import java.util.Collections;
 
@@ -19,19 +19,19 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModeParamRegular() {
         assertEquals(Collections.emptyMap(),
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.REGULAR));
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.REGULAR));
     }
 
     @Test
     public void compatibilityModeDerby() {
         assertEquals(Collections.emptyMap(),
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.Derby));
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.Derby));
     }
 
     @Test
     public void compatibilityModeMssql() {
         assertEquals(HyperSqlJdbcUrlFactory.SQL_SYNTAX_MSSQLSERVER,
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.MSSQLServer)
                                 .entrySet()
                                 .iterator()
                                 .next()
@@ -41,7 +41,7 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModeOracle() {
         assertEquals(HyperSqlJdbcUrlFactory.SQL_SYNTAX_ORACLE,
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.Oracle)
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.Oracle)
                                 .entrySet()
                                 .iterator()
                                 .next()
@@ -51,7 +51,7 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModeMysql() {
         assertEquals(HyperSqlJdbcUrlFactory.SQL_SYNTAX_MYSQL,
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.MySQL)
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.MySQL)
                                 .entrySet()
                                 .iterator()
                                 .next()
@@ -61,7 +61,7 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModeDB2() {
         assertEquals(HyperSqlJdbcUrlFactory.SQL_SYNTAX_DB2,
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.DB2)
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.DB2)
                                 .entrySet()
                                 .iterator()
                                 .next()
@@ -71,7 +71,7 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModePostgresql() {
         assertEquals(HyperSqlJdbcUrlFactory.SQL_SYNTAX_POSTGRESQL,
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.PostgreSQL)
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.PostgreSQL)
                                 .entrySet()
                                 .iterator()
                                 .next()
@@ -81,6 +81,6 @@ public class HyperSqlJdbcUrlFactoryTest {
     @Test
     public void compatibilityModeHsqldb() {
         assertEquals(Collections.emptyMap(),
-                     URL_FACTORY.compatibilityModeParam(EmbeddedDatabaseRule.CompatibilityMode.HSQLDB));
+                     URL_FACTORY.compatibilityModeParam(CompatibilityMode.HSQLDB));
     }
 }

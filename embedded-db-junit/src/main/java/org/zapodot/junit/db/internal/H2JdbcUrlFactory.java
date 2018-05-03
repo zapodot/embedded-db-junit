@@ -1,6 +1,6 @@
 package org.zapodot.junit.db.internal;
 
-import org.zapodot.junit.db.EmbeddedDatabaseRule;
+import org.zapodot.junit.db.CompatibilityMode;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -55,9 +55,9 @@ public class H2JdbcUrlFactory implements JdbcUrlFactory {
     }
 
     @Override
-    public Map<String, String> compatibilityModeParam(final EmbeddedDatabaseRule.CompatibilityMode compatibilityMode) {
+    public Map<String, String> compatibilityModeParam(final CompatibilityMode compatibilityMode) {
         return Optional.ofNullable(compatibilityMode)
-                       .filter(cm -> cm != EmbeddedDatabaseRule.CompatibilityMode.REGULAR)
+                       .filter(cm -> cm != CompatibilityMode.REGULAR)
                        .map(cm -> Collections.singletonMap(PROP_MODE, cm.name()))
                        .orElse(Collections.emptyMap());
     }

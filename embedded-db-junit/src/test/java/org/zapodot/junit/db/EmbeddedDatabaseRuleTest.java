@@ -39,7 +39,7 @@ public class EmbeddedDatabaseRuleTest {
 
     @Test
     public void testModeSet() throws Exception {
-        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName("test").withMode(EmbeddedDatabaseRule.CompatibilityMode.Oracle).build();
+        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName("test").withMode(CompatibilityMode.Oracle).build();
 
         assertEquals("jdbc:h2:mem:test;MODE=Oracle", embeddedDatabaseRule.getConnectionJdbcUrl());
     }

@@ -14,11 +14,11 @@ public class EmbeddedDatabaseRuleMultipleTest {
     // If you have more than one instance in your test class, you should illegalSqlFromResource them explicitly
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
-            EmbeddedDatabaseRule.builder().h2().withName("db1").withMode(EmbeddedDatabaseRule.CompatibilityMode.MySQL).build();
+            EmbeddedDatabaseRule.builder().h2().withName("db1").withMode(CompatibilityMode.MySQL).build();
 
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
-            EmbeddedDatabaseRule.builder().h2().withName("db2").withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer).build();
+            EmbeddedDatabaseRule.builder().h2().withName("db2").withMode(CompatibilityMode.MSSQLServer).build();
 
     @Test
     public void testStuff() throws Exception {

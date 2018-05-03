@@ -15,7 +15,7 @@ public class EmbeddedDatabaseRuleHsqlTest {
 
     @Rule
     public final EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule.hsqldb()
-                                                                         .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+                                                                         .withMode(CompatibilityMode.MSSQLServer)
                                                                          .build();
 
     @Test

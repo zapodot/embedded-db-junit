@@ -375,10 +375,6 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
     }
 
-    public enum CompatibilityMode {
-        REGULAR, DB2, Derby, HSQLDB, MSSQLServer, MySQL, Oracle, PostgreSQL
-    }
-
     public enum Engine {
         H2, HSQLDB
     }

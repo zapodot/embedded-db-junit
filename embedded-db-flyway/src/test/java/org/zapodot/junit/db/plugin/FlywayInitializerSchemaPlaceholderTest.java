@@ -3,6 +3,7 @@ package org.zapodot.junit.db.plugin;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Rule;
 import org.junit.Test;
+import org.zapodot.junit.db.CompatibilityMode;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import java.sql.Connection;
@@ -20,7 +21,7 @@ public class FlywayInitializerSchemaPlaceholderTest {
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder()
                                                                                  .withMode(
-                                                                                   EmbeddedDatabaseRule.CompatibilityMode.Oracle)
+                                                                                         CompatibilityMode.Oracle)
                                                                                  .initializedByPlugin(
                                                                                    new FlywayInitializer.Builder()
                                                                                            .withSchemas(SCHEMA_NAME)

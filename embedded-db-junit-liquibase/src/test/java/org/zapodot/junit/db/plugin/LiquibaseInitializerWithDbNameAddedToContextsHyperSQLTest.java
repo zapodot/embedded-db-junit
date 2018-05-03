@@ -2,6 +2,7 @@ package org.zapodot.junit.db.plugin;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.zapodot.junit.db.CompatibilityMode;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import java.sql.Connection;
@@ -20,7 +21,7 @@ public class LiquibaseInitializerWithDbNameAddedToContextsHyperSQLTest {
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
             .hsqldb()
-            .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+            .withMode(CompatibilityMode.MSSQLServer)
             .withName(DATABASE_NAME)
             .initializedByPlugin(LiquibaseInitializer.builder()
                                                      .withChangelogResource("example-changelog.xml")

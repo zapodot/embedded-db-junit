@@ -2,13 +2,11 @@ package org.zapodot.junit.db.plugin;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.zapodot.junit.db.CompatibilityMode;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 import org.zapodot.junit.db.plugin.dao.RoleDao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +21,7 @@ public class LiquibaseInitializerWithDbNameAddedToContextsH2Test {
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
             .h2()
-            .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+            .withMode(CompatibilityMode.MSSQLServer)
             .withName(DATABASE_NAME)
             .initializedByPlugin(LiquibaseInitializer.builder()
                     .withChangelogResource("example-changelog.sql")

@@ -1,6 +1,6 @@
 package org.zapodot.junit.db.internal;
 
-import org.zapodot.junit.db.EmbeddedDatabaseRule;
+import org.zapodot.junit.db.CompatibilityMode;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -44,16 +44,16 @@ public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
     }
 
     @Override
-    public Map<String, String> compatibilityModeParam(final EmbeddedDatabaseRule.CompatibilityMode compatibilityMode) {
-        if (EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer == compatibilityMode) {
+    public Map<String, String> compatibilityModeParam(final CompatibilityMode compatibilityMode) {
+        if (CompatibilityMode.MSSQLServer == compatibilityMode) {
             return createEnabledSettingMap(SQL_SYNTAX_MSSQLSERVER);
-        } else if (EmbeddedDatabaseRule.CompatibilityMode.DB2 == compatibilityMode) {
+        } else if (CompatibilityMode.DB2 == compatibilityMode) {
             return createEnabledSettingMap(SQL_SYNTAX_DB2);
-        } else if (EmbeddedDatabaseRule.CompatibilityMode.Oracle == compatibilityMode) {
+        } else if (CompatibilityMode.Oracle == compatibilityMode) {
             return createEnabledSettingMap(SQL_SYNTAX_ORACLE);
-        } else if (EmbeddedDatabaseRule.CompatibilityMode.MySQL == compatibilityMode) {
+        } else if (CompatibilityMode.MySQL == compatibilityMode) {
             return createEnabledSettingMap(SQL_SYNTAX_MYSQL);
-        } else if (EmbeddedDatabaseRule.CompatibilityMode.PostgreSQL == compatibilityMode) {
+        } else if (CompatibilityMode.PostgreSQL == compatibilityMode) {
             return createEnabledSettingMap(SQL_SYNTAX_POSTGRESQL);
         } else {
             return Collections.emptyMap();
