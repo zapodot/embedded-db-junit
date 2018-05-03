@@ -9,7 +9,7 @@ embedded-db-junit
 [![Open Source Helpers](https://www.codetriage.com/zapodot/embedded-db-junit/badges/users.svg)](https://www.codetriage.com/zapodot/embedded-db-junit)
 [![Follow me @ Twitter](https://img.shields.io/twitter/follow/zapodot.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=zapodot)
 
-[JUnit](http://junit.org/) Rule that provides a [H2 Embedded in-memory database](http://www.h2database.com/). It is compatible with all known JDBC access libraries such as [Spring JDBC](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jdbc.html#jdbc-introduction), [RX-JDBC](//github.com/davidmoten/rxjava-jdbc), [sql2o](http://www.sql2o.org/), [JDBI](http://jdbi.org/) or plain old JDBC.
+[JUnit](http://junit.org/) Rule that provides a in-memory database (both [H2](http://www.h2database.com/) and [HyperSQL](http://hsqldb.org) are supported). It is compatible with all known JDBC access libraries such as [Spring JDBC](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jdbc.html#jdbc-introduction), [RX-JDBC](//github.com/davidmoten/rxjava-jdbc), [sql2o](http://www.sql2o.org/), [JDBI](http://jdbi.org/) or plain old JDBC.
 
 ## Why?
 * because you want to test the SQL code executed by your code without integrating with an actual DB server
