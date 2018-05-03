@@ -21,20 +21,6 @@ embedded-db-junit
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 Java 7 or higher is required.
 
-## Changelog
-* version 1.0.0: Updated some build plugins and added initial support for [Flyway](//github.com/flyway/flyway). Otherwise equal to v. 1.0-RC1
-* version 1.0-RC1: Fixed issue #8. InitializationPlugins will now be provided with a connection that will not be closed before the end of the test execution. Thanks to [@victornoel](//github.com/victornoel)
-* version 0.9: improved logging as per request by @Gaibhne. Also updated H2 and SLF4J dependencies
-* version 0.8: updated Mockito and ByteBuddy as suggested by @victornoel. Using an explicit name when the rule is invoked
-as a method-based @Rule will issue a warning. Thx to [@victornoel](//github.com/victornoel) for valuable input
-* version 0.7: merged pull request #3 which created by [@tmszdmsk](//github.com/tmszdmsk) allowing the developer to specify a schema for Liquibase. Thx!
-* version 0.6: created InitializationPlugin API with the first implementation being the [LiquibaseInitializer](./embedded-db-junit-liquibase/)
-* version 0.5: created builder method withInitialSqlFromResource that allows the initial SQL to be [read from file](#read-initial-sql-from-a-file-resource-v--05)
-* version 0.4: created method getConnectionJdbcUrl that returns a filtered JDBC URL (for tools requiring a JDBC URL)
-* version 0.3: updated all dependencies as well as some changes to the internal implementation
-* version 0.2: added datasource() for getting an embedded DataSource and suppressing close() call to the connection
-* version 0.1: first release
-
 ## Usage
 
 ### Add dependency
@@ -214,4 +200,8 @@ public final EmbeddedDatabaseRule embeddedDatabaseMysqlRule =
 public final EmbeddedDatabaseRule embeddedDatabaseMsSqlServerRule =
         EmbeddedDatabaseRule.builder().withName("db2").withMode(CompatibilityMode.MSSQLServer).build();
 ```
+## Changelog
+Please consult the [wiki](//github.com/zapodot/embedded-db-junit/wiki/Changelog).
+
 [![Analytics](https://ga-beacon.appspot.com/UA-58568779-1/embedded-db-junit/README.md)](https://github.com/igrigorik/ga-beacon)
+
