@@ -7,7 +7,7 @@
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <properties>
         <byte-buddy.version>1.8.3</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
