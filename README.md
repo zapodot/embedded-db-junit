@@ -21,10 +21,10 @@ embedded-db-junit
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 
 ## Compatibility matrix
-| Version | Java version | H2 version | HSQLDB version |
-| ------- | ------------ | ---------- | -------------- |
-| 1.1+    | 8.0          | 1.4.197    | 2.4.0          |
-| 1.0     | 1.7          | 1.4.196    | N/A            |
+| Version | Java version | H2 version | HSQLDB version | Branch        |
+| ------- | ------------ | ---------- | -------------- | ------------- |
+| 1.1+    | 8.0          | 1.4.197    | 2.4.0          | `master`      |
+| 1.0     | 1.7          | 1.4.196    | N/A            | `release-1.x` |
 
 ## Usage
 
