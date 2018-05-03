@@ -15,7 +15,7 @@ embedded-db-junit
 * because you want to test the SQL code executed by your code without integrating with an actual DB server
 * removes the need of having a database server running and available
 * you are refactoring legacy code where JDBC calls is tightly coupled with your business logic and wants to start by testing the legacy code from the "outside" (as suggested by [Michael Feathers](http://www.informit.com/store/working-effectively-with-legacy-code-9780131177055?aid=15d186bd-1678-45e9-8ad3-fe53713e811b))
-* you want to test your database evolutions with support either they are maintened using  [Liquibase](./embedded-db-junit-liquibase/) or [Flyway](./embedded-db-flyway/).
+* you want to test your database evolutions with either they are maintened using [Liquibase](./embedded-db-junit-liquibase/) or [Flyway](./embedded-db-flyway/).
 
 ## Status
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
