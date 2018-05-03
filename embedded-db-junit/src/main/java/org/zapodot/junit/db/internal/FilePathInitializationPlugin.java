@@ -20,11 +20,11 @@ public class FilePathInitializationPlugin implements InitializationPlugin {
     private final Charset charset;
 
     public FilePathInitializationPlugin(final String resource, final Charset charset) {
-        if(null == resource) {
+        if (null == resource) {
             throw new IllegalArgumentException("The \"resource\" parameter must be provided");
         }
         this.resource = resource;
-        if(null == charset) {
+        if (null == charset) {
             throw new IllegalArgumentException("The \"charset\" parameter must be provided");
         }
         this.charset = charset;
@@ -41,12 +41,12 @@ public class FilePathInitializationPlugin implements InitializationPlugin {
             statement.execute(convertToString(out.toByteArray()));
 
         } catch (IOException e) {
-            throw new IllegalStateException(String.format("Could not read SQL from file path \"%s\"",
-                                                          filePath.getName()),
-                                            e);
+            throw new IllegalArgumentException(String.format("Could not read SQL from file path \"%s\"",
+                                                             filePath.getName()),
+                                               e);
         } catch (SQLException e) {
-            throw new IllegalStateException(String.format("Could not run SQL script from file path \"%s\"",
-                                                          filePath.getName()));
+            throw new IllegalArgumentException(String.format("Could not run SQL script from file path \"%s\"",
+                                                             filePath.getName()), e);
         }
 
     }

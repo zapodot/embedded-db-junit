@@ -23,5 +23,25 @@
         </addColumn>
     </changeSet>
 
-
+    <changeSet id="createRole" author="zapodot" labels="base">
+        <createTable tableName="role">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="createUserRole" author="zapodot" labels="base" context="myDb">
+        <createTable tableName="userrole">
+            <column name="user_id" type="int">
+                <constraints referencedTableName="user" referencedColumnNames="id" foreignKeyName="FK_USER_ROLE_USER_ID" nullable="false"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints referencedTableName="role" referencedColumnNames="id" foreignKeyName="FK_USER_ROLE_ROLE_ID" nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="userrole" columnNames="user_id,role_id"/>
+    </changeSet>
 </databaseChangeLog>

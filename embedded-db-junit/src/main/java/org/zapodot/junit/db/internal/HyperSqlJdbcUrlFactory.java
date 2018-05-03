@@ -3,6 +3,7 @@ package org.zapodot.junit.db.internal;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
@@ -21,9 +22,11 @@ public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
 
     static final String SQL_SYNTAX_POSTGRESQL = "sql.syntax_pgs";
 
+    private static final String DATABASE_CREATE_SETTING = "create";
+
     @Override
     public String connectionUrlForInitialization(final String name, final Map<String, String> properties) {
-        return connectionUrl(name, properties);
+        return connectionUrl(name, addCreateProperty(properties));
     }
 
     @Override
@@ -31,6 +34,13 @@ public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
         return new StringBuilder(HSQLDB_MEM_URL).append(name)
                                                 .append(createJdbcUrlParameterString(properties))
                                                 .toString();
+    }
+
+    private Map<String, String> addCreateProperty(final Map<String, String> properties) {
+        final Map<String, String> props = new LinkedHashMap<>();
+        props.putAll(properties);
+        props.put(DATABASE_CREATE_SETTING, ENABLED_SETTING);
+        return props;
     }
 
     @Override

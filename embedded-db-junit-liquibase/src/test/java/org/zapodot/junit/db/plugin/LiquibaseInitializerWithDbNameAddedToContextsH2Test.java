@@ -3,6 +3,7 @@ package org.zapodot.junit.db.plugin;
 import org.junit.Rule;
 import org.junit.Test;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
+import org.zapodot.junit.db.plugin.dao.RoleDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +16,15 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author zapodot
  */
-public class LiquibaseInitializerWithDbNameAddedToContextsTest {
+public class LiquibaseInitializerWithDbNameAddedToContextsH2Test {
+
+    private static final String DATABASE_NAME = "myDb";
 
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
-            .builder()
+            .h2()
             .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+            .withName(DATABASE_NAME)
             .initializedByPlugin(LiquibaseInitializer.builder()
                     .withChangelogResource("example-changelog.sql")
                     .addDatabaseNameToContext()
@@ -30,16 +34,8 @@ public class LiquibaseInitializerWithDbNameAddedToContextsTest {
     @Test
     public void testFindRolesInsertedByLiquibase() throws Exception {
         try(final Connection connection = embeddedDatabaseRule.getConnection()) {
-            try(final PreparedStatement statement = connection.prepareStatement("Select * FROM ROLE r INNER JOIN USERROLE ur on r.ID = ur.ROLE_ID INNER JOIN USER u on ur.USER_ID = u.ID where u.NAME = ?")) {
-                statement.setString(1, "Ada");
-                try(final ResultSet resultSet = statement.executeQuery()) {
-                    final List<String> roles = new LinkedList<>();
-                    while(resultSet.next()) {
-                        roles.add(resultSet.getString("name"));
-                    }
-                    assertEquals(2, roles.size());
-                }
-            }
+            final List<String> rolesForUser = new RoleDao(connection).rolesForUser("Ada");
+            assertEquals(0, rolesForUser.size());
         }
 
     }

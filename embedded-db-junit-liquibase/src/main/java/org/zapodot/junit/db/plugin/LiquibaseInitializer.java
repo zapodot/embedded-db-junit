@@ -104,7 +104,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
          * @return the same builder instance
          */
         public Builder addDatabaseNameToContext() {
-            this.addNameToContext = false;
+            this.addNameToContext = true;
             return this;
         }
 
@@ -189,7 +189,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
                     String.format("CREATE SCHEMA IF NOT EXISTS %s", defaultSchemaName))) {
                 preparedStatement.execute();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException("Could not create schema \"" + defaultSchemaName + "\"", e);
             }
         }
 
@@ -204,7 +204,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
                 liquibase.update(changesLimit, contexts, labelExpression);
             }
         } catch (LiquibaseException e) {
-            throw new RuntimeException("An exception occurred while applying Liquibase changesets", e);
+            throw new IllegalArgumentException("An exception occurred while applying Liquibase changesets", e);
         }
     }
 
@@ -218,7 +218,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
             }
             return new Liquibase(changeLog, resourceAccessor, database);
         } catch (LiquibaseException e) {
-            throw new RuntimeException("Could not initialize Liquibase", e);
+            throw new IllegalStateException("Could not initialize Liquibase", e);
         }
     }
 

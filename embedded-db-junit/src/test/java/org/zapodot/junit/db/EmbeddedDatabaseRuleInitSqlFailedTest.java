@@ -19,7 +19,7 @@ public class EmbeddedDatabaseRuleInitSqlFailedTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void illegalSqlFromResource() throws Throwable {
         final EmbeddedDatabaseRule rule = EmbeddedDatabaseRule.builder()
                                                               .withInitialSqlFromResource("classpath:illegal.sql")
