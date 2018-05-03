@@ -7,7 +7,7 @@
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <properties>
         <byte-buddy.version>1.8.3</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
@@ -29,6 +29,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <spring-jdbc.version>5.0.5.RELEASE</spring-jdbc.version>
         <sql2o.version>1.6.0-RC3</sql2o.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
     </properties>
     <prerequisites>
         <maven>3.2.0</maven>
@@ -125,6 +126,12 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>

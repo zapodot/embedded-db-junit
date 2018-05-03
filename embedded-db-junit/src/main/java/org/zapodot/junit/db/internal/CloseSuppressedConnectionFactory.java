@@ -22,23 +22,25 @@ public class CloseSuppressedConnectionFactory {
     private CloseSuppressedConnectionFactory() {
     }
 
-    private final static Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
+    private static final Class<? extends Connection> proxyType = new ByteBuddy().subclass(Connection.class)
                                                                                 .method(any())
                                                                                 .intercept(MethodDelegation.to(
-                    ConnectionInterceptor.class))
+                                                                                        ConnectionInterceptor.class))
                                                                                 .defineField("delegatedConnection",
-                    Connection.class,
-                    Visibility.PRIVATE)
+                                                                                             Connection.class,
+                                                                                             Visibility.PRIVATE)
                                                                                 .implement(ConnectionProxy.class)
-                                                                                .intercept(FieldAccessor.ofBeanProperty())
+                                                                                .intercept(FieldAccessor
+                                                                                                   .ofBeanProperty())
                                                                                 .make()
                                                                                 .load(CloseSuppressedConnectionFactory.class
-                            .getClassLoader(),
-                    ClassLoadingStrategy.Default.WRAPPER)
+                                                                                              .getClassLoader(),
+                                                                                      ClassLoadingStrategy.Default.WRAPPER)
                                                                                 .getLoaded();
 
     /**
      * Create a proxy that delegates to the provided Connection except for calls to "close()" which will be suppressed.
+     *
      * @param connection the connection that is to be used as an underlying connection
      * @return a Connection proxy
      */

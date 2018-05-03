@@ -1,10 +1,11 @@
 package org.zapodot.junit.db.internal;
 
+import org.slf4j.LoggerFactory;
+
 import javax.sql.DataSource;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
 /**
@@ -12,6 +13,38 @@ import java.util.logging.Logger;
  * Needs to be public to be used by ByteBuddy. Part of internal api, so it may be changed or removed without prior warning
  */
 public class EmbeddedDataSource implements DataSource {
+
+    static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(EmbeddedDataSource.class);
+
+    static class Slf4jInfoWriter extends Writer {
+
+        private final org.slf4j.Logger logger;
+
+        public Slf4jInfoWriter(final org.slf4j.Logger logger) {
+            if(logger == null) {
+                throw new IllegalArgumentException("No logger was provided");
+            }
+            this.logger = logger;
+        }
+
+        @SuppressWarnings("squid:S2629")
+        @Override
+        public void write(final char[] cbuf, final int off, final int len) {
+            if (cbuf != null && cbuf.length > 0) {
+                logger.info(String.valueOf(cbuf));
+            }
+        }
+
+        @Override
+        public void flush() {
+            // Intentionally kept empty
+        }
+
+        @Override
+        public void close() {
+            // Intentionally kept empty
+        }
+    }
 
     private final Connection connection;
 
@@ -35,17 +68,17 @@ public class EmbeddedDataSource implements DataSource {
 
     @Override
     public PrintWriter getLogWriter() {
-        return new PrintWriter(System.err);
+        return new PrintWriter(new Slf4jInfoWriter(LOGGER));
     }
 
     @Override
     public void setLogWriter(final PrintWriter out) {
-
+        // intentionally kept empty
     }
 
     @Override
     public void setLoginTimeout(final int seconds) {
-
+        // intentionally kept empty
     }
 
     @Override

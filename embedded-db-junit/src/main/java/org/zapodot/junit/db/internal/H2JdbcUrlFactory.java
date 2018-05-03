@@ -2,26 +2,29 @@ package org.zapodot.junit.db.internal;
 
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author zapodot
  */
-public class H2JdbcUrlFactory {
+public class H2JdbcUrlFactory implements JdbcUrlFactory {
 
-    private H2JdbcUrlFactory() {
-    }
+    public static final String PROP_MODE = "MODE";
+
+    public static final String PROP_INIT_SQL = "INIT";
 
     static final String H2_IN_MEMORY_JDBC_URL_PREFIX = "jdbc:h2:mem:";
 
-    public static Map<String, String> filterInitProperties(final Map<String, String> jdbcUrlProperties) {
+    static Map<String, String> filterInitProperties(final Map<String, String> jdbcUrlProperties) {
         if (jdbcUrlProperties == null) {
             return null;
         } else {
             final Map<String, String> propertiesCopy = new LinkedHashMap<>();
             for (final Map.Entry<String, String> property : jdbcUrlProperties.entrySet()) {
-                if (!EmbeddedDatabaseRule.PROP_INIT_SQL.equalsIgnoreCase(property.getKey())) {
+                if (!PROP_INIT_SQL.equalsIgnoreCase(property.getKey())) {
                     propertiesCopy.put(property.getKey(), property.getValue());
                 }
             }
@@ -29,23 +32,8 @@ public class H2JdbcUrlFactory {
         }
     }
 
-    private static String createJdbcUrlParameterString(final Map<String, String> properties) {
-        if (properties == null) {
-            return "";
-        }
-        final StringBuilder paramStringBuilder = new StringBuilder("");
-        for (final Map.Entry<String, String> property : properties.entrySet()) {
-            if (property.getValue() != null) {
-                paramStringBuilder.append(';')
-                        .append(property.getKey())
-                        .append('=')
-                        .append(property.getValue());
-            }
-        }
-        return paramStringBuilder.toString();
-    }
 
-    public static String buildWithNameAndProperties(final String name, final Map<String, String> properties) {
+    private String buildWithNameAndProperties(final String name, final Map<String, String> properties) {
         if (name == null) {
             throw new NullPointerException("The value of the \"name\" parameter can not be null");
         }
@@ -55,7 +43,22 @@ public class H2JdbcUrlFactory {
                 .toString();
     }
 
-    public static String buildFilteringInitProperties(final String name, final Map<String, String> properties) {
-        return buildWithNameAndProperties(name, filterInitProperties(properties));
+    @Override
+    public String connectionUrlForInitialization(final String name, final Map<String, String> properties) {
+        return buildWithNameAndProperties(name, properties);
+
+    }
+
+    @Override
+    public String connectionUrl(final String name, final Map<String, String> properties) {
+        return buildWithNameAndProperties(name,filterInitProperties(properties));
+    }
+
+    @Override
+    public Map<String, String> compatibilityModeParam(final EmbeddedDatabaseRule.CompatibilityMode compatibilityMode) {
+        return Optional.ofNullable(compatibilityMode)
+                       .filter(cm -> cm != EmbeddedDatabaseRule.CompatibilityMode.REGULAR)
+                       .map(cm -> Collections.singletonMap(PROP_MODE, cm.name()))
+                       .orElse(Collections.emptyMap());
     }
 }
