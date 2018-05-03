@@ -23,7 +23,7 @@ for your real world database schema without affecting your real database
 @Rule
 public EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
         .builder()
-        .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+        .withMode(CompatibilityMode.MSSQLServer)
         .initializedByPlugin(LiquibaseInitializer.builder()
                 .withChangelogResource("example-changelog.sql")
                 .withContexts("addUsersAndRoles")
