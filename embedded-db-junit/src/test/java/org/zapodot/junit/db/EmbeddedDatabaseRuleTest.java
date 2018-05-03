@@ -2,15 +2,14 @@ package org.zapodot.junit.db;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class EmbeddedDatabaseRuleTest {
 
     public static final String TEST_NAME = "test";
 
     @Test (expected = IllegalArgumentException.class)
-    public void testFilterNullProperties() throws Exception {
+    public void testFilterNullProperties() {
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withMode((String) null).build();
 
         assertEquals("jdbc:h2:mem:test", embeddedDatabaseRule.getConnectionJdbcUrl());
@@ -18,12 +17,12 @@ public class EmbeddedDatabaseRuleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitialSqlNull() throws Exception {
+    public void testInitialSqlNull() {
         EmbeddedDatabaseRule.builder().withName(TEST_NAME).withInitialSql(null);
     }
 
     @Test
-    public void testInitialSqlNotNull() throws Exception {
+    public void testInitialSqlNotNull() {
 
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withInitialSql("CREATE TABLE foo(bar int primary key)").build();
         assertFalse(embeddedDatabaseRule.getConnectionJdbcUrl().contains("INIT"));
@@ -31,21 +30,35 @@ public class EmbeddedDatabaseRuleTest {
     }
 
     @Test
-    public void testPropertyNull() throws Exception {
+    public void testPropertyNull() {
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withProperty("property", null).build();
         assertEquals("jdbc:h2:mem:test", embeddedDatabaseRule.getConnectionJdbcUrl());
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void withInitialSqlFromResourceNullBoth() {
+        final EmbeddedDatabaseRule.Builder builder = EmbeddedDatabaseRule.h2();
+        assertNotNull(builder);
+        builder.withInitialSqlFromResource(null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void withInitialSqlFromResourceNullCharset() {
+        final EmbeddedDatabaseRule.Builder builder = EmbeddedDatabaseRule.h2();
+        assertNotNull(builder);
+        builder.withInitialSqlFromResource("filename.sql", null);
+    }
+
     @Test
-    public void testModeSet() throws Exception {
+    public void testModeSet() {
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName("test").withMode(CompatibilityMode.Oracle).build();
 
         assertEquals("jdbc:h2:mem:test;MODE=Oracle", embeddedDatabaseRule.getConnectionJdbcUrl());
     }
 
     @Test
-    public void testProperty() throws Exception {
+    public void testProperty() {
 
         final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName(TEST_NAME).withProperty("MODE", "ORACLE").build();
         assertEquals("jdbc:h2:mem:test;MODE=ORACLE", embeddedDatabaseRule.getConnectionJdbcUrl());
@@ -53,7 +66,7 @@ public class EmbeddedDatabaseRuleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInitResourcesNull() throws Exception {
+    public void testInitResourcesNull() {
         EmbeddedDatabaseRule.builder().withInitialSqlFromResource(null);
     }
 }

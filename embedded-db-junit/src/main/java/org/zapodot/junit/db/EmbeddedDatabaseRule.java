@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A JUnit Rule implementation that makes it easy to stub JDBC integrations from your tests
@@ -242,7 +243,7 @@ public class EmbeddedDatabaseRule implements TestRule {
          */
         @Deprecated
         public static Builder instance() {
-            return new Builder(Engine.H2);
+            return h2();
         }
 
         /**
@@ -270,11 +271,9 @@ public class EmbeddedDatabaseRule implements TestRule {
         }
 
         private String normalizeString(final String input) {
-            if (input == null) {
-                return null;
-            } else {
-                return input.replaceAll("\n", "").replaceAll(";", "\\\\;").trim();
-            }
+            return Optional.ofNullable(input)
+                           .map(i -> i.replaceAll("\n", "").replaceAll(";", "\\\\;").trim())
+                           .orElse(null);
         }
 
         public Builder withInitialSql(final String sql) {
@@ -304,10 +303,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
 
         public Builder withMode(final String mode) {
-            if (mode == null) {
-                throw new IllegalArgumentException("The \"mode\" argument can not be null");
-            }
-            if (mode != "") {
+            if (!"".equals(mode)) {
                 return withMode(mapToCompatibilityMode(mode));
             } else {
                 return this;
