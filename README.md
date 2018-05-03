@@ -23,10 +23,10 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 ## Compatibility matrix
 These are the minimum versions required to use this library. Later versions may be used but is currently not tested by the maintainer.
 
-| Version | Java version | H2 version | HSQLDB version | Branch        |
-| ------- | ------------ | ---------- | -------------- | ------------- |
-| 1.1+    | 8.0          | 1.4.197    | 2.4.0          | `master`      |
-| 1.0     | 1.7          | 1.4.196    | N/A            | `release-1.x` |
+| Version | Java version | JUnit version | H2 version | HSQLDB version | Branch        |
+| ------- | ------------ | ------------- | ---------- | -------------- | ------------- |
+| 1.1+    | 8.0          | 4.12          | 1.4.197    | 2.4.0          | `master`      |
+| 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | `release-1.x` |
 
 ## Usage
 
