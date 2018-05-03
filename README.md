@@ -72,7 +72,7 @@ libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.0.0" % "test"
 @Rule
 public final EmbeddedDatabaseRule dbRule = EmbeddedDatabaseRule
                                         .builder()
-                                        .withMode("ORACLE")
+                                        .withMode(CompatibilityMode.Oracle)
                                         .withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
                                                         + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')")
                                         .build();
@@ -151,7 +151,7 @@ In the example above a "classpath:" URI has been used to specify the location of
 @Rule
 public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule
         .builder()
-        .withMode(EmbeddedDatabaseRule.CompatibilityMode.MSSQLServer)
+        .withMode(CompatibilityMode.MSSQLServer)
         .initializedByPlugin(LiquibaseInitializer.builder()
                 .withChangelogResource("example-changelog.sql")
                 .build())
