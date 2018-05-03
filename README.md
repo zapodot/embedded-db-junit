@@ -36,7 +36,7 @@ These are the minimum versions required to use this library. Later versions may 
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -47,7 +47,7 @@ If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/m
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-liquibase</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -57,7 +57,7 @@ If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/mast
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-flyway</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <scope>test</scope>
 </dependency>
 ```
