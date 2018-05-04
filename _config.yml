@@ -2,8 +2,8 @@
 title: Embedded DB Junit Rule
 email: zapodot@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Embedded DB Junit provides a JUnit Rule for embedding an H2 in memory database
-  in your tests. The database is set up before your test (@Rule) or
+  Embedded DB Junit provides a JUnit Rule for embedding an in memory database
+  (H2 or HyperSQL) in your test executions. The database is set up before your test (@Rule) or
   TestClass (@ClassRule) and is cleaned up afterwards. In essence, it makes it
   a lot easier to test your SQL and/or other database integration code.
 baseurl: "" # the subpath of your site, e.g. /blog/
