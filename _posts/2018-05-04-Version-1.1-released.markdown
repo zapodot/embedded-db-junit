@@ -8,15 +8,17 @@ Starting with the brand new 1.1 release, support for the HyperSQL database engin
 Example:
 {% highlight java %}
 @Rule
-public final EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule.hsqldb()
-                                                                     .withMode(CompatibilityMode.MSSQLServer)
-                                                                     .build();
+public final EmbeddedDatabaseRule databaseRule =
+                EmbeddedDatabaseRule.hsqldb()
+                                    .withMode(CompatibilityMode.MSSQLServer)
+                                    .build();
 {% endhighlight %}
 
 ## Requirements
 In order to use the HyperSQL support, you must have the following dependencies in your classpath:
 * version 1.1.0 of the embedded-db-junit library
 * at least version 2.4.0 of the HyperSQL library
+
 For the lazy programmer, add these to your Maven POM:
 {% highlight xml %}
 <dependency>
