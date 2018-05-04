@@ -1,0 +1,40 @@
+---
+layout: post
+title:  "HyperSQL database engine supported"
+date:   2017-12-28 17:00:00 CET
+categories: release features hsqldb
+---
+Starting with the brand new 1.1 release, support for the HyperSQL database engine has been added. As H2 is still the default database engine for the library, you will have to invoke a separate builder to use the HyperSQL engine.
+Example:
+{% highlight java %}
+@Rule
+public final EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule.hsqldb()
+                                                                     .withMode(CompatibilityMode.MSSQLServer)
+                                                                     .build();
+{% endhighlight %}
+
+## Requirements
+In order to use the HyperSQL support, you must have the following dependencies in your classpath:
+* version 1.1.0 of the embedded-db-junit library
+* at least version 2.4.0 of the HyperSQL library
+For the lazy programmer, add these to your Maven POM:
+{% highlight xml %}
+<dependency>
+  <groupId>org.zapodot</groupId>
+  <artifactId>embedded-db-junit</artifactId>
+  <version>1.1.0</version>
+  <scope>test</scope>
+</dependency>
+<dependency>
+  <groupId>org.hsqldb</groupId>
+  <artifactId>hsqldb</artifactId>
+  <version>2.4.0</version>
+  <scope>test</scope>
+</dependency>
+{% endhighlight %}
+
+## Compatibility mode
+The HyperSQL engine offers a great deal more vendor-specific SQL extensions than the H2 and may be a good option if you need to instantiate the in-memory database with a lot of predefined vendor-specific DDL. To find the level of support for your chosen database engine, please consult the [HyperSQL compatibility overview](http://hsqldb.org/doc/2.0/guide/compatibility-chapt.html#coc_compatibility_other).
+
+## Feedback
+Do you have any questions or suggestions, please [report an issue](https://github.com/zapodot/embedded-db-junit/issues) :-).
