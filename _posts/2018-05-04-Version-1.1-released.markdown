@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "HyperSQL database engine supported"
-date:   2017-12-28 17:00:00 CET
+date:   2018-05-04 08:00:00 CET
 categories: release features hsqldb
 ---
 Starting with the brand new 1.1 release, support for the HyperSQL database engine has been added. As H2 is still the default database engine for the library, you will have to invoke a separate builder to use the HyperSQL engine.
