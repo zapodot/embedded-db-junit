@@ -4,6 +4,8 @@ title:  "HyperSQL database support added"
 date:   2018-05-04 08:00:00 CET
 categories: release features hsqldb
 ---
+*If you are not familiar with the `Embedded DB JUnit` library, consult the [GitHub project site](https://github.com/zapodot/embedded-db-junit) for more information.*
+
 Starting with the brand new 1.1 release, support for the HyperSQL database engine has been added. As H2 is still the default database engine for the library, you will have to invoke a separate builder to use the HyperSQL engine.
 Example:
 {% highlight java %}
