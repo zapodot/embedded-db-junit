@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "HyperSQL database engine supported"
+title:  "HyperSQL database support added"
 date:   2018-05-04 08:00:00 CET
 categories: release features hsqldb
 ---
