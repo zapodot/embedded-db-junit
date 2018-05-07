@@ -1,5 +1,5 @@
 /**
- * Contains all classes needed to run Liquibase update after an in-memory H2 database has been created.
+ * Contains all classes needed to run Liquibase update after an in-memory database has been created.
  *
  * @author zapodot
  */

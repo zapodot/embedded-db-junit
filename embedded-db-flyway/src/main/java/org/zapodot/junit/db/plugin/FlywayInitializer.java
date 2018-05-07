@@ -9,12 +9,17 @@ import org.zapodot.junit.db.internal.EmbeddedDataSource;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Plugin for initializing in-memory database using <a href="https://flywaydb.org">Flyway</a>.
+ */
 public class FlywayInitializer implements InitializationPlugin {
 
     private final FlywayConfiguration flywayConfiguration;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FlywayInitializer.class);
 
     public static class Builder {
@@ -118,9 +123,9 @@ public class FlywayInitializer implements InitializationPlugin {
             int created = 0;
             for (String schema : schemas) {
                 LOGGER.debug("Create schema \"{}\"", schema);
-                connection.prepareStatement(
-                        String.format("CREATE SCHEMA IF NOT EXISTS %s", schema))
-                          .execute();
+                try(final PreparedStatement preparedStatement = connection.prepareStatement(String.format("CREATE SCHEMA IF NOT EXISTS %s", schema))) {
+                    preparedStatement.execute();
+                }
                 created++;
             }
             return created;

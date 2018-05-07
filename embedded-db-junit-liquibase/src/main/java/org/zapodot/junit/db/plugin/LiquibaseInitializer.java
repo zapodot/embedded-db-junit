@@ -5,7 +5,6 @@ import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
-import liquibase.database.core.H2Database;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
@@ -21,7 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A custom InitializationPlugin for
+ * A custom InitializationPlugin for Embedded DB Junit supporting database evolutions based on
+ * <a href="https://www.liquibase.org">Liquibase</a>.
  *
  * @author zapodot
  */
