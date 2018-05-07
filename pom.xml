@@ -220,11 +220,17 @@
                         <windowtitle>Embedded Database JUnit Rule API</windowtitle>
                         <encoding>UTF-8</encoding>
                         <links>
-                            <link>http://junit.org/javadoc/latest/</link>
-                            <link>http://docs.oracle.com/javase/7/docs/api/</link>
+                            <link>https://junit.org/junit4/javadoc/latest/</link>
+                            <link>https://docs.oracle.com/javase/8/docs/api/</link>
                         </links>
                         <locale>en</locale>
                         <keywords>true</keywords>
+                        <header>
+                            <![CDATA[<b><a href="https://github.com/zapodot/embedded-db-junit">Embedded DB JUnit plugin API</a>, v. ${project.version}</b>]]>
+                        </header>
+                        <bottom>
+                            <![CDATA[Copyright &#169; 2014&#x2014;{currentYear} <a href="http://zapodot.org">Sondre Eikanger Kval&oslash;</a>. All rights reserved..]]>
+                        </bottom>
                     </configuration>
                 </plugin>
                 <plugin>
