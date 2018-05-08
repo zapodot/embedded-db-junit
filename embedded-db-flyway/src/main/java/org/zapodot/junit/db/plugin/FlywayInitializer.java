@@ -9,9 +9,6 @@ import org.zapodot.junit.db.internal.EmbeddedDataSource;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -107,9 +104,7 @@ public class FlywayInitializer implements InitializationPlugin {
 
     @Override
     public void connectionMade(final String name, final Connection connection) {
-        if (flywayConfiguration.getSchemas() != null) {
-            createSchemas(connection, flywayConfiguration.getSchemas());
-        }
+        LOGGER.debug("Initiating Flyway migration");
         final Flyway flyway = new Flyway(flywayConfiguration);
         flyway.setDataSource(EmbeddedDataSource.create(connection));
         flyway.migrate();
@@ -119,20 +114,4 @@ public class FlywayInitializer implements InitializationPlugin {
         return flywayConfiguration;
     }
 
-    private long createSchemas(final Connection connection, final String[] schemas) {
-
-        return Arrays.stream(schemas)
-                     .map(schema -> createSchema(connection, schema))
-                     .count();
-    }
-
-    private boolean createSchema(final Connection connection, final String schema) {
-        LOGGER.debug("Create schema \"{}\"", schema);
-        try (final Statement preparedStatement = connection.createStatement()) {
-            preparedStatement.execute(String.format("CREATE SCHEMA IF NOT EXISTS %s", schema));
-        } catch (SQLException e) {
-            throw new IllegalStateException(String.format("Could not create schema \"%s\"", schema));
-        }
-        return true;
-    }
 }

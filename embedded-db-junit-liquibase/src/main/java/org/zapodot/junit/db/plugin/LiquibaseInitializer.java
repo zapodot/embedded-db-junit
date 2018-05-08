@@ -13,8 +13,8 @@ import liquibase.resource.ResourceAccessor;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,9 +55,6 @@ public class LiquibaseInitializer implements InitializationPlugin {
         private boolean addNameToContext = false;
 
         private String defaultSchemaName;
-
-        public Builder() {
-        }
 
         /**
          * A reference to the changelog file. Can be in any format supported by liquibase (currently SQL,Yaml,XML or JSON)
@@ -185,9 +182,8 @@ public class LiquibaseInitializer implements InitializationPlugin {
     @Override
     public void connectionMade(final String name, final Connection connection) {
         if (defaultSchemaName != null) {
-            try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    String.format("CREATE SCHEMA IF NOT EXISTS %s", defaultSchemaName))) {
-                preparedStatement.execute();
+            try (final Statement statement = connection.createStatement()) {
+                statement.execute(String.format("CREATE SCHEMA IF NOT EXISTS %s", defaultSchemaName));
             } catch (SQLException e) {
                 throw new IllegalStateException("Could not create schema \"" + defaultSchemaName + "\"", e);
             }

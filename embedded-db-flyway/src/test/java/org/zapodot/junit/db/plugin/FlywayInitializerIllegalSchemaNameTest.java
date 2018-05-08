@@ -2,36 +2,39 @@ package org.zapodot.junit.db.plugin;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test that shows that when Flyway initializes the schema it quotes the name. This allows reserved words to be used as schema names
+ */
 public class FlywayInitializerIllegalSchemaNameTest {
 
+    private static final String SCHEMA_NAME = "CREATE";
+
     @Rule
-    public final MockitoRule mockitoRule = MockitoJUnit.rule();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule =
+            EmbeddedDatabaseRule.h2()
+                                .withName(
+                                        "FlywayInitializerIllegalSchemaNameTest")
+                                .initializedByPlugin(
+                                        new FlywayInitializer.Builder()
+                                                .withSchemas(SCHEMA_NAME)
+                                                .withLocations(
+                                                        "classpath:migrations/")
+                                                .build()).build();
 
-    @Mock
-    private Statement statement;
-
-    @Test(expected = IllegalStateException.class)
-    public void illegalSchema() throws Throwable {
-        final Description testDescription = Description.createTestDescription(getClass(), "Flyway");
-        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.h2()
-                                                                              .initializedByPlugin(
-                                                                                      new FlywayInitializer.Builder()
-                                                                                              .withSchemas("SELECT",
-                                                                                                           "SCHEMA")
-                                                                                              .withLocations(
-                                                                                                      "classpath:migrations/")
-                                                                                              .build()).build();
-        final Statement appliedStatement = embeddedDatabaseRule.apply(statement, testDescription);
-        assertNotNull(appliedStatement);
-        appliedStatement.evaluate();
+    @Test
+    public void illegalSchema() throws SQLException {
+        try (final Statement statement = embeddedDatabaseRule.getConnection().createStatement();
+             final ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM USER")) {
+            assertNotNull(resultSet);
+            assertTrue(resultSet.next());
+        }
     }
 }
