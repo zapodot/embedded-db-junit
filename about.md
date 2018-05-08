@@ -13,4 +13,4 @@ The tool has proven to be quite valuable for my self in my day job as a software
 To use it in your project, add the dependency to your build tool, and add a public field of type _EmbeddedDatabaseRule_ annotated with JUnit @Rule annotation. For detailed examples, check the documentation and JUnit tests at the [project GitHub site](https://github.com/zapodot/embedded-db-junit).  
 
 Javadocs:
-* [v. 1.1.0](/javadocs/1.1.0/)
+* [v. 1.1.1](/javadocs/1.1.1/)
