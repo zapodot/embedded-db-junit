@@ -4,7 +4,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
@@ -15,36 +14,6 @@ import java.util.logging.Logger;
 public class EmbeddedDataSource implements DataSource {
 
     static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(EmbeddedDataSource.class);
-
-    static class Slf4jInfoWriter extends Writer {
-
-        private final org.slf4j.Logger logger;
-
-        public Slf4jInfoWriter(final org.slf4j.Logger logger) {
-            if(logger == null) {
-                throw new IllegalArgumentException("No logger was provided");
-            }
-            this.logger = logger;
-        }
-
-        @SuppressWarnings("squid:S2629")
-        @Override
-        public void write(final char[] cbuf, final int off, final int len) {
-            if (cbuf != null && cbuf.length > 0) {
-                logger.info(String.valueOf(cbuf));
-            }
-        }
-
-        @Override
-        public void flush() {
-            // Intentionally kept empty
-        }
-
-        @Override
-        public void close() {
-            // Intentionally kept empty
-        }
-    }
 
     private final Connection connection;
 

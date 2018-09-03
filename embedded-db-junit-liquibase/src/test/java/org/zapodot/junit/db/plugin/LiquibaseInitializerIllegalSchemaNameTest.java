@@ -7,7 +7,7 @@ import org.junit.runners.model.Statement;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.zapodot.junit.db.CompatibilityMode;
+import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import static org.junit.Assert.*;

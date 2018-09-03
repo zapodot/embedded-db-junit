@@ -2,7 +2,7 @@ package org.zapodot.junit.db.plugin;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.zapodot.junit.db.CompatibilityMode;
+import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
 import org.zapodot.junit.db.plugin.dao.RoleDao;
 

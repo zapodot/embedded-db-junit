@@ -1,6 +1,6 @@
 package org.zapodot.junit.db.internal;
 
-import org.zapodot.junit.db.CompatibilityMode;
+import org.zapodot.junit.db.common.CompatibilityMode;
 
 import java.util.Map;
 

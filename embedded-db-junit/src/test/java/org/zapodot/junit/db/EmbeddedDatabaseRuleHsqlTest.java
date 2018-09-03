@@ -2,6 +2,7 @@ package org.zapodot.junit.db;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.internal.HyperSqlJdbcUrlFactory;
 
 import java.sql.Connection;

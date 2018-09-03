@@ -1,6 +1,7 @@
 package org.zapodot.junit.db;
 
 import org.junit.Test;
+import org.zapodot.junit.db.common.CompatibilityMode;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;

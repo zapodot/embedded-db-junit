@@ -1,4 +1,4 @@
-package org.zapodot.junit.db;
+package org.zapodot.junit.db.common;
 
 /**
  * Describe what compatibility mode to use. The support for each mode may vary depending on the database engine.

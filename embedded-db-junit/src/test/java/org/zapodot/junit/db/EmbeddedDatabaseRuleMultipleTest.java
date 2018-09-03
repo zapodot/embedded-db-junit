@@ -3,6 +3,7 @@ package org.zapodot.junit.db;
 import com.github.davidmoten.rx.jdbc.Database;
 import org.junit.Rule;
 import org.junit.Test;
+import org.zapodot.junit.db.common.CompatibilityMode;
 import rx.Observable;
 
 import java.util.Date;

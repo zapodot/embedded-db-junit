@@ -10,7 +10,7 @@ import java.sql.Connection;
 public interface InitializationPlugin {
 
     /**
-     * Invoked by {@link org.zapodot.junit.db.EmbeddedDatabaseRule} after the in-memory database has been created
+     * Invoked by the Junit plugin after the in-memory database has been created
      *
      * @param name       the name of the in-memory H2 databaase
      * @param connection a connection to the database

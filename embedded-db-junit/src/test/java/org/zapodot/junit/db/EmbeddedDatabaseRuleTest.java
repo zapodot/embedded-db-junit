@@ -1,6 +1,7 @@
 package org.zapodot.junit.db;
 
 import org.junit.Test;
+import org.zapodot.junit.db.common.CompatibilityMode;
 
 import static org.junit.Assert.*;
 
@@ -52,7 +53,8 @@ public class EmbeddedDatabaseRuleTest {
 
     @Test
     public void testModeSet() {
-        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName("test").withMode(CompatibilityMode.Oracle).build();
+        final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.builder().withName("test").withMode(
+                CompatibilityMode.Oracle).build();
 
         assertEquals("jdbc:h2:mem:test;MODE=Oracle", embeddedDatabaseRule.getConnectionJdbcUrl());
     }

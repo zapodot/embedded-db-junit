@@ -1,4 +1,4 @@
-package org.zapodot.junit.db.internal;
+package org.zapodot.junit.db;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Before;
@@ -6,6 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.zapodot.junit.db.EmbeddedDatabaseRule;
+import org.zapodot.junit.db.internal.Slf4jInfoWriter;
 
 import javax.sql.DataSource;
 
@@ -61,7 +62,7 @@ public class EmbeddedDataSourceTest {
     @Test
     public void slf4jInfoWriter() {
         org.slf4j.Logger logger = Mockito.spy(org.slf4j.Logger.class);
-        final EmbeddedDataSource.Slf4jInfoWriter slf4jInfoWriter = new EmbeddedDataSource.Slf4jInfoWriter(logger);
+        final Slf4jInfoWriter slf4jInfoWriter = new Slf4jInfoWriter(logger);
         final char[] charArray = "test".toCharArray();
         slf4jInfoWriter.write((char[]) null, 0, 0);
         slf4jInfoWriter.write(charArray, 0, charArray.length);
@@ -71,7 +72,7 @@ public class EmbeddedDataSourceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void nullSlf4jInfoWritter() {
-        new EmbeddedDataSource.Slf4jInfoWriter(null);
+        new Slf4jInfoWriter(null);
     }
 
     @Test
