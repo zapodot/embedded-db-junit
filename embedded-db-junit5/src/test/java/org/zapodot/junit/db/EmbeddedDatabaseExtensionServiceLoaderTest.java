@@ -10,7 +10,7 @@ import java.util.stream.StreamSupport;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class EmbeddedDatabaseExtensionTest {
+class EmbeddedDatabaseExtensionServiceLoaderTest {
 
     @Test
     void loadUsingServiceLoader() throws ClassNotFoundException {
