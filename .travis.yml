@@ -9,10 +9,9 @@ before_install:
   - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 jdk:
 - oraclejdk8
-- oraclejdk9
 - openjdk11
 after_success:
-- mvn clean test jacoco:report coveralls:report
+- mvn test jacoco:report coveralls:report
 - echo "<settings><servers><server><id>sonatype-nexus-snapshots</id><username>\${env.REPO_USER}</username><password>\${env.REPO_KEY}</password></server></servers></settings>" > ~/settings.xml
 - mvn deploy --settings ~/settings.xml
 addons:
