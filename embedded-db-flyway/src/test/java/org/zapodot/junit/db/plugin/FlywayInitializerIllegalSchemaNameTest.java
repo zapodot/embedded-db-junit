@@ -20,8 +20,6 @@ public class FlywayInitializerIllegalSchemaNameTest {
     @Rule
     public final EmbeddedDatabaseRule embeddedDatabaseRule =
             EmbeddedDatabaseRule.h2()
-                                .withName(
-                                        "FlywayInitializerIllegalSchemaNameTest")
                                 .initializedByPlugin(
                                         new FlywayInitializer.Builder()
                                                 .withSchemas(SCHEMA_NAME)
@@ -32,7 +30,7 @@ public class FlywayInitializerIllegalSchemaNameTest {
     @Test
     public void illegalSchema() throws SQLException {
         try (final Statement statement = embeddedDatabaseRule.getConnection().createStatement();
-             final ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM USER")) {
+             final ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM \"CREATE\".USER")) {
             assertNotNull(resultSet);
             assertTrue(resultSet.next());
         }

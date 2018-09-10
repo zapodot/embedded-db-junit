@@ -2,7 +2,7 @@ package org.zapodot.junit.db.plugin;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
-import org.flywaydb.core.api.configuration.FlywayConfiguration;
+import org.flywaydb.core.api.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zapodot.junit.db.internal.EmbeddedDataSource;
@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class FlywayInitializer implements InitializationPlugin {
 
-    private final FlywayConfiguration flywayConfiguration;
+    private final Configuration flywayConfiguration;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FlywayInitializer.class);
 
@@ -98,7 +98,7 @@ public class FlywayInitializer implements InitializationPlugin {
         }
     }
 
-    private FlywayInitializer(final FlywayConfiguration flywayConfiguration) {
+    private FlywayInitializer(final Configuration flywayConfiguration) {
         this.flywayConfiguration = flywayConfiguration;
     }
 
@@ -110,7 +110,7 @@ public class FlywayInitializer implements InitializationPlugin {
         flyway.migrate();
     }
 
-    FlywayConfiguration getFlywayConfiguration() {
+    Configuration getFlywayConfiguration() {
         return flywayConfiguration;
     }
 
