@@ -20,6 +20,11 @@ public class Slf4jInfoWriterTest {
     @Spy
     public final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Test(expected = IllegalArgumentException.class)
+    public void constructNullLogger() {
+        assertNotNull(new Slf4jInfoWriter(null));
+    }
+
     @Test
     public void write() {
         final Slf4jInfoWriter slf4jInfoWriter = new Slf4jInfoWriter(logger);
