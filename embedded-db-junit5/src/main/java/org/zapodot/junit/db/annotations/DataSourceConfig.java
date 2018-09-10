@@ -33,6 +33,10 @@ public @interface DataSourceConfig {
      */
     CompatibilityMode compatibilityMode() default CompatibilityMode.REGULAR;
 
+    /**
+     * A predefined name for the datasource. Is normally not needed
+     * @return
+     */
     String name() default "";
 
     boolean autoCommit()  default true;
@@ -43,5 +47,17 @@ public @interface DataSourceConfig {
      * @return
      */
     ConfigurationProperty[] properties() default {};
+
+    /**
+     * SQL statements to be run once the embedded database server has been created
+     * @return
+     */
+    String[] initialSqls() default {};
+
+    /**
+     * Resources containing SQL to be executed once the embedded database server has been created
+     * @return
+     */
+    String[] initialSqlResources() default {};
 
 }

@@ -24,6 +24,8 @@ public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
 
     private static final String DATABASE_CREATE_SETTING = "create";
 
+    private static final String DATABASE_SHUTDOWN_WHEN_CLOSED = "shutdown";
+
     @Override
     public String connectionUrlForInitialization(final String name, final Map<String, String> properties) {
         return connectionUrl(name, addCreateProperty(properties));
@@ -40,6 +42,7 @@ public class HyperSqlJdbcUrlFactory implements JdbcUrlFactory {
         final Map<String, String> props = new LinkedHashMap<>();
         props.putAll(properties);
         props.put(DATABASE_CREATE_SETTING, ENABLED_SETTING);
+        props.put(DATABASE_SHUTDOWN_WHEN_CLOSED, ENABLED_SETTING);
         return props;
     }
 

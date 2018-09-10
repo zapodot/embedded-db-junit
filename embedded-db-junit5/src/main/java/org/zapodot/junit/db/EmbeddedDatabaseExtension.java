@@ -1,16 +1,18 @@
 package org.zapodot.junit.db;
 
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.platform.commons.util.AnnotationUtils;
-import org.junit.platform.commons.util.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zapodot.junit.db.annotations.ConfigurationProperty;
 import org.zapodot.junit.db.annotations.DataSourceConfig;
+import org.zapodot.junit.db.annotations.EmbeddedDatabase;
 import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.common.EmbeddedDatabaseCreator;
 import org.zapodot.junit.db.common.Engine;
@@ -23,18 +25,24 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * A JUnit5 Extension that makes it easy to test JDBC integration code
  */
-public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, ExecutionCondition, BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, BeforeEachCallback, AfterEachCallback, TestInstancePostProcessor, ParameterResolver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedDatabaseExtension.class);
 
-    private InternalEmbeddedDatabaseCreator embeddedDatabaseCreator;
+    private static final ExtensionContext.Namespace EMBEDDED_DB_EXT = ExtensionContext.Namespace
+            .create("org.zapodot.junit.db");
+
+    private static final String STORE_PROPERTY_DATABASE_CREATOR = "embeddedDatabaseCreator";
+
+    private static final String TEST_INSTANCE = "testInstance";
+
+    private final InternalEmbeddedDatabaseCreator embeddedDatabaseCreator;
 
     public EmbeddedDatabaseExtension() {
 
@@ -45,35 +53,56 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Execu
         this.embeddedDatabaseCreator = embeddedDatabaseCreator;
     }
 
-
     @Override
-    public void afterTestExecution(final ExtensionContext extensionContext) throws Exception {
-        embeddedDatabaseCreator.takeDownConnection();
+    public void afterEach(final ExtensionContext context) throws Exception {
+        final InternalEmbeddedDatabaseCreator internalEmbeddedDatabaseCreator = context.getStore(EMBEDDED_DB_EXT).get(
+                STORE_PROPERTY_DATABASE_CREATOR,
+                InternalEmbeddedDatabaseCreator.class);
+        if (internalEmbeddedDatabaseCreator != null) {
+            internalEmbeddedDatabaseCreator.takeDownConnection();
+        }
+        context.getStore(EMBEDDED_DB_EXT).remove(TEST_INSTANCE);
+        context.getStore(EMBEDDED_DB_EXT).remove(STORE_PROPERTY_DATABASE_CREATOR);
     }
 
     @Override
-    public void beforeTestExecution(final ExtensionContext extensionContext) throws Exception {
-        embeddedDatabaseCreator
-                .setupConnection(embeddedDatabaseCreator.getPredefinedName() != null ? embeddedDatabaseCreator
-                        .getPredefinedName() : extractNameFromExtensionContext(extensionContext));
+    public void beforeEach(final ExtensionContext context) throws Exception {
 
-        tryToInjectDataSourceOrConnection(extensionContext);
+        final InternalEmbeddedDatabaseCreator embeddedDatabaseCreatorFromConfiguration = Optional
+                .ofNullable(embeddedDatabaseCreator)
+                .orElseGet(() -> Optional.ofNullable(context.getStore(EMBEDDED_DB_EXT).get(
+                        STORE_PROPERTY_DATABASE_CREATOR,
+                        InternalEmbeddedDatabaseCreator.class))
+                                         .orElseGet(() -> tryToCreateFromExtensionContext(context).orElse(null)));
+        if (embeddedDatabaseCreatorFromConfiguration != null) {
+            embeddedDatabaseCreatorFromConfiguration
+                    .setupConnection(embeddedDatabaseCreatorFromConfiguration
+                                             .getPredefinedName() != null ? embeddedDatabaseCreatorFromConfiguration
+                            .getPredefinedName() : extractNameFromExtensionContext(context));
+            tryToInjectDataSourceOrConnection(context.getStore(EMBEDDED_DB_EXT).get(TEST_INSTANCE), embeddedDatabaseCreatorFromConfiguration);
+            context.getStore(EMBEDDED_DB_EXT)
+                   .put(STORE_PROPERTY_DATABASE_CREATOR, embeddedDatabaseCreatorFromConfiguration);
+        }
+
     }
 
     @Override
-    public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context) {
-        if (embeddedDatabaseCreator != null) {
-            return ConditionEvaluationResult.enabled("Configuration was provided");
-        }
-        final InternalEmbeddedDatabaseCreator embeddedDatabaseCreatorFromConfiguration = tryToCreateFromExtensionContext(
-                context);
-        if (embeddedDatabaseCreatorFromConfiguration == null) {
-            return ConditionEvaluationResult.disabled(
-                    "No database configuration found. Disabling test. Use @RegisterExtension with builder or the @DataSourceConfig annotation to configure");
-        } else {
-            this.embeddedDatabaseCreator = embeddedDatabaseCreatorFromConfiguration;
-            return ConditionEvaluationResult.enabled("Configuration provided using annotations");
-        }
+    public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) {
+        tryToCreateFromExtensionContext(context)
+                .ifPresent(dc -> context.getStore(EMBEDDED_DB_EXT).put(STORE_PROPERTY_DATABASE_CREATOR, dc));
+        context.getStore(EMBEDDED_DB_EXT).put(TEST_INSTANCE, testInstance);
+    }
+
+    @Override
+    public boolean supportsParameter(final ParameterContext parameterContext,
+                                     final ExtensionContext extensionContext) throws ParameterResolutionException {
+        return parameterContext.isAnnotated(EmbeddedDatabase.class);
+    }
+
+    @Override
+    public Object resolveParameter(final ParameterContext parameterContext,
+                                   final ExtensionContext extensionContext) throws ParameterResolutionException {
+        return null;
     }
 
     @Override
@@ -96,60 +125,33 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Execu
         return embeddedDatabaseCreator.getConnectionJdbcUrl();
     }
 
-    private void tryToInjectDataSourceOrConnection(final ExtensionContext extensionContext) {
-        extensionContext.getTestInstance()
-                        .ifPresent(testInstance -> {
-                            findInjectCandidateFields(extensionContext).stream()
-                                                                       .filter(field -> getFieldValueFromInstance(
-                                                                               testInstance,
-                                                                               field) == null)
-                                                                       .forEach(field ->
-                                                                                        injectDataSourceOrConnection(
-                                                                                                testInstance,
-                                                                                                field));
-                        });
+    private void tryToInjectDataSourceOrConnection(final Object testInstance,
+                                                   final EmbeddedDatabaseCreator embeddedDatabaseCreator) {
+        findInjectCandidateFields(testInstance.getClass()).stream()
+                                                   .forEach(field -> injectDataSourceOrConnection(testInstance, field, embeddedDatabaseCreator));
+    }
 
+    private List<Field> findInjectCandidateFields(final Class type) {
+        return AnnotationUtils.findAnnotatedFields(type, EmbeddedDatabase.class, f -> DataSource.class
+                .isAssignableFrom(f.getType()) || Connection.class
+                .isAssignableFrom(f.getType()));
 
     }
 
-    private List<Field> findInjectCandidateFields(final ExtensionContext extensionContext) {
-        return extensionContext.getTestClass()
-                               .map(clazz -> ReflectionUtils.findFields(clazz,
-                                                                        f -> DataSource.class
-                                                                                .isAssignableFrom(f.getType()) || Connection.class
-                                                                                .isAssignableFrom(f.getType()),
-                                                                        ReflectionUtils.HierarchyTraversalMode.TOP_DOWN))
-                               .orElse(Collections.emptyList());
-
-    }
-
-    private Object getFieldValueFromInstance(final Object testInstance,
-                                             final Field field) {
-        boolean accessibleOriginal = field.isAccessible();
-        try {
-            field.setAccessible(true);
-            return field.get(testInstance);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(String.format("Could not access field \"%s\" on instance %s",
-                                                          field,
-                                                          testInstance));
-        } finally {
-            field.setAccessible(accessibleOriginal);
-        }
-    }
 
     private void injectDataSourceOrConnection(final Object testInstance,
-                                              final Field field) {
+                                              final Field field,
+                                              final EmbeddedDatabaseCreator embeddedDatabaseCreator) {
         boolean accessibleOriginal = field.isAccessible();
         field.setAccessible(true);
         try {
 
             if (DataSource.class.isAssignableFrom(field.getType())) {
                 LOGGER.debug("Will inject javax.sql.DataSource to field {}", field.getName());
-                field.set(testInstance, getDataSource());
+                field.set(testInstance, embeddedDatabaseCreator.getDataSource());
             } else if (Connection.class.isAssignableFrom(field.getType())) {
                 LOGGER.debug("Will inject java.sql.Connection to field {}", field.getName());
-                field.set(testInstance, getConnection());
+                field.set(testInstance, embeddedDatabaseCreator.getConnection());
             }
         } catch (IllegalAccessException | IllegalArgumentException e) {
             throw new IllegalStateException("Could not inject embedded DataSource/Connection to field", e);
@@ -162,7 +164,7 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Execu
         return extensionContext.getTestClass().map(Class::getSimpleName).orElse(extensionContext.getUniqueId());
     }
 
-    private static InternalEmbeddedDatabaseCreator tryToCreateFromExtensionContext(final ExtensionContext extensionContext) {
+    private static Optional<InternalEmbeddedDatabaseCreator> tryToCreateFromExtensionContext(final ExtensionContext extensionContext) {
 
         LOGGER.debug("Constructing DataSource configuration using annotations");
         final Optional<DataSourceConfig> dataSourceConfig = findAnnotation(extensionContext.getElement(),
@@ -170,7 +172,7 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Execu
         if (!dataSourceConfig.isPresent()) {
             LOGGER.warn(
                     "No configuration found. There should be an @DataSourceConfig annotation on either the test class or the method");
-            return null;
+            return Optional.empty();
         } else {
             final DataSourceConfig dataSourceConfigValue = dataSourceConfig.get();
             final Builder builder;
@@ -191,20 +193,35 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Execu
             if (properties != null) {
                 Arrays.stream(properties).forEach(cp -> builder.withProperty(cp.name(), cp.value()));
             }
-
-            return builder.buildInternalEmbeddedDatabaseCreator();
+            if (!dataSourceConfigValue.autoCommit()) {
+                builder.withoutAutoCommit();
+            }
+            if (dataSourceConfigValue.initialSqls() != null) {
+                Arrays.stream(dataSourceConfigValue.initialSqls())
+                      .forEach(sql -> builder.withInitialSql(sql));
+            }
+            if (dataSourceConfigValue.initialSqlResources() != null) {
+                Arrays.stream(dataSourceConfigValue.initialSqlResources())
+                      .forEach(sqlResource -> builder.withInitialSqlFromResource(sqlResource));
+            }
+            return Optional.of(builder.buildInternalEmbeddedDatabaseCreator());
         }
     }
 
-    public static <A extends Annotation> Optional<A> findAnnotation(Optional<? extends AnnotatedElement> element,
-                                                                    Class<A> annotationType) {
+    private static <A extends Annotation> Optional<A> findAnnotation(Optional<? extends AnnotatedElement> element,
+                                                                     Class<A> annotationType) {
 
         if (element == null || !element.isPresent()) {
             return Optional.empty();
         }
-
-        return AnnotationUtils.findAnnotation(element.get(), annotationType);
+        return element.flatMap(e -> findAnnotationForElement(annotationType, e));
     }
+
+    private static <A extends Annotation> Optional<A> findAnnotationForElement(final Class<A> annotationType,
+                                                                               final AnnotatedElement e) {
+        return AnnotationUtils.findAnnotation(e, annotationType);
+    }
+
 
     public static class Builder extends AbstractEmbeddedDatabaseCreatorBuilder<EmbeddedDatabaseExtension> {
 
