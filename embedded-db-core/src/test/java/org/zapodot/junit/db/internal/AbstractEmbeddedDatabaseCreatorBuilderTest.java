@@ -37,6 +37,11 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
     }
 
     @Test
+    public void buildUsingLegalCompatibilityString() {
+        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode(CompatibilityMode.DB2.name()));
+    }
+
+    @Test
     public void buildUsingEmptyCompatibilityString() {
         assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode(""));
     }
