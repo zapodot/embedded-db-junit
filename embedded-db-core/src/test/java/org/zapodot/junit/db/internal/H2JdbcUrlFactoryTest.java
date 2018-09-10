@@ -1,6 +1,7 @@
 package org.zapodot.junit.db.internal;
 
 import org.junit.Test;
+import org.zapodot.junit.db.common.CompatibilityMode;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,7 +66,18 @@ public class H2JdbcUrlFactoryTest {
         final String dbName = "illegalSqlFromResource";
         final String jdbcUrl = new H2JdbcUrlFactory().connectionUrlForInitialization(dbName, null);
         assertEquals(H2JdbcUrlFactory.H2_IN_MEMORY_JDBC_URL_PREFIX + dbName, jdbcUrl);
-
     }
 
+    @Test
+    public void testBuildWithCompatibilityMode() {
+        final H2JdbcUrlFactory h2JdbcUrlFactory = new H2JdbcUrlFactory();
+        final String name = "name";
+        final String jdbcUrl = h2JdbcUrlFactory
+                .connectionUrlForInitialization(name, h2JdbcUrlFactory.compatibilityModeParam(
+                        CompatibilityMode.DB2));
+        final String[] elements = jdbcUrl.split(";");
+        assertEquals(2, elements.length);
+        assertEquals(H2JdbcUrlFactory.H2_IN_MEMORY_JDBC_URL_PREFIX + name, elements[0]);
+        assertEquals("MODE=DB2", elements[1]);
+    }
 }

@@ -83,4 +83,23 @@ public class HyperSqlJdbcUrlFactoryTest {
         assertEquals(Collections.emptyMap(),
                      URL_FACTORY.compatibilityModeParam(CompatibilityMode.HSQLDB));
     }
+
+    @Test
+    public void createForInitialization() {
+        final String name = "name";
+        final String urlForInitialization = new HyperSqlJdbcUrlFactory()
+                .connectionUrlForInitialization(name, Collections.emptyMap());
+        final String[] elements = urlForInitialization.split(";");
+        assertEquals(3, elements.length);
+        assertEquals(HyperSqlJdbcUrlFactory.HSQLDB_MEM_URL + name, elements[0]);
+        assertEquals("create=true", elements[1]);
+        assertEquals("shutdown=true", elements[2]);
+    }
+
+    @Test
+    public void createForReuse() {
+        final String name = "name";
+        final String connectionUrl = new HyperSqlJdbcUrlFactory().connectionUrl(name, Collections.emptyMap());
+        assertEquals(HyperSqlJdbcUrlFactory.HSQLDB_MEM_URL + name, connectionUrl);
+    }
 }
