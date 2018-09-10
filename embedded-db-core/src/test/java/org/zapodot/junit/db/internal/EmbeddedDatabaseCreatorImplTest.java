@@ -80,13 +80,38 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                     CompatibilityMode.DB2);
         databaseCreator.setupConnection("name");
         assertNotNull(databaseCreator.getConnection());
-        takeDownConnection();
+        databaseCreator.takeDownConnection();
     }
 
-    @Test
-    public void takeDownConnection() {
+    @Test(expected = SQLException.class)
+    public void illegalJdbcUrl() throws SQLException {
+        final RealEmbeddedDatabaseCreatorImpl databaseCreator = new RealEmbeddedDatabaseCreatorImpl(false,
+                                                                                                    "name",
+                                                                                                    Collections
+                                                                                                            .emptyMap(),
+                                                                                                    Collections
+                                                                                                            .emptyMap(),
+                                                                                                    new IllegalJdbcUrlFactory(),
+                                                                                                    CompatibilityMode.DB2);
+        databaseCreator.setupConnection("name");
     }
 
+    private static class IllegalJdbcUrlFactory implements JdbcUrlFactory {
+        @Override
+        public String connectionUrlForInitialization(final String name, final Map<String, String> properties) {
+            return "jdbc:stuff:notworks";
+        }
+
+        @Override
+        public String connectionUrl(final String name, final Map<String, String> properties) {
+            return connectionUrlForInitialization(name, properties);
+        }
+
+        @Override
+        public Map<String, String> compatibilityModeParam(final CompatibilityMode compatibilityMode) {
+            return Collections.emptyMap();
+        }
+    }
     private static class RealEmbeddedDatabaseCreatorImpl extends EmbeddedDatabaseCreatorImpl {
         public RealEmbeddedDatabaseCreatorImpl(final boolean autoCommit,
                                                final String name,
