@@ -22,7 +22,8 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 
 | Version | Java version | JUnit version | H2 version | HSQLDB version | Branch        | Status        |
 | ------- | ------------ | ------------- | ---------- | -------------- | ------------- | ------------- |
-| 1.1+    | 8.0          | 4.12          | 1.4.197    | 2.4.0          | `master`      | `active`      |
+| 2.X+    | 8.0          | 4.12/5.X      | 1.4.197    | 2.4.0          | `release-2.x` | `unreleased`  |
+| 1.1.X   | 8.0          | 4.12          | 1.4.197    | 2.4.0          | `master`      | `active`      |
 | 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | `release-1.x` | `maintenance` | 
 
 The versions that is described in this table are minimum versions. Later versions may be used but is currently not tested by the maintainer.
