@@ -5,9 +5,9 @@ import java.util.Properties;
 
 public class Version {
 
-    private static final String PROP_FILE_BUILD_INFO = "build.info.properties";
+    static final String PROP_FILE_BUILD_INFO = "build.info.properties";
 
-    private static final String PROP_FILE_GIT_PROPERTIES = "git.properties";
+    static final String PROP_FILE_GIT_PROPERTIES = "git.properties";
 
     private final String groupId;
 
@@ -77,12 +77,12 @@ public class Version {
         return loadPropertiesFile(PROP_FILE_GIT_PROPERTIES);
     }
 
-    private static Properties loadPropertiesFile(final String file) {
+    static Properties loadPropertiesFile(final String file) {
         final Properties properties = new Properties();
         try {
             properties.load(Version.class.getResourceAsStream("/" + file));
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not load build.info.properties", e);
+        } catch (IOException | NullPointerException e) {
+            throw new IllegalStateException("Could not load \"" + file + "\"", e);
         }
         return properties;
     }

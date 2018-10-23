@@ -19,4 +19,9 @@ public class VersionTest {
         assertNotNull(version.getGitCommit());
         assertNotEquals("", version.getGitCommit());
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void loadPropsNotFound() {
+        assertNotNull(Version.loadPropertiesFile("tsss"));
+    }
 }
