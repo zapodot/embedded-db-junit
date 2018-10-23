@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>2.0-SNAPSHOT</version>
     <properties>
-        <byte-buddy.version>1.8.22</byte-buddy.version>
+        <byte-buddy.version>1.9.2</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
-        <flyway.version>5.1.4</flyway.version>
-        <guava.version>25.0-jre</guava.version>
+        <flyway.version>5.2.0</flyway.version>
+        <guava.version>27.0-jre</guava.version>
         <h2.version>1.4.197</h2.version>
         <hsqldb.version>2.4.1</hsqldb.version>
         <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
@@ -24,19 +24,20 @@
         <liquibase.version>3.6.2</liquibase.version>
         <maven-build-info-plugin.version>1.2</maven-build-info-plugin.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven-git-commit-id-plugin.version>2.2.5</maven-git-commit-id-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
-        <mockito.version>2.21.0</mockito.version>
+        <mockito.version>2.23.0</mockito.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rxjava-jdbc.version>0.7.16</rxjava-jdbc.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring-jdbc.version>5.0.9.RELEASE</spring-jdbc.version>
-        <sql2o.version>1.6.0-RC3</sql2o.version>
+        <spring-jdbc.version>5.1.1.RELEASE</spring-jdbc.version>
+        <sql2o.version>1.6.0</sql2o.version>
     </properties>
     <prerequisites>
         <maven>3.2.0</maven>
@@ -204,6 +205,10 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
