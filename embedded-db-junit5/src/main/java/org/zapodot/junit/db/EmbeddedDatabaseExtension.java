@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
@@ -79,7 +80,8 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
                     .setupConnection(embeddedDatabaseCreatorFromConfiguration
                                              .getPredefinedName() != null ? embeddedDatabaseCreatorFromConfiguration
                             .getPredefinedName() : extractNameFromExtensionContext(context));
-            tryToInjectDataSourceOrConnection(context.getStore(EMBEDDED_DB_EXT).get(TEST_INSTANCE), embeddedDatabaseCreatorFromConfiguration);
+            tryToInjectDataSourceOrConnection(context.getStore(EMBEDDED_DB_EXT).get(TEST_INSTANCE),
+                                              embeddedDatabaseCreatorFromConfiguration);
             context.getStore(EMBEDDED_DB_EXT)
                    .put(STORE_PROPERTY_DATABASE_CREATOR, embeddedDatabaseCreatorFromConfiguration);
         }
@@ -102,6 +104,16 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
     @Override
     public Object resolveParameter(final ParameterContext parameterContext,
                                    final ExtensionContext extensionContext) throws ParameterResolutionException {
+        final Parameter parameter = parameterContext.getParameter();
+        final InternalEmbeddedDatabaseCreator databaseCreator = extensionContext.getStore(
+                EMBEDDED_DB_EXT).get(STORE_PROPERTY_DATABASE_CREATOR, InternalEmbeddedDatabaseCreator.class);
+        if (DataSource.class.isAssignableFrom(parameter.getType())) {
+            return databaseCreator.getDataSource();
+        } else if (Connection.class.isAssignableFrom(parameter.getType())) {
+            return databaseCreator.getConnection();
+        } else if (String.class.isAssignableFrom(parameter.getType())) {
+            return databaseCreator.getConnectionJdbcUrl();
+        }
         return null;
     }
 
@@ -128,7 +140,9 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
     private void tryToInjectDataSourceOrConnection(final Object testInstance,
                                                    final EmbeddedDatabaseCreator embeddedDatabaseCreator) {
         findInjectCandidateFields(testInstance.getClass()).stream()
-                                                   .forEach(field -> injectDataSourceOrConnection(testInstance, field, embeddedDatabaseCreator));
+                                                          .forEach(field -> injectDataSourceOrConnection(testInstance,
+                                                                                                         field,
+                                                                                                         embeddedDatabaseCreator));
     }
 
     private List<Field> findInjectCandidateFields(final Class type) {
@@ -211,9 +225,6 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
     private static <A extends Annotation> Optional<A> findAnnotation(Optional<? extends AnnotatedElement> element,
                                                                      Class<A> annotationType) {
 
-        if (element == null || !element.isPresent()) {
-            return Optional.empty();
-        }
         return element.flatMap(e -> findAnnotationForElement(annotationType, e));
     }
 
