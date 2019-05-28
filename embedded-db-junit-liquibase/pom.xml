@@ -33,7 +33,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <liquibase.version>3.6.1</liquibase.version>
+        <liquibase.version>3.6.3</liquibase.version>
     </properties>
     <build>
         <plugins>
