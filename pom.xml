@@ -29,7 +29,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <spring-jdbc.version>5.0.5.RELEASE</spring-jdbc.version>
         <sql2o.version>1.6.0-RC3</sql2o.version>
-        <hsqldb.version>2.4.0</hsqldb.version>
+        <hsqldb.version>2.5.0</hsqldb.version>
     </properties>
     <prerequisites>
         <maven>3.2.0</maven>
