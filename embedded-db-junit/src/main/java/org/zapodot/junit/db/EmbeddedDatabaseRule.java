@@ -21,11 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * A JUnit Rule implementation that makes it easy to stub JDBC integrations from your tests
@@ -44,7 +40,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
     private final Map<String, String> jdbcUrlProperties;
 
-    private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins;
+    private final List<InitializationPlugin> initializationPlugins;
 
     private final JdbcUrlFactory jdbcUrlFactory;
 
@@ -63,13 +59,13 @@ public class EmbeddedDatabaseRule implements TestRule {
     private EmbeddedDatabaseRule(final boolean autoCommit,
                                  final String name,
                                  final Map<String, String> jdbcUrlProperties,
-                                 final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                 final List<InitializationPlugin> initializationPlugins,
                                  final JdbcUrlFactory jdbcUrlFactory,
                                  final CompatibilityMode compatibilityMode) {
         this.autoCommit = autoCommit;
         this.predefinedName = name;
         this.jdbcUrlProperties = jdbcUrlProperties == null ? Collections.emptyMap() : jdbcUrlProperties;
-        this.initializationPlugins = initializationPlugins == null ? Collections.emptyMap() : initializationPlugins;
+        this.initializationPlugins = initializationPlugins == null ? Collections.emptyList() : initializationPlugins;
         this.jdbcUrlFactory = jdbcUrlFactory == null ? new H2JdbcUrlFactory() : jdbcUrlFactory;
         this.compatibilityMode = compatibilityMode;
     }
@@ -205,9 +201,8 @@ public class EmbeddedDatabaseRule implements TestRule {
             throw e;
         }
         connection.setAutoCommit(isAutoCommit());
-        for (final Map.Entry<Class<? extends InitializationPlugin>, InitializationPlugin> entry : initializationPlugins
-                .entrySet()) {
-            entry.getValue().connectionMade(name, getConnection());
+        for (InitializationPlugin entry : initializationPlugins) {
+            entry.connectionMade(name, getConnection());
         }
     }
 
@@ -218,7 +213,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
         private final Map<String, String> properties = new LinkedHashMap<>();
 
-        private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins = new LinkedHashMap<>();
+        private final List<InitializationPlugin> initializationPlugins = new LinkedList<>();
 
         private String name;
 
@@ -331,7 +326,7 @@ public class EmbeddedDatabaseRule implements TestRule {
 
         public <P extends InitializationPlugin> Builder initializedByPlugin(final P plugin) {
             if (plugin != null) {
-                initializationPlugins.put(plugin.getClass(), plugin);
+                initializationPlugins.add(plugin);
             }
             return this;
         }
