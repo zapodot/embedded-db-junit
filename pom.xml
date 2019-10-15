@@ -13,7 +13,7 @@
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <flyway.version>5.0.7</flyway.version>
         <guava.version>27.1-jre</guava.version>
-        <h2.version>1.4.199</h2.version>
+        <h2.version>1.4.200</h2.version>
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <java.version>1.8</java.version>
         <jdbi.version>2.78</jdbi.version>
