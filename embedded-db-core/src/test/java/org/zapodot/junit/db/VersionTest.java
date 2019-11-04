@@ -1,8 +1,9 @@
 package org.zapodot.junit.db;
 
-import org.junit.Test;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VersionTest {
 
@@ -20,8 +21,8 @@ public class VersionTest {
         assertNotEquals("", version.getGitCommit());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void loadPropsNotFound() {
-        assertNotNull(Version.loadPropertiesFile("tsss"));
+        assertThrows(IllegalStateException.class, () -> Version.loadPropertiesFile("tsss"));
     }
 }

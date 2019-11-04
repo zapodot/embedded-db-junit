@@ -1,24 +1,22 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class FilePathInitializationPluginTest {
-
-    @Rule
-    public final MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Connection connection;
@@ -26,14 +24,14 @@ public class FilePathInitializationPluginTest {
     @Mock
     private Statement statement;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void resourceMissing() {
-        new FilePathInitializationPlugin(null, null);
+        assertThrows(IllegalArgumentException.class, () -> new FilePathInitializationPlugin(null, null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void charsetMissing() {
-        new FilePathInitializationPlugin("resource", null);
+        assertThrows(IllegalArgumentException.class, () -> new FilePathInitializationPlugin("resource", null));
     }
 
     @Test
@@ -51,7 +49,7 @@ public class FilePathInitializationPluginTest {
         verifyNoMoreInteractions(connection, statement);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void connectionSQLExecutionFails() throws SQLException {
         final FilePathInitializationPlugin filePathInitializationPlugin = new FilePathInitializationPlugin(
                 "classpath:initial.sql",
@@ -60,26 +58,20 @@ public class FilePathInitializationPluginTest {
 
         when(connection.createStatement()).thenReturn(statement);
         when(statement.execute(anyString())).thenThrow(new SQLException("Error"));
-        try {
-            filePathInitializationPlugin.connectionMade("name", connection);
-        } finally {
-            verify(connection).createStatement();
-            verify(statement).execute(anyString());
-            verify(statement).close();
-            verifyNoMoreInteractions(connection, statement);
-        }
+        assertThrows(IllegalArgumentException.class, () -> filePathInitializationPlugin.connectionMade("name", connection));
+        verify(connection).createStatement();
+        verify(statement).execute(anyString());
+        verify(statement).close();
+        verifyNoMoreInteractions(connection, statement);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void connectionMadeIllegalPath() {
         final FilePathInitializationPlugin filePathInitializationPlugin = new FilePathInitializationPlugin(
                 "classpath:nonexisting.sql",
                 StandardCharsets.UTF_8);
         assertNotNull(filePathInitializationPlugin);
-        try {
-            filePathInitializationPlugin.connectionMade("name", connection);
-        } finally {
-            verifyNoMoreInteractions(connection, statement);
-        }
+        assertThrows(IllegalArgumentException.class, () -> filePathInitializationPlugin.connectionMade("name", connection));
+        verifyNoMoreInteractions(connection, statement);
     }
 }

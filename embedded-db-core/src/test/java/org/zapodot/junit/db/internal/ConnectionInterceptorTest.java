@@ -1,10 +1,9 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -14,10 +13,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ConnectionInterceptorTest {
 
     static class FrenchConnection implements ConnectionProxy, Connection {
@@ -308,9 +307,6 @@ public class ConnectionInterceptorTest {
         }
     }
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Mock
     private Connection connection;
 
@@ -325,17 +321,17 @@ public class ConnectionInterceptorTest {
         verifyNoMoreInteractions(connection);
     }
 
-    @Test(expected = SQLException.class)
+    @Test
     public void testInterceptWithException() throws Throwable {
         when(connection.createStatement()).thenThrow(new SQLException("Some reason"));
-        doInterception(connection);
+        assertThrows(SQLException.class, () -> doInterception(connection));
 
     }
 
-    @Test(expected = InvocationTargetException.class)
+    @Test
     public void testInterceptWithError() throws Throwable {
         when(connection.createStatement()).thenThrow(new Error("Some Error"));
-        doInterception(connection);
+        assertThrows(InvocationTargetException.class, () -> doInterception(connection));
 
     }
 
@@ -347,10 +343,10 @@ public class ConnectionInterceptorTest {
         constructor.setAccessible(false);
     }
 
-    @Test(expected = IllegalAccessException.class)
+    @Test
     public void testNoInstantiation() throws Exception {
         final Constructor<ConnectionInterceptor> constructor = ConnectionInterceptor.class.getDeclaredConstructor();
-        constructor.newInstance();
+        assertThrows(IllegalAccessException.class, () -> constructor.newInstance());
 
     }
 

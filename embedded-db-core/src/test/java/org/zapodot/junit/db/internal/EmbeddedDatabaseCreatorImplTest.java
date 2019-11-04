@@ -1,6 +1,6 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.plugin.InitializationPlugin;
 
@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EmbeddedDatabaseCreatorImplTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void getConnection() {
         final RealEmbeddedDatabaseCreatorImpl realEmbeddedDatabaseCreator = new RealEmbeddedDatabaseCreatorImpl(false,
                                                                                                                 "name",
@@ -23,7 +23,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                                 new H2JdbcUrlFactory(),
                                                                                                                 CompatibilityMode.DB2);
         assertNotNull(realEmbeddedDatabaseCreator);
-        realEmbeddedDatabaseCreator.getConnection();
+        assertThrows(NullPointerException.class, () -> realEmbeddedDatabaseCreator.getConnection());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class EmbeddedDatabaseCreatorImplTest {
         databaseCreator.takeDownConnection();
     }
 
-    @Test(expected = SQLException.class)
+    @Test
     public void illegalJdbcUrl() throws SQLException {
         final RealEmbeddedDatabaseCreatorImpl databaseCreator = new RealEmbeddedDatabaseCreatorImpl(false,
                                                                                                     "name",
@@ -93,7 +93,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                             .emptyMap(),
                                                                                                     new IllegalJdbcUrlFactory(),
                                                                                                     CompatibilityMode.DB2);
-        databaseCreator.setupConnection("name");
+        assertThrows(SQLException.class, () -> databaseCreator.setupConnection("name"));
     }
 
     private static class IllegalJdbcUrlFactory implements JdbcUrlFactory {

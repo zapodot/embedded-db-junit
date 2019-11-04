@@ -1,10 +1,9 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.common.EmbeddedDatabaseCreator;
 import org.zapodot.junit.db.common.Engine;
@@ -13,12 +12,10 @@ import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class AbstractEmbeddedDatabaseCreatorBuilderTest {
-
-    @Rule
-    public final MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Connection connection;
@@ -26,14 +23,14 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
     @Mock
     private DataSource dataSource;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void buildUsingNullCompatibilityString() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode((String) null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode((String) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void buildUsingIllegalCompatibilityString() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode("STUFF"));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode("STUFF"));
     }
 
     @Test
@@ -46,9 +43,9 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
         assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode(""));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void buildUsingNullCompatibilityEnumValue() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode((CompatibilityMode) null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withMode((CompatibilityMode) null));
     }
 
     @Test
@@ -63,19 +60,19 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
                      new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB).getH2JdbcUrlFactory().getClass());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInitialSqlFromResourceNullResource() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB).withInitialSqlFromResource(null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB).withInitialSqlFromResource(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInitialSqlFromResourceAndCharsetNullResource() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB).withInitialSqlFromResource(null, null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB).withInitialSqlFromResource(null, null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInitialSqlFromResourceAndCharsetNullCharset() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB)
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.HSQLDB)
                               .withInitialSqlFromResource("classpath:file.sql", null));
     }
 
@@ -85,9 +82,9 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
                 .withInitialSqlFromResource("classpath:initial.sql").initializationPlugins.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInitialSqlNull() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withInitialSql(null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(Engine.H2).withInitialSql(null));
     }
 
     @Test
@@ -97,9 +94,9 @@ public class AbstractEmbeddedDatabaseCreatorBuilderTest {
                              .withInitialSql("CREATE TABLE A(B varchar(255))").initializationPlugins.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withNoEngine() {
-        assertNotNull(new InternalEmbeddedDatabaseCreatorBuilder(null));
+        assertThrows(IllegalArgumentException.class, () -> new InternalEmbeddedDatabaseCreatorBuilder(null));
     }
 
     @Test

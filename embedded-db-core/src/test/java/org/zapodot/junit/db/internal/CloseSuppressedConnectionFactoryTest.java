@@ -1,25 +1,27 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Test;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-
+import static org.hamcrest.Matchers.*;
 /**
  * Created by cc31904 on 19.05.2017.
  */
 public class CloseSuppressedConnectionFactoryTest {
 
-    @Test(expected = IllegalAccessException.class)
+    @Test
     public void instantiationUsingPrivateConstructor() throws Exception {
         final Constructor<CloseSuppressedConnectionFactory> constructor = CloseSuppressedConnectionFactory.class
                 .getDeclaredConstructor();
-        constructor.newInstance();
+        assertThrows(IllegalAccessException.class, () -> constructor.newInstance());
     }
 
     @Test

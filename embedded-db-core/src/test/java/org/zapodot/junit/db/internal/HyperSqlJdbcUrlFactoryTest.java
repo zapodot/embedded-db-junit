@@ -1,11 +1,11 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zapodot.junit.db.common.CompatibilityMode;
 
 import java.util.Collections;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HyperSqlJdbcUrlFactoryTest {
 

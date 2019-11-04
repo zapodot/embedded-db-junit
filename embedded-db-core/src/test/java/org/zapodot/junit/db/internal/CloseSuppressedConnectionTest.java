@@ -1,34 +1,29 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
+@ExtendWith(MockitoExtension.class)
 public class CloseSuppressedConnectionTest {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Connection underlyingConnection;
 
     private Connection connection;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         this.connection = CloseSuppressedConnectionFactory.createProxy(underlyingConnection);
 
@@ -88,7 +83,7 @@ public class CloseSuppressedConnectionTest {
     @Test
     public void testClose() throws Exception {
         connection.close();
-        verifyZeroInteractions(underlyingConnection);
+        verifyNoInteractions(underlyingConnection);
     }
 
 

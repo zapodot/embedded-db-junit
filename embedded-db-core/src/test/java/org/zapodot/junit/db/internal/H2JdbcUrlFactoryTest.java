@@ -1,13 +1,17 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zapodot.junit.db.common.CompatibilityMode;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author zapodot
@@ -33,9 +37,9 @@ public class H2JdbcUrlFactoryTest {
         return properties;
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testBuildWithNameNull() {
-        new H2JdbcUrlFactory().connectionUrl(null, null);
+        assertThrows(NullPointerException.class, () -> new H2JdbcUrlFactory().connectionUrl(null, null));
     }
 
     @Test
@@ -43,14 +47,14 @@ public class H2JdbcUrlFactoryTest {
         final String name = "illegalSqlFromResource";
         final String jdbcUrl = new H2JdbcUrlFactory()
                 .connectionUrlForInitialization(name, createPropertyWithInitValue("something"));
-        assertTrue(jdbcUrl.contains(H2JdbcUrlFactory.PROP_INIT_SQL));
+        assertThat(jdbcUrl, containsString(H2JdbcUrlFactory.PROP_INIT_SQL));
     }
 
     @Test
     public void testBuildWitNameAndFilter() {
         final String jdbcUrl = new H2JdbcUrlFactory()
                 .connectionUrl("illegalSqlFromResource", createPropertyWithInitValue("something"));
-        assertFalse(jdbcUrl.contains(H2JdbcUrlFactory.PROP_INIT_SQL));
+        assertThat(jdbcUrl, not(containsString(H2JdbcUrlFactory.PROP_INIT_SQL)));
     }
 
     @Test

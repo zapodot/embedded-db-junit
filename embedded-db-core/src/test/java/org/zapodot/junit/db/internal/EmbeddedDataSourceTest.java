@@ -1,20 +1,17 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class EmbeddedDataSourceTest {
-
-    @Rule
-    public final MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Connection connection;
@@ -66,8 +63,8 @@ public class EmbeddedDataSourceTest {
         assertFalse(EmbeddedDataSource.create(connection).isWrapperFor(getClass()));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void unwrap() {
-        assertNotNull(EmbeddedDataSource.create(connection).unwrap(getClass()));
+        assertThrows(UnsupportedOperationException.class, () -> EmbeddedDataSource.create(connection).unwrap(getClass()));
     }
 }

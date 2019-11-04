@@ -1,23 +1,21 @@
 package org.zapodot.junit.db.internal;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class SQLInitializationPluginTest {
-
-    @Rule
-    public final MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Connection connection;
@@ -25,12 +23,12 @@ public class SQLInitializationPluginTest {
     @Mock
     private Statement statement;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void constructionNull() {
-        assertNull(new SQLInitializationPlugin(null));
+        assertThrows(IllegalArgumentException.class, () -> new SQLInitializationPlugin(null));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void connectionMadeSQLFails() throws SQLException {
         final SQLInitializationPlugin sqlInitializationPlugin = new SQLInitializationPlugin(
                 "INSERT INTO MyTables values(1, 'User');");
@@ -38,7 +36,7 @@ public class SQLInitializationPluginTest {
         when(connection.createStatement()).thenReturn(statement);
         when(statement.execute(anyString())).thenThrow(new SQLException("Reason"));
 
-        sqlInitializationPlugin.connectionMade("name", connection);
+        assertThrows(IllegalStateException.class, () -> sqlInitializationPlugin.connectionMade("name", connection));
 
     }
 }
