@@ -100,6 +100,10 @@ public class FlywayInitializer implements InitializationPlugin {
         }
     }
 
+    public static Builder builder() {
+        return new FlywayInitializer.Builder();
+    }
+
     private FlywayInitializer(final FluentConfiguration flywayConfiguration) {
         this.flywayConfiguration = flywayConfiguration;
     }

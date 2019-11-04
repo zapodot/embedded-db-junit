@@ -21,7 +21,7 @@ public interface EmbeddedDatabaseCreator {
     /**
      * Convenience method that may be used to check if AutoCommit has been set
      *
-     * @return
+     * @return state of autoCommit
      */
     boolean isAutoCommit();
 

@@ -13,12 +13,11 @@ import static org.junit.Assert.*;
 public class FlywayInitializerDefaultSettingsTest {
 
     @Rule
-    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.h2()
-                                                                                 .initializedByPlugin(
-                                                                                   new FlywayInitializer.Builder()
-                                                                                           .withLocations(
-                                                                                                   "classpath:migrations/")
-                                                                                           .build()).build();
+    public final EmbeddedDatabaseRule embeddedDatabaseRule = EmbeddedDatabaseRule.h2().initializedByPlugin(
+            FlywayInitializer.builder()
+                    .withLocations(
+                            "classpath:migrations/")
+                    .build()).build();
 
 
     @Test

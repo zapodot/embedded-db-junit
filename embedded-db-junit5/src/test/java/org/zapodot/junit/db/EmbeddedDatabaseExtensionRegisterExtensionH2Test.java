@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class EmbeddedDatabaseExtensionRegisterExtensionH2Test {
 
     @RegisterExtension
-    static EmbeddedDatabaseExtension embeddedDatabaseExtension = EmbeddedDatabaseExtension.Builder.h2().build();
+    static EmbeddedDatabaseExtension embeddedDatabaseExtension = EmbeddedDatabaseExtension.Builder.h2().initializedByPlugin((n,c) -> {}).build();
 
     @EmbeddedDatabase
     private DataSource injectableDataSource;
