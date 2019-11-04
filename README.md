@@ -22,7 +22,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 
 | Version | Java version | JUnit version | H2 version | HSQLDB version | Branch                                                                   | Status        |
 | ------- | ------------ | ------------- | ---------- | -------------- | ------------------------------------------------------------------------ | ------------- |
-| 2.X+    | 8.0          | 4.12/5.X      | 1.4.197    | 2.4.1          | [`release-2.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.x) | `unreleased`  |
+| 2.X+    | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`release-2.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.x) | `beta`  |
 | 1.1.X   | 8.0          | 4.12          | 1.4.197    | 2.4.0          | [`master`](//github.com/zapodot/embedded-db-junit)                       | `active`      |
 | 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | [`release-1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.x) | `maintenance` | 
 
@@ -32,11 +32,23 @@ The versions that is described in this table are minimum versions. Later version
 
 ### Add dependency
 #### Maven
+
+#### For JUnit 5 Jupiter
+```xml
+<dependency>
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-db-junit-jupiter</artifactId>
+    <version>2.0-BETA1</version>
+    <scope>test</scope>
+</dependency>
+```
+
+#### For JUnit 4.X
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>1.1.1</version>
+    <version>2.0-BETA1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -47,7 +59,7 @@ If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/m
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-liquibase</artifactId>
-    <version>1.1.1</version>
+    <version>2.0-BETA1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -57,17 +69,69 @@ If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/mast
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-flyway</artifactId>
-    <version>1.1.1</version>
+    <version>2.0-BETA1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "1.1.1" % "test"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "2.0-BETA1" % "test"
 ```
 
 ### Add to Junit test
+#### Junit 5.X Jupiter
+##### Declarative style using annotations
+```java
+@ExtendWith(EmbeddedDatabaseExtension.class)
+@DataSourceConfig(
+        engine = Engine.HSQLDB
+)
+class EmbeddedDatabaseExtensionExtendWithTest {
+
+    @Test
+    void testUsingSpringJdbc(final @EmbeddedDatabase DataSource dataSource) {
+        final JdbcOperations jdbcOperation = new JdbcTemplate(dataSource);
+        final int id = 2;
+        final String customerName = "Jane Doe";
+    
+        final int updatedRows = jdbcOperation.update("INSERT INTO CUSTOMER(id, name) VALUES(?,?)", id, customerName);
+    
+        assertEquals(1, updatedRows);
+        assertEquals(customerName, jdbcOperation.queryForObject("SELECT name from CUSTOMER where id = ?", String.class, id));
+
+    }
+    
+    void testUsingConnection(final @EmbeddedDatabase Connection connection) {
+         try(final Statement statement = connection.createStatement();
+             final ResultSet resultSet = statement.executeQuery("SELECT * from CUSTOMER")) {
+                assertTrue(resultSet.next());
+         }
+    } 
+
+}
+```
+
+##### Fluent style using builder and @RegisterExtension
+```java
+class EmbeddedDatabaseExtensionRegisterExtensionHSQLDBTest {
+
+    @RegisterExtension
+    static EmbeddedDatabaseExtension embeddedDatabaseExtension = EmbeddedDatabaseExtension.Builder.hsqldb()
+                                            .withInitialSql("CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
+                                                          + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')")
+                                            .build();
+
+
+    @Test
+    void doDatabaseCall() throws SQLException {
+        assertEquals("HSQL Database Engine", embeddedDatabaseExtension.getConnection().getMetaData().getDatabaseProductName());
+    }
+
+}
+```
+
+#### Junit 4.X
 ```java
 @Rule
 public final EmbeddedDatabaseRule dbRule = EmbeddedDatabaseRule
