@@ -132,7 +132,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>embedded-db-jupiter</artifactId>
+                <artifactId>embedded-db-junit-jupiter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -397,7 +397,7 @@
     <modules>
         <module>embedded-db-core</module>
         <module>embedded-db-junit</module>
-        <module>embedded-db-jupiter</module>
+        <module>embedded-db-junit-jupiter</module>
         <module>embedded-db-junit-liquibase</module>
         <module>embedded-db-flyway</module>
         <module>embedded-db-plugin-jupiter-tests</module>
