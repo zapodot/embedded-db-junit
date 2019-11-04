@@ -1,6 +1,7 @@
 package org.zapodot.junit.db;
 
 import com.github.davidmoten.rx.jdbc.Database;
+import org.h2.api.TimestampWithTimeZone;
 import org.junit.Rule;
 import org.junit.Test;
 import org.zapodot.junit.db.common.CompatibilityMode;
@@ -26,8 +27,8 @@ public class EmbeddedDatabaseRuleMultipleTest {
         final Database mysql = Database.from(embeddedDatabaseMysqlRule.getConnection());
         final Database mssqlServer = Database.from(embeddedDatabaseMsSqlServerRule.getConnection());
 
-        final Observable<Date> dateMysql = mysql.select("select sysdate from dual").getAs(Date.class);
-        final Observable<Date> dateMssql = mssqlServer.select("select sysdate from dual").getAs(Date.class);
+        final Observable<TimestampWithTimeZone> dateMysql = mysql.select("select sysdate from dual").getAs(TimestampWithTimeZone.class);
+        final Observable<TimestampWithTimeZone> dateMssql = mssqlServer.select("select sysdate from dual").getAs(TimestampWithTimeZone.class);
 
         assertTrue(Observable.zip(dateMysql, dateMssql, (date, date2) -> date != null && date2 != null).toBlocking().single());
 
