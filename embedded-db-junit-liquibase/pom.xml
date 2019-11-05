@@ -32,9 +32,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <properties>
-        <liquibase.version>3.6.3</liquibase.version>
-    </properties>
     <build>
         <plugins>
             <plugin>

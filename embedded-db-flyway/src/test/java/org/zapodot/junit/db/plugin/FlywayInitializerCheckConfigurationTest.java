@@ -54,9 +54,9 @@ public class FlywayInitializerCheckConfigurationTest {
         assertTrue(flywayInitializer.getFlywayConfiguration().isIgnoreMissingMigrations());
         assertFalse(flywayInitializer.getFlywayConfiguration().isValidateOnMigrate());
         assertFalse(flywayInitializer.getFlywayConfiguration().isIgnoreFutureMigrations());
-        assertEquals(ENCODING, flywayInitializer.getFlywayConfiguration().getEncoding());
+        assertEquals(ENCODING, flywayInitializer.getFlywayConfiguration().getEncoding().name());
         assertEquals(TARGET_VERSION, flywayInitializer.getFlywayConfiguration().getTarget().getVersion());
-        assertEquals(LOCATION, flywayInitializer.getFlywayConfiguration().getLocations()[0]);
+        assertEquals(LOCATION, flywayInitializer.getFlywayConfiguration().getLocations()[0].toString());
 
     }
 }
