@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EmbeddedDatabaseTest(engine = Engine.HSQLDB)
-class EmbeddedDatabaseExtensionExtendWithTest {
+class EmbeddedDatabaseExtensionDeclarativeTest {
 
 
     @EmbeddedDatabase
