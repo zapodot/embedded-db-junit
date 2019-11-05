@@ -32,7 +32,7 @@ public class FlywayInitializerIllegalSchemaNameTest {
     @Test
     public void illegalSchema() throws SQLException {
         try (final Statement statement = embeddedDatabaseRule.getConnection().createStatement();
-             final ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM USER")) {
+             final ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM \"" + SCHEMA_NAME + "\".USER")) {
             assertNotNull(resultSet);
             assertTrue(resultSet.next());
         }
