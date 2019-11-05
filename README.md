@@ -84,7 +84,9 @@ libraryDependencies += "org.zapodot" % "embedded-db-junit" % "2.0-BETA1" % "test
 ##### Declarative style using annotations
 ```java
 @EmbeddedDatabaseTest(
-        engine = Engine.HSQLDB
+        engine = Engine.HSQLDB,
+        initialSqls = "CREATE TABLE Customer(id INTEGER PRIMARY KEY, name VARCHAR(512)); "
+                    + "INSERT INTO CUSTOMER(id, name) VALUES (1, 'John Doe')"
 )
 class EmbeddedDatabaseExtensionExtendWithTest {
 
