@@ -83,8 +83,7 @@ libraryDependencies += "org.zapodot" % "embedded-db-junit" % "2.0-BETA1" % "test
 #### Junit 5.X Jupiter
 ##### Declarative style using annotations
 ```java
-@ExtendWith(EmbeddedDatabaseExtension.class)
-@DataSourceConfig(
+@EmbeddedDatabaseTest(
         engine = Engine.HSQLDB
 )
 class EmbeddedDatabaseExtensionExtendWithTest {

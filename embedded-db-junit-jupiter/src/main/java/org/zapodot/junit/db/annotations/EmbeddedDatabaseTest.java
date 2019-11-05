@@ -1,23 +1,18 @@
 package org.zapodot.junit.db.annotations;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.zapodot.junit.db.EmbeddedDatabaseExtension;
 import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.common.Engine;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-/**
- * Configuration for the Embedded database server.
- */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface DataSourceConfig {
+@ExtendWith(EmbeddedDatabaseExtension.class)
+public @interface EmbeddedDatabaseTest {
 
     /**
      * Engine to use for the embedded database
@@ -59,5 +54,4 @@ public @interface DataSourceConfig {
      * @return
      */
     String[] initialSqlResources() default {};
-
 }

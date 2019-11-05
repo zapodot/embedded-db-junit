@@ -1,18 +1,12 @@
 package org.zapodot.junit.db;
 
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
-import org.junit.jupiter.api.extension.ParameterResolver;
-import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.util.AnnotationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zapodot.junit.db.annotations.ConfigurationProperty;
-import org.zapodot.junit.db.annotations.DataSourceConfig;
 import org.zapodot.junit.db.annotations.EmbeddedDatabase;
+import org.zapodot.junit.db.annotations.EmbeddedDatabaseTest;
 import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.common.EmbeddedDatabaseCreator;
 import org.zapodot.junit.db.common.Engine;
@@ -181,14 +175,14 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
     private static Optional<InternalEmbeddedDatabaseCreator> tryToCreateFromExtensionContext(final ExtensionContext extensionContext) {
 
         LOGGER.debug("Constructing DataSource configuration using annotations");
-        final Optional<DataSourceConfig> dataSourceConfig = findAnnotation(extensionContext.getElement(),
-                                                                           DataSourceConfig.class);
+        final Optional<EmbeddedDatabaseTest> dataSourceConfig = findAnnotation(extensionContext.getElement(),
+                                                                           EmbeddedDatabaseTest.class);
         if (!dataSourceConfig.isPresent()) {
             LOGGER.warn(
                     "No configuration found. There should be an @DataSourceConfig annotation on either the test class or the method");
             return Optional.empty();
         } else {
-            final DataSourceConfig dataSourceConfigValue = dataSourceConfig.get();
+            final EmbeddedDatabaseTest dataSourceConfigValue = dataSourceConfig.get();
             final Builder builder;
             if (Engine.HSQLDB.equals(dataSourceConfigValue.engine())) {
                 builder = Builder.hsqldb();

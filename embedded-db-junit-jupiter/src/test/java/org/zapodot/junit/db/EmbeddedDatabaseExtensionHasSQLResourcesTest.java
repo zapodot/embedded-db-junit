@@ -1,9 +1,8 @@
 package org.zapodot.junit.db;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.zapodot.junit.db.annotations.DataSourceConfig;
 import org.zapodot.junit.db.annotations.EmbeddedDatabase;
+import org.zapodot.junit.db.annotations.EmbeddedDatabaseTest;
 import org.zapodot.junit.db.common.Engine;
 
 import java.sql.Connection;
@@ -13,11 +12,7 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(EmbeddedDatabaseExtension.class)
-@DataSourceConfig(
-        engine = Engine.HSQLDB,
-        initialSqlResources = "classpath:create-tables.sql"
-)
+@EmbeddedDatabaseTest(engine = Engine.HSQLDB, initialSqlResources = "classpath:create-tables.sql")
 class EmbeddedDatabaseExtensionHasSQLResourcesTest {
 
     @EmbeddedDatabase
