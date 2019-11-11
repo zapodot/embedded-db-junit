@@ -12,7 +12,7 @@ public interface InitializationPlugin {
     /**
      * Invoked by the Junit plugin after the in-memory database has been created
      *
-     * @param name       the name of the in-memory H2 databaase
+     * @param name       the name of the in-memory H2 or HSQLDB database
      * @param connection a connection to the database
      */
     void connectionMade(final String name, final Connection connection);
