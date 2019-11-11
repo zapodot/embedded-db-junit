@@ -4,7 +4,7 @@ if [    "$TRAVIS_REPO_SLUG" = "zapodot/embedded-db-junit" -a \
         "$TRAVIS_PULL_REQUEST" = "false" -a \
         "$TRAVIS_BRANCH" = "master" ]
 then
-
+  mvn javadoc:aggregate-no-fork
   echo "Publishing javadoc..."
 
   cp -R target/site/apidocs $HOME/apidocs
