@@ -4,13 +4,14 @@ import org.zapodot.junit.db.common.CompatibilityMode;
 import org.zapodot.junit.db.plugin.InitializationPlugin;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class InternalEmbeddedDatabaseCreator extends EmbeddedDatabaseCreatorImpl {
     public InternalEmbeddedDatabaseCreator(final boolean autoCommit,
                                            final String name,
                                            final Map<String, String> jdbcUrlProperties,
-                                           final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                           final List<InitializationPlugin> initializationPlugins,
                                            final JdbcUrlFactory jdbcUrlFactory,
                                            final CompatibilityMode compatibilityMode) {
         super(autoCommit, name, jdbcUrlProperties, initializationPlugins, jdbcUrlFactory, compatibilityMode);

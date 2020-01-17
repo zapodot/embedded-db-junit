@@ -205,12 +205,12 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
                 builder.withoutAutoCommit();
             }
             if (dataSourceConfigValue.initialSqls() != null) {
-                Arrays.stream(dataSourceConfigValue.initialSqls())
-                      .forEach(sql -> builder.withInitialSql(sql));
+                Arrays.asList(dataSourceConfigValue.initialSqls())
+                      .forEach(builder::withInitialSql);
             }
             if (dataSourceConfigValue.initialSqlResources() != null) {
-                Arrays.stream(dataSourceConfigValue.initialSqlResources())
-                      .forEach(sqlResource -> builder.withInitialSqlFromResource(sqlResource));
+                Arrays.asList(dataSourceConfigValue.initialSqlResources())
+                      .forEach(builder::withInitialSqlFromResource);
             }
             return Optional.of(builder.buildInternalEmbeddedDatabaseCreator());
         }

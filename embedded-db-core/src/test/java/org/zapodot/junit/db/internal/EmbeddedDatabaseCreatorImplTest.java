@@ -6,6 +6,7 @@ import org.zapodot.junit.db.plugin.InitializationPlugin;
 
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                                 Collections
                                                                                                                         .emptyMap(),
                                                                                                                 Collections
-                                                                                                                        .emptyMap(),
+                                                                                                                        .emptyList(),
                                                                                                                 new H2JdbcUrlFactory(),
                                                                                                                 CompatibilityMode.DB2);
         assertNotNull(realEmbeddedDatabaseCreator);
@@ -33,7 +34,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                                 Collections
                                                                                                                         .emptyMap(),
                                                                                                                 Collections
-                                                                                                                        .emptyMap(),
+                                                                                                                        .emptyList(),
                                                                                                                 new H2JdbcUrlFactory(),
                                                                                                                 CompatibilityMode.DB2);
         assertNotNull(realEmbeddedDatabaseCreator);
@@ -47,7 +48,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                     Collections
                                                                                                             .emptyMap(),
                                                                                                     Collections
-                                                                                                            .emptyMap(),
+                                                                                                            .emptyList(),
                                                                                                     new H2JdbcUrlFactory(),
                                                                                                     CompatibilityMode.DB2);
         assertFalse(databaseCreator.isAutoCommit());
@@ -61,7 +62,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                     Collections
                                                                                                             .emptyMap(),
                                                                                                     Collections
-                                                                                                            .emptyMap(),
+                                                                                                            .emptyList(),
                                                                                                     new H2JdbcUrlFactory(),
                                                                                                     CompatibilityMode.DB2);
         assertEquals(H2JdbcUrlFactory.H2_IN_MEMORY_JDBC_URL_PREFIX + name + ";MODE=DB2",
@@ -75,7 +76,7 @@ public class EmbeddedDatabaseCreatorImplTest {
                                                                                                     Collections
                                                                                                             .emptyMap(),
                                                                                                     Collections
-                                                                                                            .emptyMap(),
+                                                                                                            .emptyList(),
                                                                                                     new H2JdbcUrlFactory(),
                                                                                                     CompatibilityMode.DB2);
         databaseCreator.setupConnection("name");
@@ -84,13 +85,13 @@ public class EmbeddedDatabaseCreatorImplTest {
     }
 
     @Test
-    public void illegalJdbcUrl() throws SQLException {
+    public void illegalJdbcUrl() {
         final RealEmbeddedDatabaseCreatorImpl databaseCreator = new RealEmbeddedDatabaseCreatorImpl(false,
                                                                                                     "name",
                                                                                                     Collections
                                                                                                             .emptyMap(),
                                                                                                     Collections
-                                                                                                            .emptyMap(),
+                                                                                                            .emptyList(),
                                                                                                     new IllegalJdbcUrlFactory(),
                                                                                                     CompatibilityMode.DB2);
         assertThrows(SQLException.class, () -> databaseCreator.setupConnection("name"));
@@ -116,7 +117,7 @@ public class EmbeddedDatabaseCreatorImplTest {
         public RealEmbeddedDatabaseCreatorImpl(final boolean autoCommit,
                                                final String name,
                                                final Map<String, String> jdbcUrlProperties,
-                                               final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                               final List<InitializationPlugin> initializationPlugins,
                                                final JdbcUrlFactory jdbcUrlFactory,
                                                final CompatibilityMode compatibilityMode) {
             super(autoCommit, name, jdbcUrlProperties, initializationPlugins, jdbcUrlFactory, compatibilityMode);

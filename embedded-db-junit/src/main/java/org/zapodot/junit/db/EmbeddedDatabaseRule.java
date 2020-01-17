@@ -12,6 +12,7 @@ import org.zapodot.junit.db.internal.EmbeddedDatabaseCreatorImpl;
 import org.zapodot.junit.db.internal.JdbcUrlFactory;
 import org.zapodot.junit.db.plugin.InitializationPlugin;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public class EmbeddedDatabaseRule extends EmbeddedDatabaseCreatorImpl implements
     private EmbeddedDatabaseRule(final boolean autoCommit,
                                  final String name,
                                  final Map<String, String> jdbcUrlProperties,
-                                 final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                 final List<InitializationPlugin> initializationPlugins,
                                  final JdbcUrlFactory jdbcUrlFactory,
                                  final CompatibilityMode compatibilityMode) {
         super(autoCommit, name, jdbcUrlProperties, initializationPlugins, jdbcUrlFactory, compatibilityMode);

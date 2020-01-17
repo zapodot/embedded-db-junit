@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class EmbeddedDatabaseCreatorImpl implements EmbeddedDatabaseCreator {
@@ -27,7 +28,7 @@ public abstract class EmbeddedDatabaseCreatorImpl implements EmbeddedDatabaseCre
 
     private final Map<String, String> jdbcUrlProperties;
 
-    private final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins;
+    private final List<InitializationPlugin> initializationPlugins;
 
     private final JdbcUrlFactory jdbcUrlFactory;
 
@@ -38,13 +39,13 @@ public abstract class EmbeddedDatabaseCreatorImpl implements EmbeddedDatabaseCre
     protected EmbeddedDatabaseCreatorImpl(final boolean autoCommit,
                                         final String name,
                                         final Map<String, String> jdbcUrlProperties,
-                                        final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins,
+                                        final List<InitializationPlugin> initializationPlugins,
                                         final JdbcUrlFactory jdbcUrlFactory,
                                         final CompatibilityMode compatibilityMode) {
         this.autoCommit = autoCommit;
         this.predefinedName = name;
         this.jdbcUrlProperties = jdbcUrlProperties == null ? Collections.emptyMap() : jdbcUrlProperties;
-        this.initializationPlugins = initializationPlugins == null ? Collections.emptyMap() : initializationPlugins;
+        this.initializationPlugins = initializationPlugins == null ? Collections.emptyList() : initializationPlugins;
         this.jdbcUrlFactory = jdbcUrlFactory == null ? new H2JdbcUrlFactory() : jdbcUrlFactory;
         this.compatibilityMode = compatibilityMode;
     }
@@ -109,9 +110,8 @@ public abstract class EmbeddedDatabaseCreatorImpl implements EmbeddedDatabaseCre
             throw e;
         }
         connection.setAutoCommit(isAutoCommit());
-        for (final Map.Entry<Class<? extends InitializationPlugin>, InitializationPlugin> entry : initializationPlugins
-                .entrySet()) {
-            entry.getValue().connectionMade(name, getConnection());
+        for (InitializationPlugin entry : initializationPlugins) {
+            entry.connectionMade(name, getConnection());
         }
     }
 

@@ -8,16 +8,13 @@ import org.zapodot.junit.db.plugin.InitializationPlugin;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class AbstractEmbeddedDatabaseCreatorBuilder<C extends EmbeddedDatabaseCreator> implements EmbeddedDatabaseCreatorBuilder<C> {
 
     protected final Map<String, String> properties = new LinkedHashMap<>();
 
-    protected final Map<Class<? extends InitializationPlugin>, InitializationPlugin> initializationPlugins = new LinkedHashMap<>();
+    protected final List<InitializationPlugin> initializationPlugins = new LinkedList<>();
 
     protected String name;
 
@@ -107,7 +104,7 @@ public abstract class AbstractEmbeddedDatabaseCreatorBuilder<C extends EmbeddedD
     @Override
     public <P extends InitializationPlugin> AbstractEmbeddedDatabaseCreatorBuilder<C> initializedByPlugin(final P plugin) {
         if (plugin != null) {
-            initializationPlugins.put(plugin.getClass(), plugin);
+            initializationPlugins.add(plugin);
         }
         return this;
     }
