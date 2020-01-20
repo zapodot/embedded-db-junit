@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>embedded-db-flyway-jupiter-tests</artifactId>
+    <artifactId>embedded-db-plugin-jupiter-tests</artifactId>
     <properties>
         <maven.install.skip>true</maven.install.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
