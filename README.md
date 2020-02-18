@@ -22,9 +22,9 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 
 | Version | Java version | JUnit version | H2 version | HSQLDB version | Branch                                                                   | Status        |
 | ------- | ------------ | ------------- | ---------- | -------------- | ------------------------------------------------------------------------ | ------------- |
-| 2.X+    | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`master`](//github.com/zapodot/embedded-db-junit/tree/release-2.x)      | `beta`        |
-| 1.1.X   | 8.0          | 4.12          | 1.4.200    | 2.4.0          | [`release-1.1.x`](//github.com/zapodot/embedded-db-junit)                | `active`      |
-| 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | [`release-1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.x) | `maintenance` | 
+| 2.X+    | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`master`](//github.com/zapodot/embedded-db-junit/tree/release-2.x)      | `active`      |
+| 1.1.X   | 8.0          | 4.12          | 1.4.200    | 2.4.0          | [`release-1.1.x`](//github.com/zapodot/embedded-db-junit)                | `maintenance` |
+| 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | [`release-1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.x) | `obsolete`    | 
 
 The versions that is described in this table are minimum versions. Later versions may be used but is currently not tested by the maintainer.
 
@@ -38,7 +38,7 @@ The versions that is described in this table are minimum versions. Later version
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-jupiter</artifactId>
-    <version>2.0-BETA1</version>
+    <version>2.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -48,7 +48,7 @@ The versions that is described in this table are minimum versions. Later version
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>2.0-BETA1</version>
+    <version>2.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -59,7 +59,7 @@ If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/m
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-liquibase</artifactId>
-    <version>2.0-BETA1</version>
+    <version>2.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -69,7 +69,7 @@ If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/mast
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-flyway</artifactId>
-    <version>2.0-BETA1</version>
+    <version>2.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
