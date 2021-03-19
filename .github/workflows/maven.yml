@@ -19,9 +19,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Java  ${{ matrix.java-version }}
+    - name: Set up Java ${{ matrix.java-version }}
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java-version }}
-    - name: Build with Maven
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2    
+    - name: Build with Maven and Java ${{ matrix.java-version }}
       run: mvn -B package  --no-transfer-progress --file pom.xml
