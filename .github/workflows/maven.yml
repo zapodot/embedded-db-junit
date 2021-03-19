@@ -38,8 +38,8 @@ jobs:
         flag-name: run-java-${{ matrix.java-version }}
         parallel: true
 
-  finish:
-    needs: test
+  report-coverage:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
