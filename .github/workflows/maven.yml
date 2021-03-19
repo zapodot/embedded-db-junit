@@ -31,3 +31,19 @@ jobs:
         restore-keys: ${{ runner.os }}-m2    
     - name: Build with Maven and Java ${{ matrix.java-version }}
       run: mvn -B package  --no-transfer-progress --file pom.xml
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        flag-name: run-java-${{ matrix.java-version }}
+        parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true
