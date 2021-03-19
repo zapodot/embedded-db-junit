@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [ 8, 11, 15 ]
+        java-version: [ 1.8, 11, 15 ]
 
     steps:
     - uses: actions/checkout@v2
@@ -38,4 +38,21 @@ jobs:
       with:
         flags: tests-java-${{ matrix.java-version }}
         verbose: true
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Set up Java 8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        server-id: sonatype-nexus-snapshots
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+    - name: Run maven deploy
+      run: mvn -B -DskipTests=true deploy --no-transfer-progress --file pom.xml
+      env:
+        MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
+        MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
 
