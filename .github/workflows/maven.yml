@@ -31,19 +31,11 @@ jobs:
         restore-keys: ${{ runner.os }}-m2    
     - name: Build with Maven and Java ${{ matrix.java-version }}
       run: mvn -B package  --no-transfer-progress --file pom.xml
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
+    - name: Generate JaCoCo report ${{ matrix.java-version }}
+      run: mvn -B jacoco:report --no-transfer-progress --file pom.xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
       with:
-        github-token: ${{ secrets.github_token }}
-        flag-name: run-java-${{ matrix.java-version }}
-        parallel: true
+        flags: tests-java-${{ matrix.java-version }}
+        verbose: true
 
-  report-coverage:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.github_token }}
-          parallel-finished: true
