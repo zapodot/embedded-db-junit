@@ -138,7 +138,7 @@ public class LiquibaseInitializer implements InitializationPlugin {
                         "You must provide a changelog file to the LiquibaseIntitializer Plugin builder");
             }
             try {
-                if (resourceAccessor.getResourcesAsStream(databaseChangeLog) == null) {
+                if (resourceAccessor.openStream(null, databaseChangeLog) == null) {
                     throw new IllegalArgumentException(String.format(
                             "Can not load changelog from resource \"%s\". Does it exist?",
                             databaseChangeLog));
