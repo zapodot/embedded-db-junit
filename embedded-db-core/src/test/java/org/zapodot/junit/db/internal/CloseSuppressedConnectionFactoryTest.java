@@ -1,6 +1,5 @@
 package org.zapodot.junit.db.internal;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -8,12 +7,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 /**
- * Created by cc31904 on 19.05.2017.
+ * Created by zapodot on 19.05.2017.
  */
 public class CloseSuppressedConnectionFactoryTest {
 
@@ -42,7 +42,7 @@ public class CloseSuppressedConnectionFactoryTest {
         final Connection proxy = CloseSuppressedConnectionFactory.createProxy(connection);
         assertNotNull(proxy);
         proxy.close();
-        verifyZeroInteractions(connection);
+        verifyNoInteractions(connection);
     }
 
 }
