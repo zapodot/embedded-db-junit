@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>2.0.3-SNAPSHOT</version>
     <properties>
-        <byte-buddy.version>1.11.22</byte-buddy.version>
+        <byte-buddy.version>1.12.2</byte-buddy.version>
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <flyway.version>8.0.5</flyway.version>
         <guava.version>31.0.1-jre</guava.version>
