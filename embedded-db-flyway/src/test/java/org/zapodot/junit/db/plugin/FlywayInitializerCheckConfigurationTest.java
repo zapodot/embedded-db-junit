@@ -1,13 +1,12 @@
 package org.zapodot.junit.db.plugin;
 
 import com.google.common.collect.ImmutableMap;
+import org.flywaydb.core.internal.license.FlywayTeamsUpgradeRequiredException;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FlywayInitializerCheckConfigurationTest {
 
@@ -26,21 +25,19 @@ public class FlywayInitializerCheckConfigurationTest {
     @Test
     public void testBuilder() {
         final FlywayInitializer flywayInitializer = new FlywayInitializer.Builder().withInstalledBy(INSTALLED_BY)
-                                                                       .withTable(TABLE)
-                                                                       .withPlaceholders(
-                                                                               ImmutableMap.of(PLACEHOLDER_KEY,
-                                                                                               PLACEHOLDER_VALUE))
-                                                                       .withPlaceholderPrefix(PLACEHOLDER_PREFIX)
-                                                                       .withPlaceholderSuffix(PLACEHOLDER_SUFFIX)
-                                                                       .withSchemas(SCHEMA_ONE, SCHEMA_TWO)
-                                                                       .withTarget(TARGET_VERSION)
-                                                                       .withAllowMixed()
-                                                                       .withDoNotValidateOnMigrate()
-                                                                       .withIgnoreMissingMigrations()
-                                                                       .withDoNotIgnoreFutureMigrations()
-                                                                       .withEncoding(ENCODING)
-                                                                       .withLocations(LOCATION)
-                                                                       .build();
+                .withTable(TABLE)
+                .withPlaceholders(
+                        ImmutableMap.of(PLACEHOLDER_KEY,
+                                PLACEHOLDER_VALUE))
+                .withPlaceholderPrefix(PLACEHOLDER_PREFIX)
+                .withPlaceholderSuffix(PLACEHOLDER_SUFFIX)
+                .withSchemas(SCHEMA_ONE, SCHEMA_TWO)
+                .withTarget(TARGET_VERSION)
+                .withAllowMixed()
+                .withDoNotValidateOnMigrate()
+                .withEncoding(ENCODING)
+                .withLocations(LOCATION)
+                .build();
         assertEquals(INSTALLED_BY, flywayInitializer.getFlywayConfiguration().getInstalledBy());
         assertEquals(TABLE, flywayInitializer.getFlywayConfiguration().getTable());
         assertEquals(1, flywayInitializer.getFlywayConfiguration().getPlaceholders().size());
@@ -51,12 +48,22 @@ public class FlywayInitializerCheckConfigurationTest {
         assertEquals(SCHEMA_ONE, flywayInitializer.getFlywayConfiguration().getSchemas()[0]);
         assertEquals(SCHEMA_TWO, flywayInitializer.getFlywayConfiguration().getSchemas()[1]);
         assertTrue(flywayInitializer.getFlywayConfiguration().isMixed());
-        assertTrue(flywayInitializer.getFlywayConfiguration().isIgnoreMissingMigrations());
+        assertNotNull(flywayInitializer.getFlywayConfiguration().getIgnoreMigrationPatterns());
         assertFalse(flywayInitializer.getFlywayConfiguration().isValidateOnMigrate());
-        assertFalse(flywayInitializer.getFlywayConfiguration().isIgnoreFutureMigrations());
         assertEquals(ENCODING, flywayInitializer.getFlywayConfiguration().getEncoding().name());
         assertEquals(TARGET_VERSION, flywayInitializer.getFlywayConfiguration().getTarget().getVersion());
         assertEquals(LOCATION, flywayInitializer.getFlywayConfiguration().getLocations()[0].getDescriptor());
 
+    }
+
+    @Test
+    public void ignorePatterns() {
+        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
+                        FlywayInitializer.builder().withIgnoreMissingMigrations()
+                );
+
+        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
+                FlywayInitializer.builder().withIgnoreMigrationPatterns("repeatable:missing")
+        );
     }
 }

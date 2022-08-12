@@ -40,15 +40,26 @@ public class FlywayInitializer implements InitializationPlugin {
             return this;
         }
 
+        /**
+         * Starting with FlyWay 9 this requires teams
+         * @return builder instance
+         * @deprecated use #withIgnoreMigrationPatterns instead
+         */
+        @Deprecated
         public Builder withIgnoreMissingMigrations() {
-            fluentConfiguration.ignoreMissingMigrations(true);
+            return withIgnoreMigrationPatterns("repeatable:missing");
+        }
+
+        /**
+         * Allows setting the pattern for ignoring migratins
+         * @param patterns a <a href="https://flywaydb.org/documentation/configuration/parameters/ignoreMigrationPatterns>valid pattern</a>
+         * @return builder instance
+         */
+        public Builder withIgnoreMigrationPatterns(String... patterns) {
+            fluentConfiguration.ignoreMigrationPatterns(patterns);
             return this;
         }
 
-        public Builder withDoNotIgnoreFutureMigrations() {
-            fluentConfiguration.ignoreFutureMigrations(false);
-            return this;
-        }
 
         public Builder withDoNotValidateOnMigrate() {
             fluentConfiguration.validateOnMigrate(false);
