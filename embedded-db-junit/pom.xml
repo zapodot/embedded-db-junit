@@ -28,6 +28,7 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <classifier>jdk8</classifier>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
@@ -69,6 +70,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
