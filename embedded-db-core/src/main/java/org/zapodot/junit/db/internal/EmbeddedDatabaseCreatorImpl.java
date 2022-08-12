@@ -112,6 +112,7 @@ public abstract class EmbeddedDatabaseCreatorImpl implements EmbeddedDatabaseCre
         connection.setAutoCommit(isAutoCommit());
         for (InitializationPlugin entry : initializationPlugins) {
             entry.connectionMade(name, getConnection());
+            connection.setAutoCommit(isAutoCommit());
         }
     }
 

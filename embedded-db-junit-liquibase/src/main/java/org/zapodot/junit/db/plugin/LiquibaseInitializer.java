@@ -184,6 +184,9 @@ public class LiquibaseInitializer implements InitializationPlugin {
         if (defaultSchemaName != null) {
             try (final Statement statement = connection.createStatement()) {
                 statement.execute(String.format("CREATE SCHEMA IF NOT EXISTS %s", defaultSchemaName));
+                if(! connection.getAutoCommit()) {
+                    connection.commit();
+                }
             } catch (SQLException e) {
                 throw new IllegalStateException("Could not create schema \"" + defaultSchemaName + "\"", e);
             }
