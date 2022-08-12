@@ -43,7 +43,7 @@ public class FlywayInitializerSchemaPlaceholderTest {
         try (final Connection connection = embeddedDatabaseRule.getConnection()) {
             try (final Statement statement = connection.createStatement();
                  final ResultSet resultSet = statement
-                         .executeQuery("SELECT count(*) FROM \"" + SCHEMA_NAME + "\".USER")) {
+                         .executeQuery("SELECT count(*) FROM \"" + SCHEMA_NAME + "\".USERS")) {
                 assertTrue(resultSet.next());
                 assertEquals(3, resultSet.getInt(1));
             }

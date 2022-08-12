@@ -24,7 +24,7 @@ public class FlywayInitializerDefaultSettingsTest {
     public void checkMigrationsHasRun() throws Exception {
         try (final Connection connection = embeddedDatabaseRule.getConnection();
              final Statement statement = connection.createStatement();
-             final ResultSet resultSet = statement.executeQuery("SELECT * FROM \"User\"")) {
+             final ResultSet resultSet = statement.executeQuery("SELECT * FROM Users")) {
             assertTrue(resultSet.next());
         }
     }

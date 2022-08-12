@@ -16,7 +16,7 @@ public class RoleDao {
     }
 
     public List<String> rolesForUser(final String userName) throws SQLException {
-        try(final PreparedStatement statement = connection.prepareStatement("Select * FROM ROLE r INNER JOIN USERROLE ur on r.ID = ur.ROLE_ID INNER JOIN USER u on ur.USER_ID = u.ID where u.NAME = ?")) {
+        try(final PreparedStatement statement = connection.prepareStatement("Select * FROM ROLES r INNER JOIN USERROLE ur on r.ID = ur.ROLE_ID INNER JOIN USERS u on ur.USER_ID = u.ID where u.NAME = ?")) {
             statement.setString(1, userName);
             try(final ResultSet resultSet = statement.executeQuery()) {
                 final List<String> roles = new LinkedList<>();

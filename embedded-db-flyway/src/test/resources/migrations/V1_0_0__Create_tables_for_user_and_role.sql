@@ -1,15 +1,11 @@
-create table "User"
+create table Users
 (
-    ID      INTEGER auto_increment,
+    ID      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     NAME    CHARACTER VARYING(255),
-    CREATED TIMESTAMP default CURRENT_TIMESTAMP,
-    constraint PK_USER_ID
-        primary key (ID)
+    CREATED TIMESTAMP default CURRENT_TIMESTAMP
 );
-create table "Role"
+create table Roles
 (
-    ID      INTEGER auto_increment,
-    NAME    CHARACTER VARYING(255),
-    constraint PK_ROLE_ID
-        primary key (ID)
+    ID      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    NAME    CHARACTER VARYING(255)
 );
