@@ -1,9 +1,15 @@
-CREATE TABLE User (
-  id      INT IDENTITY PRIMARY KEY,
-  name    VARCHAR(255),
-  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+create table "User"
+(
+    ID      INTEGER auto_increment,
+    NAME    CHARACTER VARYING(255),
+    CREATED TIMESTAMP default CURRENT_TIMESTAMP,
+    constraint PK_USER_ID
+        primary key (ID)
 );
-CREATE TABLE Role (
-  id  INT IDENTITY PRIMARY KEY,
-  name VARCHAR(255)
+create table "Role"
+(
+    ID      INTEGER auto_increment,
+    NAME    CHARACTER VARYING(255),
+    constraint PK_ROLE_ID
+        primary key (ID)
 );
