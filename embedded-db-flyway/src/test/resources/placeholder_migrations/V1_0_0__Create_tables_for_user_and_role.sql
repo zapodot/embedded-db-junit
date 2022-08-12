@@ -1,9 +1,9 @@
-CREATE TABLE ${schema}.User (
+CREATE TABLE ${schema}.Users (
   id      INT IDENTITY PRIMARY KEY,
   name    VARCHAR(255),
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
-CREATE TABLE ${schema}.Role (
+CREATE TABLE ${schema}.Roles (
   id  INT IDENTITY PRIMARY KEY,
   name VARCHAR(255)
 );
