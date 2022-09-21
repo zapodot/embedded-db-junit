@@ -34,7 +34,7 @@
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rxjava-jdbc.version>0.7.18</rxjava-jdbc.version>
-        <slf4j.version>1.7.36</slf4j.version>
+        <slf4j.version>2.0.2</slf4j.version>
         <spring-jdbc.version>5.3.22</spring-jdbc.version>
         <sql2o.version>1.6.0</sql2o.version>
         <hamcrest.version>2.2</hamcrest.version>
