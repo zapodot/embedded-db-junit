@@ -11,21 +11,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java-version: [ 8, 11, 17 ]
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Java ${{ matrix.java-version }}
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.java-version }}
     - name: Cache Maven packages
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -35,7 +33,7 @@ jobs:
     - name: Generate JaCoCo report ${{ matrix.java-version }}
       run: mvn -B jacoco:report --no-transfer-progress --file pom.xml
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       with:
         flags: tests-java-${{ matrix.java-version }}
         verbose: true
