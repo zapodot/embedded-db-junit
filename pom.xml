@@ -93,7 +93,7 @@
             </properties>
         </profile>
         <profile>
-            <id>release</id>h2
+            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
