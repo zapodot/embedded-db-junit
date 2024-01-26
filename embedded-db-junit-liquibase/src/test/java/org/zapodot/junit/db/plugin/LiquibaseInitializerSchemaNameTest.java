@@ -28,7 +28,7 @@ public class LiquibaseInitializerSchemaNameTest {
     try (final Connection connection = embeddedDatabaseRule.getConnection();
          final Statement statement = connection.createStatement()
          ) {
-      statement.executeQuery(String.format("SELECT * FROM %s.[user]", SCHEMA_NAME));
+      statement.executeQuery(String.format("SELECT * FROM %s.[USER]", SCHEMA_NAME));
     }
   }
 }
