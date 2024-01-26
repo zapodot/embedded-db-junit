@@ -14,7 +14,7 @@
         <flyway.version>10.6.0</flyway.version>
         <guava.version>32.0.0-jre</guava.version>
         <h2.version>2.2.220</h2.version>
-        <hsqldb.version>2.7.1</hsqldb.version>
+        <hsqldb.version>2.7.2</hsqldb.version>
         <jackson-bom.version>2.14.2</jackson-bom.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <java.version>11</java.version>
@@ -173,8 +173,8 @@
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
                 <version>${hsqldb.version}</version>
-                <classifier>jdk8</classifier>
                 <optional>true</optional>
+                <classifier>jdk8</classifier>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
