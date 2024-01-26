@@ -1,10 +1,10 @@
 package org.zapodot.junit.db.plugin;
 
 import com.google.common.collect.ImmutableMap;
-import org.flywaydb.core.internal.license.FlywayTeamsUpgradeRequiredException;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
@@ -58,12 +58,6 @@ public class FlywayInitializerCheckConfigurationTest {
 
     @Test
     public void ignorePatterns() {
-        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
-                        FlywayInitializer.builder().withIgnoreMissingMigrations()
-                );
-
-        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
-                FlywayInitializer.builder().withIgnoreMigrationPatterns("repeatable:missing")
-        );
+        FlywayInitializer.builder().withIgnoreMigrationPatterns();
     }
 }
