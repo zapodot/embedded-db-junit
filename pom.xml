@@ -36,7 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rxjava-jdbc.version>0.7.19</rxjava-jdbc.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <spring-jdbc.version>6.0.6</spring-jdbc.version>
+        <spring-jdbc.version>5.3.31</spring-jdbc.version>
         <sql2o.version>1.6.0</sql2o.version>
         <hamcrest.version>2.2</hamcrest.version>
     </properties>
@@ -83,6 +83,15 @@
         </repository>
     </distributionManagement>
     <profiles>
+        <profile>
+            <id>java17</id>
+            <activation>
+                <jdk>[17,21)</jdk>
+            </activation>
+            <properties>
+                <spring-jdbc.version>6.1.3</spring-jdbc.version>
+            </properties>
+        </profile>
         <profile>
             <id>release</id>
             <build>
