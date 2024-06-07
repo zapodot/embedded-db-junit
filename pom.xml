@@ -16,7 +16,7 @@
         <h2.version>2.2.224</h2.version>
         <hsqldb.version>2.7.1</hsqldb.version>
         <jackson-bom.version>2.17.0</jackson-bom.version>
-        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <java.version>11</java.version>
         <jdbi.version>2.78</jdbi.version>
         <junit.version>4.13.2</junit.version>
