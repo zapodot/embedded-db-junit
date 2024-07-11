@@ -20,7 +20,7 @@ jobs:
     - name: Set up Java ${{ matrix.java-version }}
       uses: actions/setup-java@v4
       with:
-        distribution: 'zulu'
+        distribution: 'temurin'
         java-version: ${{ matrix.java-version }}
     - name: Cache Maven packages
       uses: actions/cache@v4
