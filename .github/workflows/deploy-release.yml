@@ -11,7 +11,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 11
           distribution: 'temurin'
           server-id: sonatype-nexus-staging
           server-username: MAVEN_USERNAME
