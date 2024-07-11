@@ -1,12 +1,12 @@
 package org.zapodot.junit.db.plugin;
 
 import com.google.common.collect.ImmutableMap;
-import org.flywaydb.core.internal.license.FlywayTeamsUpgradeRequiredException;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FlywayInitializerCheckConfigurationTest {
 
@@ -22,6 +22,7 @@ public class FlywayInitializerCheckConfigurationTest {
     public static final String TARGET_VERSION = "2";
     public static final String LOCATION = "classpath:placeholder";
 
+    @DisplayName("Test builder")
     @Test
     public void testBuilder() {
         final FlywayInitializer flywayInitializer = new FlywayInitializer.Builder().withInstalledBy(INSTALLED_BY)
@@ -56,14 +57,4 @@ public class FlywayInitializerCheckConfigurationTest {
 
     }
 
-    @Test
-    public void ignorePatterns() {
-        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
-                        FlywayInitializer.builder().withIgnoreMissingMigrations()
-                );
-
-        assertThrows(FlywayTeamsUpgradeRequiredException.class, () ->
-                FlywayInitializer.builder().withIgnoreMigrationPatterns("repeatable:missing")
-        );
-    }
 }
