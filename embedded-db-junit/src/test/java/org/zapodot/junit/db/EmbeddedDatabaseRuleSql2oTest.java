@@ -9,17 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class EmbeddedDatabaseRuleSql2oTest {
 
-    public static class Element {
-        public final Long id;
-
-        public final String name;
-
-        public Element(final Long id, final String name) {
-            this.id = id;
-            this.name = name;
-        }
-    }
-
     @Rule
     public final EmbeddedDatabaseRule databaseRule = EmbeddedDatabaseRule
             .builder()
@@ -28,7 +17,7 @@ public class EmbeddedDatabaseRuleSql2oTest {
             .build();
 
     @Test
-    public void testUsingSql2oWithTransaction() throws Exception {
+    public void testUsingSql2oWithTransaction() {
         final Sql2o sql2o = new Sql2o(databaseRule.getDataSource());
         final String elementName = "element illegalSqlFromResource";
         try (final Connection transaction = sql2o.beginTransaction()) {
@@ -41,9 +30,9 @@ public class EmbeddedDatabaseRuleSql2oTest {
             transaction.commit();
         }
         try (final Connection read = sql2o.open()) {
-            final Element element = read
+            final TestElement element = read
                     .createQuery("SELECT * from ELEMENT")
-                    .executeAndFetch(Element.class)
+                    .executeAndFetch(TestElement.class)
                     .iterator()
                     .next();
             assertEquals(1L, element.id.longValue());
