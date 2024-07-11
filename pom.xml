@@ -87,16 +87,6 @@
     </distributionManagement>
     <profiles>
         <profile>
-            <id>java-11</id>
-            <activation>
-                <jdk>(,12]</jdk>
-            </activation>
-            <properties>
-                <spring-jdbc.version>5.3.37</spring-jdbc.version>
-                <flyway.version>9.22.3</flyway.version>
-            </properties>
-        </profile>
-        <profile>
             <id>release</id>
             <build>
                 <plugins>
