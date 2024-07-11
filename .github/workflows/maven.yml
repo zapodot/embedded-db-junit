@@ -33,7 +33,7 @@ jobs:
     - name: Generate JaCoCo report ${{ matrix.java-version }}
       run: mvn -B jacoco:report --no-transfer-progress --file pom.xml
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         flags: tests-java-${{ matrix.java-version }}
         verbose: true
