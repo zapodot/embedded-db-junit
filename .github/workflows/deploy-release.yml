@@ -1,16 +1,17 @@
 name: Publish package to the Maven Central Repository
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "*.*.*"
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Java 11
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'temurin'
           server-id: sonatype-nexus-staging
           server-username: MAVEN_USERNAME
@@ -23,3 +24,11 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            target/*.jar
+            target/*.jar.asc
+            licence.txt
