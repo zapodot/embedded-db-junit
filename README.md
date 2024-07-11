@@ -19,12 +19,13 @@ embedded-db-junit
 ## Status
 This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available.
 
-| Version | Java version | JUnit version | H2 version | HSQLDB version | Branch                                                                        | Status        |
-|---------| ------------ | ------------- | ---------- | -------------- |-------------------------------------------------------------------------------|---------------|
-| 2.1.X   | 11           | 4.13/5.X      | 2.1.X      | 2.7.0          | [`master`](//github.com/zapodot/embedded-db-junit/tree/master)                | `active`      |
-| 2.0.X   | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`release-2.0.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.0.x)         | `maintenance` |
-| 1.1.X   | 8.0          | 4.12          | 1.4.200    | 2.4.0          | [`release-1.1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.1.x)  | `obsolete`    |
-| 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | [`release-1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.x)      | `obsolete`    | 
+| Version | Java version | JUnit version | H2 version | HSQLDB version | Branch                                                                       | Status        |
+|---------|--------------| ------------- | ---------- |----------------|------------------------------------------------------------------------------|---------------|
+| 2.2.X   | 17           | 4.13/5.X      | 2.1.X      | 2.7.x          | [`master`](//github.com/zapodot/embedded-db-junit/tree/master)               | `active`      |
+| 2.1.X   | 11           | 4.13/5.X      | 2.1.X      | 2.7.0          | [`release-2.1.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.1.x) | `maintenance`      |
+| 2.0.X   | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`release-2.0.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.0.x) | `obsolete` |
+| 1.1.X   | 8.0          | 4.12          | 1.4.200    | 2.4.0          | [`release-1.1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.1.x) | `obsolete`    |
+| 1.0     | 1.7          | 4.12          | 1.4.196    | N/A            | [`release-1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.x)     | `obsolete`    | 
 
 The versions that is described in this table are minimum versions. Later versions may be used but is currently not tested by the maintainer.
 
