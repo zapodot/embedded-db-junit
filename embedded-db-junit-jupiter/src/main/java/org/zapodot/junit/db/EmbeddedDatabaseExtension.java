@@ -150,7 +150,7 @@ public class EmbeddedDatabaseExtension implements EmbeddedDatabaseCreator, Befor
     private void injectDataSourceOrConnection(final Object testInstance,
                                               final Field field,
                                               final EmbeddedDatabaseCreator embeddedDatabaseCreator) {
-        boolean accessibleOriginal = field.isAccessible();
+        boolean accessibleOriginal = field.canAccess(testInstance);
         field.setAccessible(true);
         try {
 
