@@ -41,7 +41,7 @@
         <spring-jdbc.version>6.2.5</spring-jdbc.version>
         <sql2o.version>1.8.0</sql2o.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <cyclonedx-maven-plugin.version>2.8.0</cyclonedx-maven-plugin.version>
+        <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
     </properties>
     <name>${project.artifactId}</name>
     <description>Library that provides a JUnit rule for setting up unit test using an embedded in-memory database (H2)
