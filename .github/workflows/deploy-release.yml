@@ -29,8 +29,6 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            target/*.jar
-            target/*.jar.asc
             target/bom.json
             target/bom.xml
             licence.txt
