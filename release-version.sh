@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Funksjon for å validere semantisk versjonsnummer
+# Validates semantic version number
 validate_version() {
     local version=$1
     if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?(\+[a-zA-Z0-9.-]+)?$ ]]; then
-        echo "Feil: '$version' er ikke et gyldig semantisk versjonsnummer."
-        echo "Format: MAJOR.MINOR.PATCH (f.eks. 1.2.3, 2.0.0-beta.1)"
+        echo "Error: '$version' is not a valid semantic version."
+        echo "Format: MAJOR.MINOR.PATCH (ex. 1.2.3, 2.0.0-beta.1)"
         exit 1
     fi
 }
@@ -34,18 +34,28 @@ fi
 
 VERSION=$1
 
-# Valider versjonsnummer
+# Validates version number
 validate_version "$VERSION"
 
-# Sjekk at pom.xml eksisterer
+# Make sure there is a pom.xml-file in the folder
 if [ ! -f "pom.xml" ]; then
     echo "Error: could not find pom.xml in the current folder."
     exit 1
 fi
 
-# Sjekk at vi er i et git-repository
+# Make sure that we are in a git repo
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "Error: Current folgder is not a git repository."
+    echo "Error: Current folder is not a git repository."
+    exit 1
+fi
+
+# Check if working directory is clean (no uncommitted changes)
+if ! git diff-index --quiet HEAD --; then
+    echo "Error: Working directory contains uncommitted changes."
+    echo "Please commit or stash your changes before running this script."
+    echo ""
+    echo "Uncommitted changes:"
+    git status --porcelain
     exit 1
 fi
 
@@ -101,7 +111,7 @@ fi
 echo "Committing development version changes..."
 
 # Add and commit the SNAPSHOT version change
-git add pom.xml
+git add .
 git commit -m "Prepare for next development iteration $SNAPSHOT_VERSION"
 
 # Check if the commit was successful
