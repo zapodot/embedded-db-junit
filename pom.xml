@@ -91,7 +91,7 @@
             <id>sign</id>
             <activation>
                 <property>
-                    <name>env.GPG_KEY_PASSPHRASE</name>
+                    <name>env.MAVEN_GPG_PASSPHRASE</name>
                 </property>
             </activation>
             <build>
