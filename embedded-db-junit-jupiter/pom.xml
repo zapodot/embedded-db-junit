@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>embedded-db-junit-jupiter</artifactId>
-
+    <name>Integration with JUnit 5.x</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

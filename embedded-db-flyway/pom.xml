@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>embedded-db-flyway</artifactId>
+    <name>Extension that allows for Flyway migrations to be run in embedded databases</name>
     <dependencyManagement>
         <dependencies>
             <!-- Overrides jackson to avoid security issues -->
