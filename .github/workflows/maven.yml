@@ -54,7 +54,7 @@ jobs:
         gpg-private-key: ${{ secrets.GPG_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
     - name: Run maven deploy
-      run: mvn -X -B -DskipTests=true deploy --no-transfer-progress --file pom.xml
+      run: mvn -B -DskipTests=true deploy --no-transfer-progress --file pom.xml
       env:
         MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
         MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
