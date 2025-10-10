@@ -146,6 +146,7 @@
                         <artifactId>central-publishing-maven-plugin</artifactId>
                         <extensions>true</extensions>
                         <configuration>
+                            <excludeArtifacts>embedded-db-plugin-jupiter-tests</excludeArtifacts>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
                             <waitUntil>published</waitUntil>

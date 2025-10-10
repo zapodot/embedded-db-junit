@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>embedded-db-junit</artifactId>
-    <name>Integration with JUnit 4.x</name>
+    <name>${project.artifactId}: Integration with JUnit 4.x</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

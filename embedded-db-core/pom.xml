@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>embedded-db-core</artifactId>
-    <name>Core code needed be all other modules</name>
+    <name>${project.artifactId}: Core code needed be all other modules</name>
     <dependencies>
         <dependency>
             <groupId>com.h2database</groupId>
