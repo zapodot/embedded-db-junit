@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <rxjava-jdbc.version>0.7.19</rxjava-jdbc.version>
         <slf4j.version>2.0.17</slf4j.version>
-        <spring-jdbc.version>6.2.11</spring-jdbc.version>
+        <spring-jdbc.version>7.0.0</spring-jdbc.version>
         <sql2o.version>1.9.1</sql2o.version>
         <hamcrest.version>3.0</hamcrest.version>
         <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
