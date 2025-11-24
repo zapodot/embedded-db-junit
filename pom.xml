@@ -15,7 +15,7 @@
         <guava.version>33.5.0-jre</guava.version>
         <h2.version>2.4.240</h2.version>
         <hsqldb.version>2.7.4</hsqldb.version>
-        <jackson-bom.version>2.20.0</jackson-bom.version>
+        <jackson-bom.version>2.20.1</jackson-bom.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
         <java.version>17</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
