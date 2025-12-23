@@ -7,9 +7,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # ratchet:actions/checkout@v6
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # ratchet:actions/setup-java@v5
         with:
           java-version: 17
           distribution: 'temurin'
@@ -25,7 +25,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # ratchet:softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           files: |
