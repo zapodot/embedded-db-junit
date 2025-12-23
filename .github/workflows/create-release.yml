@@ -35,5 +35,10 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: maven
+      - name: Set version
+        shell: bash
+        env:
+          NEW_VERSION: ${{ steps.git-tag.outputs.new_version }}
+        run: mvn versions:set -DnewVersion=$NEW_VERSION-DgenerateBackupPoms=false
 
 
