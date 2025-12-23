@@ -1,0 +1,32 @@
+name: Create release
+on:
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    name: Create new release version
+    permissions:
+      contents: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Create release tag
+        uses: hennejg/github-tag-action@v4.3.1
+        id: git-tag
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+          release_branches: 'master'
+          tag_prefix: ''
+      - name: Dump tag settings
+        shell: bash
+        run: |
+          echo "## Release info" >> $GITHUB_STEP_SUMMARY
+          echo "- new tag: ${{ steps.git-tag.outputs.new_tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "- previous tag: ${{ steps.git-tag.outputs.previous_tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.git-tag.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
