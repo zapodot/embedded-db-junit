@@ -39,6 +39,6 @@ jobs:
         shell: bash
         env:
           NEW_VERSION: ${{ steps.git-tag.outputs.new_version }}
-        run: mvn versions:set -DnewVersion=$NEW_VERSION-DgenerateBackupPoms=false
+        run: mvn versions:set -DnewVersion=$NEW_VERSION -DgenerateBackupPoms=false
 
 
