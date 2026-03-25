@@ -16,13 +16,12 @@ jobs:
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-          gpg-private-key: ${{ secrets.GPG_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Publish to maven central
-        run: mvn -B -DskipTests=true --no-transfer-progress -Dgpg.passphrase=${{ secrets.GPG_KEY_PASSPHRASE }} -Prelease clean deploy
+        run: mvn -B -DskipTests=true --no-transfer-progress -Dgpg.signer=bc -Prelease clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
+          MAVEN_GPG_KEY: ${{ secrets.GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
       - name: Release
         uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # ratchet:softprops/action-gh-release@v2
