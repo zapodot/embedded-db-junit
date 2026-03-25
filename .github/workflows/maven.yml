@@ -62,5 +62,4 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PWD }}
           MAVEN_GPG_KEY: ${{ secrets.GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_KEY_PASSPHRASE }}
-          MAVEN_GPG_KEY: ${{ secrets.GPG_KEY }}
 
