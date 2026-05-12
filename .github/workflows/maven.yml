@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
       - name: Cache Maven packages
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # ratchet:actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # ratchet:actions/cache@v5
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -35,7 +35,7 @@ jobs:
       - name: Build with Maven and Java ${{ matrix.java-version }}
         run: mvn -B package  --no-transfer-progress --file pom.xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@1af58845a975a7985b0beb0cbe6fbbb71a41dbad # ratchet:codecov/codecov-action@v5
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # ratchet:codecov/codecov-action@v6
         with:
           flags: tests-java-${{ matrix.java-version }}
           verbose: true
