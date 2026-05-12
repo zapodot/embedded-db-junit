@@ -21,7 +21,7 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 
 | Version | Java version | JUnit version | H2 version | HSQLDB version | Branch                                                                       | Status        |
 |---------|--------------| ------------- | ---------- |----------------|------------------------------------------------------------------------------|---------------|
-| 2.2.X   | 17           | 4.13/5.X      | 2.1.X      | 2.7.x          | [`master`](//github.com/zapodot/embedded-db-junit/tree/master)               | `active`      |
+| 2.3.X   | 17           | 4.13/6.X      | 2.1.X      | 2.7.x          | [`master`](//github.com/zapodot/embedded-db-junit/tree/master)               | `active`      |
 | 2.1.X   | 11           | 4.13/5.X      | 2.1.X      | 2.7.0          | [`release-2.1.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.1.x) | `maintenance`      |
 | 2.0.X   | 8.0          | 4.12/5.X      | 1.4.200    | 2.5.0          | [`release-2.0.x`](//github.com/zapodot/embedded-db-junit/tree/release-2.0.x) | `obsolete` |
 | 1.1.X   | 8.0          | 4.12          | 1.4.200    | 2.4.0          | [`release-1.1.x`](//github.com/zapodot/embedded-db-junit/tree/release-1.1.x) | `obsolete`    |
