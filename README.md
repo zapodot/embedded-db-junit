@@ -40,7 +40,7 @@ The versions that is described in this table are minimum versions. Later version
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-jupiter</artifactId>
-    <version>2.1.0</version>
+    <version>2.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ The versions that is described in this table are minimum versions. Later version
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit</artifactId>
-    <version>2.1.0</version>
+    <version>2.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -61,7 +61,7 @@ If you want to use the [Liquibase](//github.com/zapodot/embedded-db-junit/tree/m
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-junit-liquibase</artifactId>
-    <version>2.1.0</version>
+    <version>2.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -71,14 +71,14 @@ If you want to use the [Flyway](//github.com/zapodot/embedded-db-junit/tree/mast
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-db-flyway</artifactId>
-    <version>2.1.0</version>
+    <version>2.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 #### SBT
 ```scala
-libraryDependencies += "org.zapodot" % "embedded-db-junit" % "2.1.0" % "test"
+libraryDependencies += "org.zapodot" % "embedded-db-junit" % "2.3.1" % "test"
 ```
 
 ### Add to Junit test
