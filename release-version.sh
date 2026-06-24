@@ -25,23 +25,42 @@ increment_patch_version() {
     echo "${major}.${minor}.${patch}"
 }
 
-# Sjekk at versjonsnummer er oppgitt
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <version_number>"
+# Resolve release version from pom.xml by stripping a trailing -SNAPSHOT suffix
+resolve_release_version_from_pom() {
+    local pom_version
+    pom_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+    if [ $? -ne 0 ] || [ -z "$pom_version" ]; then
+        echo "Error: Could not resolve project version from pom.xml"
+        exit 1
+    fi
+
+    echo "${pom_version%-SNAPSHOT}"
+}
+
+# Validate argument count
+if [ $# -gt 1 ]; then
+    echo "Usage: $0 [version_number]"
     echo "Example: $0 1.2.3"
+    echo "If version_number is omitted, version from pom.xml without -SNAPSHOT is used."
     exit 1
 fi
-
-VERSION=$1
-
-# Validates version number
-validate_version "$VERSION"
 
 # Make sure there is a pom.xml-file in the folder
 if [ ! -f "pom.xml" ]; then
     echo "Error: could not find pom.xml in the current folder."
     exit 1
 fi
+
+if [ $# -eq 1 ]; then
+    VERSION=$1
+else
+    VERSION=$(resolve_release_version_from_pom)
+    echo "No version number provided, using pom.xml version: $VERSION"
+fi
+
+# Validates version number
+validate_version "$VERSION"
 
 # Make sure that we are in a git repo
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
