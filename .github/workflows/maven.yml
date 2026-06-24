@@ -35,7 +35,7 @@ jobs:
       - name: Build with Maven and Java ${{ matrix.java-version }}
         run: mvn -B package  --no-transfer-progress --file pom.xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # ratchet:codecov/codecov-action@v6
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # ratchet:codecov/codecov-action@v6
         with:
           flags: tests-java-${{ matrix.java-version }}
           verbose: true
