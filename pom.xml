@@ -38,7 +38,7 @@
         <rxjava-jdbc.version>0.7.19</rxjava-jdbc.version>
         <slf4j.version>2.0.18</slf4j.version>
         <spring-jdbc.version>7.0.9</spring-jdbc.version>
-        <sql2o.version>1.9.1</sql2o.version>
+        <sql2o.version>1.9.2</sql2o.version>
         <hamcrest.version>3.0</hamcrest.version>
         <cyclonedx-maven-plugin.version>2.9.3</cyclonedx-maven-plugin.version>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
