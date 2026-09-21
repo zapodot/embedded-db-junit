@@ -11,3 +11,6 @@ release.properties
 *.ipr
 *.iml
 *.iws
+
+# Mac os files #
+.DS_Store
